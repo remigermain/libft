@@ -1,22 +1,38 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_isalpha.c                                     .::    .:/ .      .::   */
+/*   ft_putendl_fd.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/03 14:21:45 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 20:04:14 by alepercq    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 14:13:25 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/05 18:45:19 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+int	ft_putpstr_fd(char const *s, int fd)
 {
-	if (c > 122 || c < 65 || (c > 90 && c < 97))
-		return (0);
-	else
-		return (1);
+	int count;
+
+	count = 0;
+	if (!s)
+		return (-1);
+	while (s[count] != '\0')
+		ft_putpchar_fd(s[count++], fd);
+	return (count);
+}
+
+int	ft_putpnstr_fd(char const *s, int len, int fd)
+{
+	int count;
+
+	count = 0;
+	if (!s)
+		return (-1);
+	while (s[count] != '\0' && count < len)
+		ft_putpchar_fd(s[count++], fd);
+	return (count);
 }

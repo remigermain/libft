@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 13:38:11 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/16 05:17:25 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/08 18:17:16 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,9 +16,4 @@
 void	ft_putnbr(int n)
 {
 	ft_putnbr_fd(n, 1);
-}
-
-void	ft_putnbr2(int n)
-{
-	ft_putnbr2_fd(n, 1);
 }

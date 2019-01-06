@@ -6,14 +6,19 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 14:24:30 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/12 16:31:59 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/19 16:34:52 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar(char c)
+int	ft_putchar(char c)
 {
-	write(1, &c, sizeof(c));
+	return (ft_putchar_fd(c, 1));
+}
+
+int	ft_putwchar(wchar_t c)
+{
+	return (ft_putwchar_fd(c, 1));
 }

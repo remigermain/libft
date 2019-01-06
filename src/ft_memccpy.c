@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 19:19:53 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 19:03:24 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/08 20:01:49 by alepercq    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 	{
 		((unsigned char*)dest)[count] = ((unsigned char*)src)[count];
 		if (((unsigned char*)src)[count] == (unsigned char)c)
-			return (&dest[count + 1]);
+			return (dest + count + 1);
 		count++;
 	}
 	return (NULL);

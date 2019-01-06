@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 11:14:09 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/11 15:26:42 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/12/19 21:55:19 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,9 +15,9 @@
 
 int	ft_atoi(const char *str)
 {
-	long	a;
-	long	b;
-	long	neg;
+	int	a;
+	int	b;
+	int	neg;
 
 	a = 0;
 	b = 0;
@@ -31,9 +31,6 @@ int	ft_atoi(const char *str)
 		a++;
 	}
 	while (str[a] >= '0' && str[a] <= '9')
-	{
-		b = ((b * 10) + (str[a] - '0'));
-		a++;
-	}
-	return ((int)(b * neg));
+		b = ((b * 10) + (str[a++] - '0'));
+	return (b * neg);
 }

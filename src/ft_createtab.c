@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 11:44:53 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/02 12:01:08 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/08 20:04:35 by alepercq    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,9 +15,9 @@
 
 char	**ft_createtab(int nb, char c)
 {
-	char	**tab;
 	int		a;
 	int		b;
+	char	**tab;
 
 	a = 0;
 	if (!(tab = (char**)malloc(sizeof(char*) * (nb + 1))))
