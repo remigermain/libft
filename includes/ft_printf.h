@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:40:59 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/06 23:04:15 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/07 14:43:02 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,14 +16,13 @@
 # include "libft.h"
 # include "color.h"
 # include <stdarg.h>
-# include <errno.h>
-
 # define BUFF_PRINTF 128
-# define BUFF_FLOAT 256
+# define BUFF_FLOAT 514
 
 /*
 ** raccourcie list
 */
+# define ERROR	ftprintf_error
 # define EXPONENT lst->exponent
 # define HASH lst->hash
 # define SPACE	lst->space
@@ -82,7 +81,7 @@ int				find_conv(t_pf *lst, char *str, int ret);
 void			conv_char(t_pf *lst);
 void			conv_int(t_pf *lst);
 void			conv_string(t_pf *lst);
-void			conv_double(t_pf *lst);
+void			conv_double(t_pf *lst, char c, int i);
 void			conv_other(t_pf *lst);
 int				conv_tabstring(t_pf *lst);
 int				conv_color(t_pf *lst, char *str);

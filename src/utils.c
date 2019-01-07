@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:55 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/04 16:38:56 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/07 03:45:21 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,6 +19,8 @@ void	ftprintf_error(t_pf *lst, char *str, size_t index)
 	ft_putstr_fd("\n/  o  \\\n-------\n     	[", 2);
 	if (index == 1)
 		ft_putstr_fd("Error malloc to function \"", 2);
+	if (index == 2)
+		ft_putstr_fd("Error precision it's to larg for double! \"", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("]     \n\n", 2);
 	if (lst != NULL)

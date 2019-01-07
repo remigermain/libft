@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:13 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/06 22:29:25 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/07 01:55:24 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,8 +89,7 @@ void			conv_string(t_pf *lst)
 	}
 	else
 	{
-		if (CONV != 'm')
-			ustr = (UCHAR*)va_arg(lst->va_copy, char*);
+		ustr = (UCHAR*)va_arg(lst->va_copy, char*);
 		if (ustr == NULL)
 			ustr = ft_strudup("(null)");
 		else

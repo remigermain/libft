@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/04 16:38:44 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/07 04:26:10 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,21 +56,29 @@ static void	lst_putdouble_main(t_pf *lst, long double nb)
 
 void		lst_putdouble(t_pf *lst)
 {
-	long double nb;
+	long double	nb;
 
 	if (LENGHT == 100000)
 		nb = va_arg(lst->va_copy, long double);
 	else
 		nb = (long double)va_arg(lst->va_copy, double);
-	if (nb < 0)
-	{
-		nb = -nb;
-		PSIGN = 1;
-	}
-	else if (nb >= 0 && SIGN == '+')
-		PSIGN = 2;
-	if ((ULONG)nb > 9223372036854775807)
-		lst->ul_nb = (ULONG)nb;
+	if ((1.0 / 0.0) == nb || (-1.0 / 0.0) == nb)
+		put_buff(lst, (MAJ == 1 ? "INF" : "inf"), 3, 0);
+	else if (nb != nb)
+		put_buff(lst, (MAJ == 1 ? "NAN" : "nan"), 3, 0);
+	else if (PRECI >= BUFF_FLOAT ||
+			(PRECI + ulen_base((ULONG)nb, lst->base)) >= BUFF_FLOAT)
+		ERROR(lst, "can't print double , is to larg !", 2);
 	else
+	{
+		if (nb < 0)
+		{
+			nb = -nb;
+			PSIGN = 1;
+		}
+		else if (nb >= 0 && SIGN == '+')
+			PSIGN = 2;
 		lst_putdouble_main(lst, nb);
+		conv_double(lst, (lst->maj == 1 ? 'E' : 'e'), 0);
+	}
 }

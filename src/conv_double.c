@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:32 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/04 19:38:57 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/07 04:14:39 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,18 +55,12 @@ static void	put_double(t_pf *lst, ULONG nb[BUFF_FLOAT], int i, int max)
 		}
 		i--;
 	}
-	remove_zero(lst, nb, 0, 2);
-	put_itoa(lst, nb[i++]);
-	if (PRECI > 0)
-		put_buff(lst, ".", 1, 0);
-	while ((i - 1) < PRECI)
-		put_itoa(lst, nb[i++]);
+	remove_zero(lst, nb, 1, 2);
 }
 
-static void	assign_double(t_pf *lst, size_t i, int j)
+static void	assign_double(t_pf *lst, ULONG nb[BUFF_FLOAT], size_t i, int j)
 {
-	ULONG	nb[BUFF_FLOAT];
-	size_t	preci;
+	int		preci;
 	size_t	verif;
 
 	preci = PRECI + 1;
@@ -82,12 +76,9 @@ static void	assign_double(t_pf *lst, size_t i, int j)
 	while (preci > 0)
 	{
 		lst->fl_nb *= BASE;
-		if ((int)lst->fl_nb != 0 && verif == 0)
-			preci--;
-		else if ((int)lst->fl_nb != 0)
-			verif = 0;
 		nb[i++] = (int)lst->fl_nb;
 		lst->fl_nb -= (int)lst->fl_nb;
+		preci--;
 	}
 	put_double(lst, nb, 0, 0);
 }
@@ -102,44 +93,41 @@ static int	max_calc(t_pf *lst, int max)
 		else if (FIELD < 0)
 			FIELD++;
 	}
-	if (lst->ul_nb > 9223372036854775807)
-		max = 3;
-	else
-	{
-		if ((CONV == 'g' || CONV == 'G') && lst->ul_nb != 0)
-			PRECI = (PRECI == 0 ? 0 : PRECI - 1);
-		max = ulen_base(lst->ul_nb, BASE) + PRECI;
-		max += (PSIGN != 0 ? 1 : 0);
+	max = ulen_base(lst->ul_nb, BASE) + PRECI;
+	max += (PSIGN != 0 ? 1 : 0);
+	if (!((CONV == 'g' || CONV == 'G') && PRECI == 0))
 		max += ((POINT == 0 || PRECI > 0) ? 1 : 0);
-		if (CONV == 'e' || CONV == 'E')
-			max += 2 + MAX(ulen_base(ABS(EXPONENT), BASE), 2);
-	}
+	if (CONV == 'e' || CONV == 'E' || ((CONV == 'g' || CONV == 'G') &&
+				PRECI != 0 && (EXPONENT < -4 || EXPONENT >= PRECI)))
+		max += 2 + MAX(ulen_base(ABS(EXPONENT), BASE), 2);
 	return (max);
 }
 
-void		conv_double(t_pf *lst)
+void		conv_double(t_pf *lst, char c, int i)
 {
-	UCHAR		*new;
-	int			ret;
-	int			max;
-	char		c;
+	ULONG			nb[BUFF_FLOAT];
+	unsigned char	*new;
+	int				max;
 
 	max = 0;
-	lst_putdouble(lst);
+	if ((CONV == 'g' || CONV == 'G') && POINT == 0)
+		lst->preci -= ulen_base(lst->ul_nb, BASE);
+	assign_double(lst, nb, 0, 0);
 	max = max_calc(lst, 0);
 	if (ZERO == 1)
 		put_sign(lst);
 	put_prefix(lst, max, FIELD, ZERO);
 	if (ZERO == 0)
 		put_sign(lst);
-	if (lst->ul_nb > 9223372036854775807)
-		put_buff(lst, ft_ustrdup((UCHAR*)("nan")), 3, 1);
-	else
-		assign_double(lst, 0, 0);
-	if (CONV == 'e' || CONV == 'E')
+	put_itoa(lst, nb[i++]);
+	if (PRECI > 0)
+		put_buff(lst, ".", 1, 0);
+	while ((i - 1) < PRECI)
+		put_itoa(lst, nb[i++]);
+	if (CONV == 'e' || CONV == 'E' || ((CONV == 'g' || CONV == 'G') &&
+				PRECI != 0 && (EXPONENT < -4 || EXPONENT >= PRECI)))
 	{
-		c = (MAJ == 1 ? 'E' : 'e');
-		ret = ft_sprintf(&new, "%c%+.2d", c, EXPONENT);
-		put_buff(lst, new, ret, 1);
+		i = ft_sprintf(&new, "%c%+.2d", c, EXPONENT);
+		put_buff(lst, new, i, 1);
 	}
 }
