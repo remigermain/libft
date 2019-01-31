@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
+/*   ft_strcat.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:23:33 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/02 17:59:00 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/02 18:05:30 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# define UCHAR unsigned char
-# define ULONG unsigned long
-# define MINT char
-# define MUINT unsigned char
-# include <unistd.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <string.h>
-# include "memory.h"
-# include "divers.h"
-# include "is_methode.h"
-# include "lib_lst.h"
-# include "math.h"
-# include "print.h"
-# include "strings.h"
-# include "ft_printf.h"
-#endif
+#include "libft.h"
+
+char	*ft_strncat(char *restrict s1, const char *restrict s2, size_t n)
+{
+	size_t count_s1;
+	size_t count_s2;
+
+	count_s1 = 0;
+	count_s2 = 0;
+	while (s1[count_s1] != '\0')
+		count_s1++;
+	while (s2[count_s2] != '\0' && count_s2 < n)
+	{
+		s1[count_s1] = s2[count_s2];
+		count_s1++;
+		count_s2++;
+	}
+	s1[count_s1] = '\0';
+	return (s1);
+}

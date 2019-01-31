@@ -6,27 +6,20 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:23:33 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/31 18:26:34 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# define UCHAR unsigned char
-# define ULONG unsigned long
-# define MINT char
-# define MUINT unsigned char
-# include <unistd.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <string.h>
-# include "memory.h"
-# include "divers.h"
-# include "is_methode.h"
-# include "lib_lst.h"
-# include "math.h"
-# include "print.h"
-# include "strings.h"
-# include "ft_printf.h"
+#ifndef DIVERS_H
+# define DIVERS_H
+
+void			ft_sort_integer_table(int *tab, int size);
+void			ft_swap(int *a, int *b);
+int				ft_match(char *s1, char *s2);
+int				len_wchar_single(wchar_t c);
+int				len_wchar(wchar_t *str);
+size_t			len_wuchart(unsigned char *str);
+int				nlen_wchar(wchar_t *str, size_t len);
+void			convert_wchar(unsigned char **new, wchar_t wc, size_t *i);
 #endif

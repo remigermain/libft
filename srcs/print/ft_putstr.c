@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
+/*   ft_putstr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:23:33 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 16:24:32 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 18:52:01 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# define UCHAR unsigned char
-# define ULONG unsigned long
-# define MINT char
-# define MUINT unsigned char
-# include <unistd.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <string.h>
-# include "memory.h"
-# include "divers.h"
-# include "is_methode.h"
-# include "lib_lst.h"
-# include "math.h"
-# include "print.h"
-# include "strings.h"
-# include "ft_printf.h"
-#endif
+#include "libft.h"
+
+int	ft_putstr(char const *str)
+{
+	return (ft_putstr_fd(str, 1));
+}
+
+int	ft_putnstr(char const *str, int len)
+{
+	return (ft_putnstr_fd(str, len, 1));
+}
+
+int	ft_putstrw(wchar_t const *str)
+{
+	return (ft_putstrw_fd(str, 1));
+}
+
+int	ft_putnstrw(wchar_t const *str, int len)
+{
+	return (ft_putnstrw_fd(str, len, 1));
+}

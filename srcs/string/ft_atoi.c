@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
+/*   ft_atoi.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:23:33 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/02 11:14:09 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 21:55:19 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# define UCHAR unsigned char
-# define ULONG unsigned long
-# define MINT char
-# define MUINT unsigned char
-# include <unistd.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <string.h>
-# include "memory.h"
-# include "divers.h"
-# include "is_methode.h"
-# include "lib_lst.h"
-# include "math.h"
-# include "print.h"
-# include "strings.h"
-# include "ft_printf.h"
-#endif
+#include "libft.h"
+
+int	ft_atoi(const char *str)
+{
+	int	a;
+	int	b;
+	int	neg;
+
+	a = 0;
+	b = 0;
+	neg = 1;
+	while (str[a] == ' ' || (str[a] >= 9 && str[a] <= 13))
+		a++;
+	if (str[a] == '+' || str[a] == '-')
+	{
+		if (str[a] == '-')
+			neg = -1;
+		a++;
+	}
+	while (str[a] >= '0' && str[a] <= '9')
+		b = ((b * 10) + (str[a++] - '0'));
+	return (b * neg);
+}

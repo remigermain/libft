@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
+/*   ft_strtrim.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:23:33 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 18:04:00 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/08 18:56:39 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# define UCHAR unsigned char
-# define ULONG unsigned long
-# define MINT char
-# define MUINT unsigned char
-# include <unistd.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <string.h>
-# include "memory.h"
-# include "divers.h"
-# include "is_methode.h"
-# include "lib_lst.h"
-# include "math.h"
-# include "print.h"
-# include "strings.h"
-# include "ft_printf.h"
-#endif
+#include "libft.h"
+
+static int	ft_find_white(char c)
+{
+	if (c == ' ' || c == '\n' || c == '\t')
+		return (1);
+	else
+		return (0);
+}
+
+char		*ft_strtrim(char const *s)
+{
+	int		len;
+	int		count;
+
+	count = 0;
+	if (!s)
+		return (NULL);
+	while (ft_find_white(s[count]) == 1 && s[count] != '\0')
+		count++;
+	len = ft_strlen(s);
+	while (ft_find_white(s[len - 1]) == 1 && len > 0)
+		len--;
+	if (len == 0)
+		len = 0;
+	else
+		len -= count;
+	return (ft_strsub(s, count, len));
+}

@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
+/*   ft_createtab.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:23:33 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/02 11:44:53 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/08 20:04:35 by alepercq    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# define UCHAR unsigned char
-# define ULONG unsigned long
-# define MINT char
-# define MUINT unsigned char
-# include <unistd.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <string.h>
-# include "memory.h"
-# include "divers.h"
-# include "is_methode.h"
-# include "lib_lst.h"
-# include "math.h"
-# include "print.h"
-# include "strings.h"
-# include "ft_printf.h"
-#endif
+#include "libft.h"
+
+char	**ft_createtab(int nb, char c)
+{
+	int		a;
+	int		b;
+	char	**tab;
+
+	a = 0;
+	if (!(tab = (char**)malloc(sizeof(char*) * (nb + 1))))
+		return (NULL);
+	while (a < nb)
+	{
+		b = 0;
+		if (!(tab[a] = malloc(sizeof(char*) * (nb + 1))))
+			return (NULL);
+		while (b < nb)
+			tab[a][b++] = c;
+		tab[a][b] = '\0';
+		a++;
+	}
+	tab[a] = NULL;
+	return (tab);
+}

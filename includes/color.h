@@ -6,7 +6,7 @@
 /*   By: alepercq <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/06 16:39:55 by alepercq     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/09 16:20:30 by alepercq    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/31 15:21:25 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,8 +20,8 @@
 
 # define T_WHITE	"\033[0m"
 # define T_BLACK	"\033[30m"
-# define T_RED		"\033[31m"
-# define T_GREEN	"\033[32m"
+# define T_RED		"\033[38;5;265m"
+# define T_GREEN	"\033[38;5;326m"
 # define T_YELLOW	"\033[33m"
 # define T_BLUE		"\033[34m"
 # define T_PURPLE	"\033[35m"
