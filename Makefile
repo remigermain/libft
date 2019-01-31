@@ -6,7 +6,7 @@
 #    By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
-#    Updated: 2019/01/31 19:37:17 by rgermain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/01/31 19:47:20 by rgermain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -162,6 +162,6 @@ re: fclean all
 
 norme : print_norme
 	@echo $(SPACE)"waiting ..."
-	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&${ESC}[0m," | sed "s,Error,${ESC}[31m&${ESC}[0m,"
+	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&${ESC}[0m," | sed "s/Error/  Error/g" | sed "s,Error,${ESC}[31m&${ESC}[0m,"
 
 .PHONY: default all clean fclean re norme print_libft print_norme
