@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:23:33 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/31 19:38:31 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,9 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <string.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <fcntl.h>
 # include "memory.h"
 # include "divers.h"
 # include "is_methode.h"
