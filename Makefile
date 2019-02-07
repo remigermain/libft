@@ -6,7 +6,7 @@
 #    By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
-#    Updated: 2019/01/31 19:47:20 by rgermain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/02/07 10:56:29 by rgermain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -43,7 +43,7 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 CSRC_divers = $(addprefix $(D_DIVERS),$(SRC_divers))
 D_DIVERS = divers/
 SRC_divers = 		ft_countwchar.c ft_match.c ft_sort_integer_table.c ft_swap.c get_next_line.c \
-					ft_createtab.c
+					ft_createtab.c ft_freetabi.c
 
 
 CSRC_ISMETHODE = $(addprefix $(D_IS_METHODE),$(SRC_ISMETHODE))  
@@ -102,38 +102,26 @@ SRC_STRINGS =		ft_atoi.c ft_str_is_uppercase.c ft_strcpychr.c ft_strlcat.c ft_st
 					ft_str_is_printable.c ft_strcpy.c ft_strjoin.c ft_strncat.c ft_strrchr.c
 
 COUNT = "1"
-SPACE = "            "
+SPACE = "                  "
 .DEFAULT_GOAL := all
 ESC = $(shell printf '\033')
 
-print_libft : 
-	@printf	"\n\033[34m"
-	@echo "	     _       _________ ______   _______  _________"
-	@echo "	    ( \      \__   __/(  ___ \ (  ____ \ \__   __/"
-	@echo "	    | (         ) (   | (   ) )| (    \/    ) (   "
-	@echo "	    | |         | |   | (__/ / | (__        | |   "
-	@echo "	    | |         | |   |  __ (  |  __)       | |   "
-	@echo "	    | |         | |   | (  \ \ | (          | |  " 
-	@echo "	    | (____/\___) (___| )___) )| )          | | "  
-	@echo "	    (_______/\_______/|/ \___/ |/           )_("
-	@echo "\033[0m\n\n"
+print_name : 
+	@printf "\n----------------------------------------------------------------------\n\n\033[37m"
+	@printf " \033[47m  \033[0m\033[37m                      [    LIBFT     ]               "
+	@printf "         \033[0m  \033[47m  \033[0m\n"
+	@printf "\n----------------------------------------------------------------------\n\n"
 
 print_norme : 
-	@printf	"\n\033[34m"
-	@echo $(SPACE)" _        _______  _______  _______ "
-	@echo $(SPACE)"( (    /|(  ___  )(  ____ )(       )"
-	@echo $(SPACE)"|  \  ( || (   ) || (    )|| () () |"
-	@echo $(SPACE)"|   \ | || |   | || (____)|| || || |"
-	@echo $(SPACE)"| (\ \) || |   | ||     __)| |(_)| |"
-	@echo $(SPACE)"| | \   || |   | || (\ (   | |   | |"
-	@echo $(SPACE)"| )  \  || (___) || ) \ \__| )   ( |"
-	@echo $(SPACE)"|/    )_)(_______)|/   \__/|/     \|\n"
-	@echo "\033[0m\n"
+	@printf "\n----------------------------------------------------------------------\n\n\033[37m"
+	@printf " \033[47m  \033[0m\033[37m                   [    NORME LIBFT     ]            "
+	@printf "         \033[0m  \033[47m  \033[0m\n"
+	@printf "\n----------------------------------------------------------------------\n\n"
 
 
-all: print_libft $(NAME)
+all: print_name $(NAME)
 	@if [ $(COUNT) = "1" ]; then \
-		echo $(SPACE)"\033[34mNothing are changed !\033[0m"; \
+		echo $(SPACE)"\033[1;34m    Nothing are changed !\033[0m"; \
 	fi
 
 $(NAME): $(COBJ)
@@ -150,7 +138,7 @@ $(DOBJ)%.o : $(DSRC)%.c $(CHEADER)
 	@gcc $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo $(SPACE)"compilation de la fonction \033[38;5;326m"$< "\033[0m\033[K\033[1A"
 
-clean: print_libft
+clean: print_name
 	@rm -rf $(DOBJ)
 	@echo $(SPACE)"Suppresion des \033[38;5;265mobjects\033[0m"
 
@@ -160,8 +148,10 @@ fclean: clean
 
 re: fclean all
 
-norme : print_norme
-	@echo $(SPACE)"waiting ..."
+norme : print_name print_norme
+	@echo $(SPACE)"waiting \033[5m ...\033[0m"
+	@sleep 2
+	@echo "\033[0m\033[K\033[1A"$(SPACE) $(SPACE) $(SPACE)
 	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&${ESC}[0m," | sed "s/Error/  Error/g" | sed "s,Error,${ESC}[31m&${ESC}[0m,"
 
 .PHONY: default all clean fclean re norme print_libft print_norme
