@@ -6,12 +6,13 @@
 #    By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
-#    Updated: 2019/02/07 10:56:29 by rgermain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/02/07 12:58:50 by rgermain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 NAME = libft.a
+TYPE = " de la library"
 
 CFLAGS = -Wall -Werror -Wextra
 
@@ -126,7 +127,7 @@ all: print_name $(NAME)
 
 $(NAME): $(COBJ)
 	@echo $(SPACE)"\033[JCompilation des Objects \033[38;5;326mterminer\033[0m"
-	@echo $(SPACE)"Compilation de la library \033[34m" $(NAME) "\033[0m"
+	@echo $(SPACE)"Compilation "$(TYPE)" \033[34m" $(NAME) "\033[0m"
 	@ar ru $(NAME) $?
 	@echo $(SPACE)"Optimisation des index avec ranlib"
 	@ranlib $(NAME)
@@ -144,11 +145,11 @@ clean: print_name
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo $(SPACE)"Suppresion de la library \033[38;5;265m"$(NAME) "\033[0m"
+	@echo $(SPACE)"Suppresion "$(TYPE)" \033[38;5;265m"$(NAME) "\033[0m"
 
 re: fclean all
 
-norme : print_name print_norme
+norme : print_norme
 	@echo $(SPACE)"waiting \033[5m ...\033[0m"
 	@sleep 2
 	@echo "\033[0m\033[K\033[1A"$(SPACE) $(SPACE) $(SPACE)
