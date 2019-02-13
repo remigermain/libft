@@ -6,12 +6,23 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 15:24:31 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/07 15:46:55 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/02/13 09:00:58 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void	conv_boucle_char(t_pf *lst)
+{
+	char	c;
+	char	tmp[lst->field + 1];
+
+	c = (char)va_arg(lst->va_copy, int);
+	ft_memset(tmp, c, FIELD);
+	tmp[FIELD] = 0;
+	put_buff(lst, tmp, FIELD - 1, 0);
+}
 
 static void	conv_error(t_pf *lst)
 {
@@ -86,8 +97,10 @@ void		conv_other(t_pf *lst)
 	char	*other;
 
 	other = va_arg(lst->va_copy, char*);
-	if (ft_strncmp(other, "help", 4) == 0)
+	if (!ft_strcmp(other, "help"))
 		conv_help();
-	else if (ft_strncmp(other, "error", 5) == 0)
+	else if (!ft_strcmp(other, "error"))
 		conv_error(lst);
+	else if (!ft_strcmp(other, "char"))
+		conv_boucle_char(lst);
 }
