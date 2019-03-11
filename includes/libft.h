@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/11 12:13:32 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/11 13:18:33 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,5 +33,4 @@
 # include "strings.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
-# include "lib_mlx.h"
 #endif

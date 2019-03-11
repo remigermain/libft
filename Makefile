@@ -6,7 +6,7 @@
 #    By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
-#    Updated: 2019/03/11 12:28:45 by rgermain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/03/11 13:18:19 by rgermain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -19,19 +19,19 @@ CFLAGS = -Wall -Werror -Wextra
 INCLUDE = -Iincludes
 
 HEADER = libft.h color.h ft_printf.h is_methode.h memory.h strings.h \
-		divers.h get_next_line.h lib_lst.h math.h print.h lib_mlx.h
+		divers.h get_next_line.h lib_lst.h math.h print.h
 
 OBJ = $(SRC:.c=.o)
 
 DSRC = srcs/
 DOBJ = obj/
 ALL_D = $(D_DIVERS) $(D_IS_METHODE) $(D_LST) $(D_MATH) $(D_MEMORY) \
-		$(D_PUT) $(D_STDIO) $(D_STRING) $(addprefix $(D_STDIO),$(D_FT_PRINTF)) $(D_MLX)
+		$(D_PUT) $(D_STDIO) $(D_STRING) $(addprefix $(D_STDIO),$(D_FT_PRINTF))
 
 DHEADER = includes/
 
 SRC =  $(CSRC_divers) $(CSRC_ISMETHODE) $(CSRC_lst) $(CSRC_MATH) \
-	  $(CSRC_MEMORY) $(CSRC_PUT) $(CSRC_string) $(CSRC_STDIO) $(CSRC_MLX)
+	  $(CSRC_MEMORY) $(CSRC_PUT) $(CSRC_string) $(CSRC_STDIO)
 
 CSRC = $(addprefix $(DSRC),$(SRC))
 COBJ = $(addprefix $(DOBJ),$(OBJ))
@@ -71,11 +71,6 @@ CSRC_MEMORY = $(addprefix $(D_MEMORY),$(SRC_MEMORY))
 D_MEMORY = memory/
 SRC_MEMORY = 		ft_bzero.c ft_memalloc.c ft_memccpy.c  ft_memchr.c ft_memcmp.c \
 					ft_memcpy.c ft_memdel.c ft_memmove.c ft_memset.c
-
-
-CSRC_MLX = $(addprefix $(D_MLX),$(SRC_MLX))
-D_MLX = mlx/
-SRC_MLX = 		mlx_drawline.c mlx_get.c
 
 
 CSRC_PUT = $(addprefix $(D_PUT),$(SRC_PUT))
