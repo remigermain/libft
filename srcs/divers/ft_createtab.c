@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 11:44:53 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 20:04:35 by alepercq    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/11 10:52:45 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,6 @@
 char	**ft_createtab(int nb, char c)
 {
 	int		a;
-	int		b;
 	char	**tab;
 
 	a = 0;
@@ -24,13 +23,13 @@ char	**ft_createtab(int nb, char c)
 		return (NULL);
 	while (a < nb)
 	{
-		b = 0;
-		if (!(tab[a] = malloc(sizeof(char*) * (nb + 1))))
+		if (!(tab[a] = (char*)ft_memalloc(sizeof(char*) * (nb + 1))))
+		{
+			ft_memdeltab(tab);
 			return (NULL);
-		while (b < nb)
-			tab[a][b++] = c;
-		tab[a][b] = '\0';
-		a++;
+		}
+		ft_memset(tab[a], c, nb);
+		tab[a++][nb] = '\0';
 	}
 	tab[a] = NULL;
 	return (tab);

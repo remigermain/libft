@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 14:40:18 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 15:09:29 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/11 11:01:17 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,11 +15,6 @@
 
 void	ft_strdel(char **as)
 {
-	if (!as)
-		return ;
-	if (*as)
-	{
-		free(*as);
-		*as = NULL;
-	}
+	if (as)
+		ft_memdel((void**)as);
 }

@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:32 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:21:49 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/11 11:04:35 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,11 +61,9 @@ static void	roundup_double(t_pf *lst, ULONG *nb, int i, int max)
 static void	assign_double(t_pf *lst, ULONG *nb, size_t i, int j)
 {
 	int		preci;
-	size_t	verif;
 
 	preci = PRECI + 1;
 	nb[i++] = lst->ul_nb;
-	verif = 0;
 	j = (lst->ful_nb != 0 ? ulen_base(lst->ful_nb, BASE) : 0);
 	i += j;
 	while (j > 0)

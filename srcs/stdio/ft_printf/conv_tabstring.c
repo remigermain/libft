@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:39:28 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 16:32:36 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/11 10:56:29 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,12 +100,10 @@ static void	pf_doublestring(t_pf *lst, char **tab, int len, int larg)
 int			conv_tabstring(t_pf *lst)
 {
 	char		**tab;
-	UCHAR		c;
 
 	tab = va_arg(lst->va_copy, char**);
-	c = '\n';
 	if (tab == NULL)
-		put_buff(lst, "tab (null)", 1, 0);
+		put_buff(lst, "(tab null)", 10, 0);
 	else
 	{
 		if (POINT == 1)
@@ -116,7 +114,7 @@ int			conv_tabstring(t_pf *lst)
 			{
 				put_buff(lst, (UCHAR*)*tab, ft_strlen(*tab), 0);
 				if (*tab++ != NULL)
-					put_buff(lst, &c, 1, 0);
+					put_buff(lst, "\n", 1, 0);
 			}
 		}
 	}
