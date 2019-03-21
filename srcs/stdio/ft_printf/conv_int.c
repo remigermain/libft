@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:24:00 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:06:14 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/21 02:45:20 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,23 +17,23 @@ static void	lst_putnb_unb(t_pf *lst)
 {
 	if (LENGHT == 1 && CONV != 'O' && CONV != 'U'
 			&& CONV != 'D')
-		lst->ul_nb = (unsigned short)va_arg(lst->va_copy, ULONG);
+		lst->flag.ul_nb = (unsigned short)va_arg(lst->va_copy, ulong);
 	else if (LENGHT == 2 && CONV != 'O' && CONV != 'U'
 			&& CONV != 'D')
-		lst->ul_nb = (unsigned char)va_arg(lst->va_copy, ULONG);
+		lst->flag.ul_nb = (unsigned char)va_arg(lst->va_copy, ulong);
 	else if (LENGHT == 10)
-		lst->ul_nb = va_arg(lst->va_copy, long);
+		lst->flag.ul_nb = va_arg(lst->va_copy, long);
 	else if (LENGHT == 20)
-		lst->ul_nb = va_arg(lst->va_copy, ULONG);
+		lst->flag.ul_nb = va_arg(lst->va_copy, ulong);
 	else if (LENGHT == 100)
-		lst->ul_nb = va_arg(lst->va_copy, intmax_t);
+		lst->flag.ul_nb = va_arg(lst->va_copy, intmax_t);
 	else if (LENGHT == 1000)
-		lst->ul_nb = va_arg(lst->va_copy, size_t);
+		lst->flag.ul_nb = va_arg(lst->va_copy, size_t);
 	else if (CONV == 'o' || CONV == 'x' || CONV == 'X' ||
 			CONV == 'u' || CONV == 'X')
-		lst->ul_nb = va_arg(lst->va_copy, unsigned int);
+		lst->flag.ul_nb = va_arg(lst->va_copy, unsigned int);
 	else
-		lst->ul_nb = va_arg(lst->va_copy, ULONG);
+		lst->flag.ul_nb = va_arg(lst->va_copy, ulong);
 	if (SIGN == '+' && (CONV == 'd' || CONV == 'D' ||
 				CONV == 'I' || CONV == 'i'))
 		PSIGN = "+";
@@ -63,7 +63,7 @@ static void	lst_putnb_snb(t_pf *lst)
 	if (SIGN == '+' && nb_tmp >= 0 && (CONV == 'd' ||
 				CONV == 'D' || CONV == 'I' || CONV == 'i'))
 		PSIGN = "+";
-	lst->ul_nb = (nb_tmp < 0 ? -nb_tmp : nb_tmp);
+	lst->flag.ul_nb = (nb_tmp < 0 ? -nb_tmp : nb_tmp);
 }
 
 void		lst_putint(t_pf *lst)
@@ -74,15 +74,15 @@ void		lst_putint(t_pf *lst)
 	else
 		lst_putnb_unb(lst);
 	if (CONV == 'p' || ((CONV == 'x' || CONV == 'X')
-				&& HASH == 1 && lst->ul_nb != 0))
+				&& HASH == 1 && lst->flag.ul_nb != 0))
 		PSIGN = (MAJ == 1 ? "0X" : "0x");
 }
 
 static void	ft_spacecalc(t_pf *lst, int len)
 {
 	if ((HASH == 1 && (CONV == 'o' || CONV == 'O')) &&
-		!((lst->ul_nb == 0 && POINT == 1 && PRECI > 0) ||
-			(POINT == 0 && lst->ul_nb == 0)))
+		!((lst->flag.ul_nb == 0 && POINT == 1 && PRECI > 0) ||
+			(POINT == 0 && lst->flag.ul_nb == 0)))
 	{
 		HASH = 1;
 		if ((POINT == 1 && PRECI > len))
@@ -111,8 +111,8 @@ void		conv_int(t_pf *lst)
 	int max;
 
 	lst_putint(lst);
-	len = ulen_base(lst->ul_nb, BASE);
-	if (lst->ul_nb == 0 && POINT == 1 && PRECI == 0)
+	len = ulen_base(lst->flag.ul_nb, BASE);
+	if (lst->flag.ul_nb == 0 && POINT == 1 && PRECI == 0)
 		len = 0;
 	ft_spacecalc(lst, len);
 	max = MAX(len, PRECI) + ft_strlen(PSIGN);
@@ -123,7 +123,7 @@ void		conv_int(t_pf *lst)
 		put_buff(lst, PSIGN, ft_strlen(PSIGN), 0);
 	put_prefix(lst, 0, HASH, 1);
 	put_prefix(lst, len, PRECI, 1);
-	if (!(POINT == 1 && PRECI == 0 && lst->ul_nb == 0))
-		put_itoa(lst, lst->ul_nb);
+	if (!(POINT == 1 && PRECI == 0 && lst->flag.ul_nb == 0))
+		put_itoa(lst, lst->flag.ul_nb);
 	put_prefix(lst, max, -FIELD, 0);
 }

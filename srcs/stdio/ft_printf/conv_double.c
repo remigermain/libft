@@ -6,14 +6,14 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:32 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/11 11:04:35 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/21 03:03:41 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	remove_zero(t_pf *lst, ULONG *nb, int i, size_t index)
+static void	remove_zero(t_pf *lst, ulong *nb, int i, size_t index)
 {
 	if ((CONV == 'g' || CONV == 'G') && (index == 1 || index == 3))
 	{
@@ -40,7 +40,7 @@ static void	remove_zero(t_pf *lst, ULONG *nb, int i, size_t index)
 	}
 }
 
-static void	roundup_double(t_pf *lst, ULONG *nb, int i, int max)
+static void	roundup_double(t_pf *lst, ulong *nb, int i, int max)
 {
 	remove_zero(lst, nb, 1, 3);
 	i = PRECI + 1;
@@ -58,24 +58,24 @@ static void	roundup_double(t_pf *lst, ULONG *nb, int i, int max)
 	remove_zero(lst, nb, 1, 2);
 }
 
-static void	assign_double(t_pf *lst, ULONG *nb, size_t i, int j)
+static void	assign_double(t_pf *lst, ulong *nb, size_t i, int j)
 {
 	int		preci;
 
 	preci = PRECI + 1;
-	nb[i++] = lst->ul_nb;
-	j = (lst->ful_nb != 0 ? ulen_base(lst->ful_nb, BASE) : 0);
+	nb[i++] = lst->flag.ul_nb;
+	j = (lst->flag.ful_nb != 0 ? ulen_base(lst->flag.ful_nb, BASE) : 0);
 	i += j;
 	while (j > 0)
 	{
-		nb[j--] = lst->ful_nb % BASE;
-		lst->ful_nb /= BASE;
+		nb[j--] = lst->flag.ful_nb % BASE;
+		lst->flag.ful_nb /= BASE;
 	}
 	while (preci > 0)
 	{
-		lst->fl_nb *= BASE;
-		nb[i++] = (int)lst->fl_nb;
-		lst->fl_nb -= (int)lst->fl_nb;
+		lst->flag.fl_nb *= BASE;
+		nb[i++] = (int)lst->flag.fl_nb;
+		lst->flag.fl_nb -= (int)lst->flag.fl_nb;
 		preci--;
 	}
 	roundup_double(lst, nb, 0, 0);
@@ -91,7 +91,7 @@ static int	max_calc(t_pf *lst, int max)
 		else if (FIELD < 0)
 			FIELD++;
 	}
-	max = ulen_base(lst->ul_nb, BASE) + PRECI;
+	max = ulen_base(lst->flag.ul_nb, BASE) + PRECI;
 	max += ft_strlen(PSIGN);
 	if (!((CONV == 'g' || CONV == 'G') && PRECI == 0))
 		max += ((POINT == 0 || PRECI > 0) ? 1 : 0);
@@ -101,14 +101,14 @@ static int	max_calc(t_pf *lst, int max)
 	return (max);
 }
 
-void		conv_double(t_pf *lst, ULONG *nb, int i)
+void		conv_double(t_pf *lst, ulong *nb, int i)
 {
 	unsigned char	*new;
 	int				max;
 
 	max = 0;
 	if ((CONV == 'g' || CONV == 'G') && POINT == 0)
-		lst->preci -= ulen_base(lst->ul_nb, BASE);
+		lst->flag.preci -= ulen_base(lst->flag.ul_nb, BASE);
 	assign_double(lst, nb, 0, 0);
 	max = max_calc(lst, 0);
 	if (ZERO == 1)

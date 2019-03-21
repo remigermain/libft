@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:26:12 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 16:45:13 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/21 03:03:02 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,6 +51,7 @@ static void	lst_base(t_pf *lst)
 	if (!ft_islowercase(CONV))
 		MAJ = 1;
 	lst_undefined(lst);
+	lst->flag.psign = "";
 }
 
 static int	lst_putflag_conv(t_pf *lst, char *str, int count)
@@ -102,7 +103,7 @@ int			lst_putoption(t_pf *lst, char *str, int count)
 	int		neg;
 
 	neg = 1;
-	lst_zero(lst);
+	ft_bzero(&(lst->flag), sizeof(t_pf_flag));
 	while (str[count] != '\0' && CONV == 0)
 	{
 		if (str[count] == '.')

@@ -6,7 +6,7 @@
 #    By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
-#    Updated: 2019/03/11 13:18:19 by rgermain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/03/21 03:25:54 by rgermain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -14,12 +14,12 @@
 NAME = libft.a
 TYPE = " de la library"
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -o3
 
 INCLUDE = -Iincludes
 
 HEADER = libft.h color.h ft_printf.h is_methode.h memory.h strings.h \
-		divers.h get_next_line.h lib_lst.h math.h print.h
+		divers.h get_next_line.h lib_lst.h math.h print.h limit.h
 
 OBJ = $(SRC:.c=.o)
 
@@ -87,7 +87,7 @@ SRC_STDIO = $(CSRC_PRINTF)
 CSRC_PRINTF = $(addprefix $(D_FT_PRINTF),$(SRC_PRINTF))
 D_FT_PRINTF = ft_printf/
 SRC_PRINTF =		conv_char.c conv_int.c conv_string.c ft_printf.c lst_putdouble.c lst_putoption.c \
-					put_string.c conv_double.c conv_other.c conv_tabstring.c lst_init.c put_color.c utils.c
+					put_string.c conv_double.c conv_other.c conv_tabstring.c put_color.c utils.c
 
 
 

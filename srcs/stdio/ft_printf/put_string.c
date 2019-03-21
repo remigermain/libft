@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:39:10 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/11 11:02:44 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/21 02:36:05 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,11 +15,11 @@
 
 void	convert_buff(t_pf *lst, void *tmp, size_t len)
 {
-	UCHAR	*new;
+	uchar	*new;
 	size_t	len_malloc;
 
 	len_malloc = lst->count + lst->buff_count + len + 1;
-	if ((new = (UCHAR*)ft_memalloc(len_malloc)) == NULL)
+	if ((new = (uchar*)ft_memalloc(len_malloc)) == NULL)
 		ERROR(lst, "comvert_buff", 1);
 	new[lst->count + lst->buff_count + len + 1] = '\0';
 	ft_memcpy(new, lst->str, lst->count);
@@ -48,9 +48,9 @@ void	put_buff(t_pf *lst, void *tmp, size_t len, size_t index)
 		free(tmp);
 }
 
-void	put_itoa(t_pf *lst, ULONG n)
+void	put_itoa(t_pf *lst, ulong n)
 {
-	UCHAR		tmp[27];
+	uchar		tmp[27];
 	int			len;
 	int			mlen;
 
@@ -75,7 +75,7 @@ void	put_itoa(t_pf *lst, ULONG n)
 void	put_prefix(t_pf *lst, int len, int nb, int point)
 {
 	size_t	llen;
-	UCHAR	tmp[nb - len];
+	uchar	tmp[nb - len];
 
 	llen = (nb - len);
 	if (len >= nb)

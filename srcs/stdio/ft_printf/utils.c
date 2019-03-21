@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:55 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:22:09 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/21 02:43:31 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,12 +31,12 @@ void	ftprintf_error(t_pf *lst, char *str, size_t index)
 	exit(0);
 }
 
-int		ulen_base(ULONG nb, size_t base)
+int		ulen_base(ulong nb, size_t base)
 {
 	return (nb >= base ? ulen_base(nb / base, base) + 1 : 1);
 }
 
-size_t	len_pstrn(UCHAR *str, size_t len, size_t index)
+size_t	len_pstrn(uchar *str, size_t len, size_t index)
 {
 	size_t i;
 	size_t a;
@@ -63,4 +63,12 @@ void	conv_nlen(t_pf *lst)
 	tmp = va_arg(lst->va_copy, int*);
 	if (tmp != NULL)
 		*tmp = (lst->count + lst->buff_count);
+}
+
+void	lst_putdollar(t_pf *lst, int len)
+{
+	va_end(lst->va_copy);
+	va_copy(lst->va_copy, lst->va_lst);
+	while (--len > 0)
+		va_arg(lst->va_copy, int);
 }

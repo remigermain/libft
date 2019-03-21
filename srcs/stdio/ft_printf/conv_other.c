@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 15:24:31 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/02/13 09:00:58 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/21 02:48:43 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,7 @@
 static void	conv_boucle_char(t_pf *lst)
 {
 	char	c;
-	char	tmp[lst->field + 1];
+	char	tmp[lst->flag.field + 1];
 
 	c = (char)va_arg(lst->va_copy, int);
 	ft_memset(tmp, c, FIELD);
