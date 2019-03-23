@@ -6,22 +6,22 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:13 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 02:34:20 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:32:40 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static uchar	*comv_pstr(t_pf *lst, uchar *str, size_t len)
+static t_uchar	*comv_pstr(t_pf *lst, t_uchar *str, size_t len)
 {
-	uchar	*new;
+	t_uchar	*new;
 	size_t	i;
 	size_t	j;
 
 	i = 0;
 	j = 0;
-	if (!(new = (uchar*)malloc(sizeof(uchar) * len + 1)))
+	if (!(new = (t_uchar*)malloc(sizeof(t_uchar) * len + 1)))
 		ERROR(lst, "pf_putpstr", 1);
 	while (str[i] != '\0' && i < len)
 	{
@@ -39,22 +39,22 @@ static uchar	*comv_pstr(t_pf *lst, uchar *str, size_t len)
 	return (new);
 }
 
-static uchar	*comv_wstr(t_pf *lst, wchar_t *wstr, size_t len)
+static t_uchar	*comv_wstr(t_pf *lst, wchar_t *wstr, size_t len)
 {
-	uchar	*str;
+	t_uchar	*str;
 	size_t	i;
 	size_t	count;
 
 	i = 0;
 	count = 0;
-	if (!(str = (uchar*)malloc(sizeof(uchar) * nlen_wchar(wstr, len))))
+	if (!(str = (t_uchar*)malloc(sizeof(t_uchar) * nlen_wchar(wstr, len))))
 		ERROR(lst, "comv_wstr", 1);
 	while (wstr[count] != '\0' && count < len && i < len)
 		convert_wchar(&str, wstr[count++], &i);
 	return (str);
 }
 
-void			pf_string(t_pf *lst, uchar *str, wchar_t *wstr, int index)
+void			pf_string(t_pf *lst, t_uchar *str, wchar_t *wstr, int index)
 {
 	size_t	max;
 
@@ -76,7 +76,7 @@ void			pf_string(t_pf *lst, uchar *str, wchar_t *wstr, int index)
 
 void			conv_string(t_pf *lst)
 {
-	uchar	*ustr;
+	t_uchar	*ustr;
 	wchar_t	*wstr;
 
 	if ((LENGHT >= 10 && LENGHT <= 20) || CONV == 'S')
@@ -93,7 +93,7 @@ void			conv_string(t_pf *lst)
 			ustr = ft_strudup(strerror(errno));
 		else
 		{
-			ustr = (uchar*)va_arg(lst->va_copy, char*);
+			ustr = (t_uchar*)va_arg(lst->va_copy, char*);
 			if (ustr == NULL)
 				ustr = ft_strudup("(null)");
 			else

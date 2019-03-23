@@ -6,31 +6,30 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/02 11:44:53 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/11 10:52:45 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 20:41:50 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_createtab(int nb, char c)
+char	**ft_createtab(int len, char c)
 {
-	int		a;
+	size_t	i;
 	char	**tab;
 
-	a = 0;
-	if (!(tab = (char**)malloc(sizeof(char*) * (nb + 1))))
+	i = 0;
+	if (!(tab = (char**)ft_memalloc(sizeof(char*) * (len + 1))))
 		return (NULL);
-	while (a < nb)
+	while (i < len)
 	{
-		if (!(tab[a] = (char*)ft_memalloc(sizeof(char*) * (nb + 1))))
+		if (!(tab[i] = (char*)ft_memalloc(len + 1)))
 		{
 			ft_memdeltab(tab);
 			return (NULL);
 		}
-		ft_memset(tab[a], c, nb);
-		tab[a++][nb] = '\0';
+		ft_memset(tab[i++], c, len);
 	}
-	tab[a] = NULL;
+	tab[i] = NULL;
 	return (tab);
 }

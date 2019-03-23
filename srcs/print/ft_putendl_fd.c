@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 14:13:25 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 15:08:57 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 20:18:29 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,12 +15,9 @@
 
 void	ft_putendl_fd(char const *s, int fd)
 {
-	int count;
-
-	count = 0;
-	if (!s)
-		return ;
-	while (s[count] != '\0')
-		ft_putchar_fd(s[count++], fd);
-	ft_putchar_fd('\n', fd);
+	if (s)
+	{
+		write(fd, s, ft_strlen(s));
+		ft_putchar_fd('\n', fd);
+	}
 }

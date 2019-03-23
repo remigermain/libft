@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/01 17:38:17 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/31 13:43:17 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 20:02:54 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,11 +15,5 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	int					count;
-	unsigned	char	*dest;
-
-	count = 0;
-	dest = s;
-	while (n-- > 0)
-		dest[count++] = 0;
+	ft_memset(s, 0, n);
 }

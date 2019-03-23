@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/21 02:28:17 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 03:28:20 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:24:41 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,9 +25,10 @@
 # define CHAR_MAX 127
 # define CHAR_MIN -128
 # define UCHAR_MAX 255
-# define bool char
-# define mint char
-# define muint unsigned char
-# define ulong unsigned long
-# define uchar unsigned char
+
+typedef char			t_bool;
+typedef unsigned char	t_muint;
+typedef char			t_mint;
+typedef unsigned long	t_ulong;
+typedef unsigned char	t_uchar;
 #endif

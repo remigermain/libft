@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:55 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 02:43:31 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:34:49 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,12 +31,12 @@ void	ftprintf_error(t_pf *lst, char *str, size_t index)
 	exit(0);
 }
 
-int		ulen_base(ulong nb, size_t base)
+int		ulen_base(t_ulong nb, size_t base)
 {
 	return (nb >= base ? ulen_base(nb / base, base) + 1 : 1);
 }
 
-size_t	len_pstrn(uchar *str, size_t len, size_t index)
+size_t	len_pstrn(t_uchar *str, size_t len, size_t index)
 {
 	size_t i;
 	size_t a;

@@ -6,13 +6,12 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 14:07:14 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/12/19 16:33:30 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 20:06:04 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
 
 int	ft_putpchar_fd(char c, int fd)
 {

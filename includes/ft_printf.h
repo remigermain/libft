@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:40:59 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 02:44:32 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:31:08 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,21 +39,21 @@
 
 typedef struct	s_pf_flag
 {
-	ulong			ul_nb;
-	ulong			ful_nb;
+	t_ulong			ul_nb;
+	t_ulong			ful_nb;
 	long double		fl_nb;
 	int				exponent;
-	mint			hash;
-	mint			space;
-	mint			zero;
-	mint			sign;
-	mint			local;
+	t_mint			hash;
+	t_mint			space;
+	t_mint			zero;
+	t_mint			sign;
+	t_mint			local;
 	int				field;
-	mint			point;
+	t_mint			point;
 	int				preci;
-	mint			maj;
+	t_mint			maj;
 	char			*psign;
-	muint			base;
+	t_muint			base;
 	size_t			lenght;
 	char			conv;
 }				t_pf_flag;
@@ -63,9 +63,9 @@ typedef struct	s_printf
 	va_list			va_lst;
 	va_list			va_copy;
 	int				buff_count;
-	uchar			buff[BUFF_PRINTF];
+	t_uchar			buff[BUFF_PRINTF];
 	int				count;
-	uchar			*str;
+	t_uchar			*str;
 	t_pf_flag		flag;
 }				t_pf;
 
@@ -75,7 +75,7 @@ typedef struct	s_printf
 */
 int				ft_printf(const char *str, ...);
 int				ft_dprintf(int fd, const char *str, ...);
-int				ft_sprintf(uchar **dest, const char *format, ...);
+int				ft_sprintf(t_uchar **dest, const char *format, ...);
 
 /*
 ** fonctions des differentes convertion
@@ -84,7 +84,7 @@ int				ft_sprintf(uchar **dest, const char *format, ...);
 void			conv_char(t_pf *lst);
 void			conv_int(t_pf *lst);
 void			conv_string(t_pf *lst);
-void			conv_double(t_pf *lst, ulong *nb, int i);
+void			conv_double(t_pf *lst, t_ulong *nb, int i);
 void			conv_other(t_pf *lst);
 int				conv_tabstring(t_pf *lst);
 int				conv_color(t_pf *lst, char *str);
@@ -104,18 +104,18 @@ void			lst_putdouble(t_pf *lst);
 **	utils.c
 */
 void			ftprintf_error(t_pf *lst, char *str, size_t index);
-int				ulen_base(ulong nb, size_t base);
-size_t			len_pstrn(uchar *str, size_t len, size_t index);
+int				ulen_base(t_ulong nb, size_t base);
+size_t			len_pstrn(t_uchar *str, size_t len, size_t index);
 
 /*
 **	fonctions qui put les signes( - , + , 0x )
 **			 ajoute les esapces et zero des precisions/field
-**				join le str entre eux && ulong itoa avec local
+**				join le str entre eux && t_ulong itoa avec local
 **	utils_put.c
 */
 void			convert_buff(t_pf *lst, void *tmp, size_t len);
 void			put_buff(t_pf *lst, void *tmp, size_t len, size_t index);
-void			put_itoa(t_pf *lst, ulong n);
+void			put_itoa(t_pf *lst, t_ulong n);
 void			put_prefix(t_pf *lst, int len, int nb, int point);
 void			put_sign(t_pf *lst);
 

@@ -6,26 +6,26 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:37:51 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 02:33:07 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:31:56 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static uchar	*pf_convwchar(t_pf *lst, wchar_t wc)
+static t_uchar	*pf_convwchar(t_pf *lst, wchar_t wc)
 {
-	uchar	*new;
+	t_uchar	*new;
 	size_t	a;
 
-	if (!(new = (uchar*)malloc(len_wchar_single(wc) + 1)))
+	if (!(new = (t_uchar*)malloc(len_wchar_single(wc) + 1)))
 		ERROR(lst, "pf_convwchar", 1);
 	a = 0;
 	convert_wchar(&new, wc, &a);
 	return (new);
 }
 
-static void		pf_putchar(t_pf *lst, uchar c, uchar *wc, int index)
+static void		pf_putchar(t_pf *lst, t_uchar c, t_uchar *wc, int index)
 {
 	size_t max;
 
@@ -40,7 +40,7 @@ static void		pf_putchar(t_pf *lst, uchar c, uchar *wc, int index)
 
 void			conv_char(t_pf *lst)
 {
-	uchar	*wc;
+	t_uchar	*wc;
 	size_t	verif;
 
 	if (CONV != 'c' && CONV != 'C')

@@ -6,14 +6,14 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:32 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 03:03:41 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:32:08 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	remove_zero(t_pf *lst, ulong *nb, int i, size_t index)
+static void	remove_zero(t_pf *lst, t_ulong *nb, int i, size_t index)
 {
 	if ((CONV == 'g' || CONV == 'G') && (index == 1 || index == 3))
 	{
@@ -40,7 +40,7 @@ static void	remove_zero(t_pf *lst, ulong *nb, int i, size_t index)
 	}
 }
 
-static void	roundup_double(t_pf *lst, ulong *nb, int i, int max)
+static void	roundup_double(t_pf *lst, t_ulong *nb, int i, int max)
 {
 	remove_zero(lst, nb, 1, 3);
 	i = PRECI + 1;
@@ -58,7 +58,7 @@ static void	roundup_double(t_pf *lst, ulong *nb, int i, int max)
 	remove_zero(lst, nb, 1, 2);
 }
 
-static void	assign_double(t_pf *lst, ulong *nb, size_t i, int j)
+static void	assign_double(t_pf *lst, t_ulong *nb, size_t i, int j)
 {
 	int		preci;
 
@@ -101,7 +101,7 @@ static int	max_calc(t_pf *lst, int max)
 	return (max);
 }
 
-void		conv_double(t_pf *lst, ulong *nb, int i)
+void		conv_double(t_pf *lst, t_ulong *nb, int i)
 {
 	unsigned char	*new;
 	int				max;

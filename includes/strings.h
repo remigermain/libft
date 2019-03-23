@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 02:33:32 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:31:28 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,8 +20,8 @@ char			*ft_strcat(char *s1, const char *s2);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strcpy(char *dst, const char *src);
 char			*ft_strdup(const char *s1);
-uchar			*ft_ustrdup(unsigned char *s1);
-uchar			*ft_strudup(char *s1);
+t_uchar			*ft_ustrdup(unsigned char *s1);
+t_uchar			*ft_strudup(char *s1);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strmap(char const *s, char (*f)(char));
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));

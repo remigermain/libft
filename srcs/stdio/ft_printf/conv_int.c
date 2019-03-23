@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:24:00 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 02:45:20 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:32:19 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,14 +17,14 @@ static void	lst_putnb_unb(t_pf *lst)
 {
 	if (LENGHT == 1 && CONV != 'O' && CONV != 'U'
 			&& CONV != 'D')
-		lst->flag.ul_nb = (unsigned short)va_arg(lst->va_copy, ulong);
+		lst->flag.ul_nb = (unsigned short)va_arg(lst->va_copy, t_ulong);
 	else if (LENGHT == 2 && CONV != 'O' && CONV != 'U'
 			&& CONV != 'D')
-		lst->flag.ul_nb = (unsigned char)va_arg(lst->va_copy, ulong);
+		lst->flag.ul_nb = (unsigned char)va_arg(lst->va_copy, t_ulong);
 	else if (LENGHT == 10)
 		lst->flag.ul_nb = va_arg(lst->va_copy, long);
 	else if (LENGHT == 20)
-		lst->flag.ul_nb = va_arg(lst->va_copy, ulong);
+		lst->flag.ul_nb = va_arg(lst->va_copy, t_ulong);
 	else if (LENGHT == 100)
 		lst->flag.ul_nb = va_arg(lst->va_copy, intmax_t);
 	else if (LENGHT == 1000)
@@ -33,7 +33,7 @@ static void	lst_putnb_unb(t_pf *lst)
 			CONV == 'u' || CONV == 'X')
 		lst->flag.ul_nb = va_arg(lst->va_copy, unsigned int);
 	else
-		lst->flag.ul_nb = va_arg(lst->va_copy, ulong);
+		lst->flag.ul_nb = va_arg(lst->va_copy, t_ulong);
 	if (SIGN == '+' && (CONV == 'd' || CONV == 'D' ||
 				CONV == 'I' || CONV == 'i'))
 		PSIGN = "+";

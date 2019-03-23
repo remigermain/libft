@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 13:38:11 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 17:28:22 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 20:39:51 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,28 +15,27 @@
 
 void	ft_putnbr_base(int n, int base)
 {
-	if (base > 16 || base < 2)
-		return ;
-	if (n == -2147483648 && base == 10)
-	{
-		ft_putchar_fd('-', 1);
-		ft_putchar_fd('2', 1);
-		n = 147483648;
-	}
+	char	str[12];
+	int		i;
+	t_mint	max;
+
+	ft_bzero(str, 12);
+	i = ft_intlen_base(n, base);
+	max = 0;
 	if (n < 0 && base == 10)
 	{
-		ft_putchar_fd('-', 1);
-		n = n * -1;
+		str[0] = '-';
+		max = 1;
 	}
-	else if (n < 0)
+	if (n < 0)
 		n = -n;
-	if (n > base)
-	{
-		ft_putnbr_base((n / base), base);
-		ft_putnbr_base((n % base), base);
-	}
-	else if (n < 10)
-		ft_putchar_fd((n + '0'), 1);
 	else
-		ft_putchar_fd(((n % 10) + 65), 1);
+		i -= 1;
+	while (i >= max)
+	{
+		str[i] = (n % base) + 48;
+		i--;
+		n /= base;
+	}
+	ft_putstr_fd(str, 1);
 }

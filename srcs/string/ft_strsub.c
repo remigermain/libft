@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 17:51:08 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/08 18:58:47 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 20:38:03 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,19 +15,10 @@
 
 char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	int		count;
-	char	*new;
+	char	*str;
 
-	count = 0;
-	if (!s)
+	if (!(str = (char *)ft_memalloc(len + 1)))
 		return (NULL);
-	if (!(new = (char *)malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	while (len-- > 0)
-	{
-		new[count] = s[count + start];
-		count++;
-	}
-	new[count] = '\0';
-	return (new);
+	ft_memcpy(str, s + start, len);
+	return (str);
 }

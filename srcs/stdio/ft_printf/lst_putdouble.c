@@ -6,33 +6,33 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 02:46:24 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:33:18 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	lst_putdouble_pos(t_pf *lst, long double nb, ulong coef)
+static void	lst_putdouble_pos(t_pf *lst, long double nb, t_ulong coef)
 {
-	while (((coef * BASE) < (ulong)nb) && nb != 0)
+	while (((coef * BASE) < (t_ulong)nb) && nb != 0)
 	{
 		coef *= BASE;
 		EXPONENT++;
 	}
-	lst->flag.ul_nb = (ulong)nb / coef;
+	lst->flag.ul_nb = (t_ulong)nb / coef;
 	lst->flag.ful_nb = nb - (lst->flag.ul_nb * coef);
-	lst->flag.fl_nb = nb - (ulong)nb;
+	lst->flag.fl_nb = nb - (t_ulong)nb;
 }
 
-static void	lst_putdouble_neg(t_pf *lst, long double nb, ulong coef)
+static void	lst_putdouble_neg(t_pf *lst, long double nb, t_ulong coef)
 {
-	while (((ulong)(coef * nb) <= 0) && nb != 0)
+	while (((t_ulong)(coef * nb) <= 0) && nb != 0)
 	{
 		coef *= BASE;
 		EXPONENT--;
 	}
-	lst->flag.ul_nb = (ulong)(nb * coef);
+	lst->flag.ul_nb = (t_ulong)(nb * coef);
 	lst->flag.fl_nb = (nb * coef) - lst->flag.ul_nb;
 }
 
@@ -50,10 +50,10 @@ static void	lst_putdouble_main(t_pf *lst, long double nb)
 	if ((CONV == 'f' || CONV == 'F') || (CONV == 'g' &&
 			PRECI >= ulen_base(nb, BASE)))
 	{
-		lst->flag.ul_nb = (ulong)nb;
-		lst->flag.fl_nb = nb - (ulong)nb;
+		lst->flag.ul_nb = (t_ulong)nb;
+		lst->flag.fl_nb = nb - (t_ulong)nb;
 	}
-	else if ((ulong)nb > 0)
+	else if ((t_ulong)nb > 0)
 		lst_putdouble_pos(lst, nb, 1);
 	else
 		lst_putdouble_neg(lst, nb, 1);
@@ -64,7 +64,7 @@ static void	lst_putdouble_main(t_pf *lst, long double nb)
 void		lst_putdouble(t_pf *lst)
 {
 	long double	nb;
-	ulong		*tab_nb;
+	t_ulong		*tab_nb;
 
 	if (LENGHT == 100000)
 		nb = va_arg(lst->va_copy, long double);
@@ -77,7 +77,7 @@ void		lst_putdouble(t_pf *lst)
 	else
 	{
 		lst_putdouble_main(lst, nb);
-		if (!(tab_nb = (ulong*)ft_memalloc(sizeof(ulong) *
+		if (!(tab_nb = (t_ulong*)ft_memalloc(sizeof(t_ulong) *
 						(PRECI + 2 + ulen_base(lst->flag.ul_nb, BASE)))))
 			ERROR(lst, "lst_putdouble", 1);
 		conv_double(lst, tab_nb, 0);

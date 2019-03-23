@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:39:28 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 02:36:33 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:34:07 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@ static void	pf_puttab_back(t_pf *lst, int len, int b)
 {
 	int			llen;
 	int			ret;
-	uchar		*str;
+	t_uchar		*str;
 
 	llen = ulen_base(len, 10) + PRECI;
 	llen -= (((len % 10) == 0) ? 1 : 0);
@@ -36,7 +36,7 @@ static void	pf_puttab_back(t_pf *lst, int len, int b)
 
 static void	pf_puttab_end(t_pf *lst, int larg, int max)
 {
-	uchar	*str;
+	t_uchar	*str;
 	int		ret;
 
 	if (PRECI == 1)
@@ -48,7 +48,7 @@ static void	pf_puttab_end(t_pf *lst, int larg, int max)
 
 static void	pf_puttab(t_pf *lst, char **tab, int len, int larg)
 {
-	uchar		*str;
+	t_uchar		*str;
 	int			llen;
 	int			a;
 	int			b;
@@ -76,7 +76,7 @@ static void	pf_puttab(t_pf *lst, char **tab, int len, int larg)
 
 static void	pf_doublestring(t_pf *lst, char **tab, int len, int larg)
 {
-	uchar		*str;
+	t_uchar		*str;
 	int			b;
 	int			ret;
 	int			llen;
@@ -112,7 +112,7 @@ int			conv_tabstring(t_pf *lst)
 		{
 			while (*tab != NULL && POINT == 0)
 			{
-				put_buff(lst, (uchar*)*tab, ft_strlen(*tab), 0);
+				put_buff(lst, (t_uchar*)*tab, ft_strlen(*tab), 0);
 				if (*tab++ != NULL)
 					put_buff(lst, "\n", 1, 0);
 			}

@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 13:38:11 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 10:39:01 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 20:25:39 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,22 +15,26 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	if (n == -2147483648)
-	{
-		ft_putchar_fd('-', fd);
-		ft_putchar_fd('2', fd);
-		n = 147483648;
-	}
+	char	str[12];
+	int		i;
+	t_mint	max;
+
+	ft_bzero(str, 12);
+	i = ft_intlen(n);
+	max = 0;
 	if (n < 0)
 	{
-		ft_putchar_fd('-', fd);
-		n = n * -1;
-	}
-	if (n > 9)
-	{
-		ft_putnbr_fd((n / 10), fd);
-		ft_putnbr_fd((n % 10), fd);
+		str[0] = '-';
+		n = -n;
+		max = 1;
 	}
 	else
-		ft_putchar_fd((n + '0'), fd);
+		i -= 1;
+	while (i >= max)
+	{
+		str[i] = (n % 10) + 48;
+		i--;
+		n /= 10;
+	}
+	ft_putstr_fd(str, fd);
 }

@@ -6,7 +6,7 @@
 /*   By: alepercq <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/20 15:28:08 by alepercq     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/20 15:30:42 by alepercq    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 20:02:16 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,20 +16,9 @@
 int		ft_sqrt(int nb)
 {
 	int i;
-	int res;
 
 	i = 1;
-	res = 0;
-	if ((nb > -2147483648) && (nb < 2147483647))
-	{
-		while (i <= nb)
-		{
-			res = i * i;
-			if (res == nb)
-				return (i);
-			else
-				i = i + 1;
-		}
-	}
-	return (0);
+	while ((i * i) < nb)
+		i++;
+	return ((i * i) == nb ? i : 0);
 }

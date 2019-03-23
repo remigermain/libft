@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:22 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 03:04:27 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/03/23 19:32:56 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,7 +56,7 @@ static int	ftprintf_base(char *str, t_pf *lst, size_t i, size_t j)
 	return (lst->count + lst->buff_count);
 }
 
-int			ft_sprintf(uchar **dest, const char *format, ...)
+int			ft_sprintf(t_uchar **dest, const char *format, ...)
 {
 	t_pf	lst;
 	int		i;

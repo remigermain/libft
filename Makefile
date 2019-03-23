@@ -6,7 +6,7 @@
 #    By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
-#    Updated: 2019/03/21 03:25:54 by rgermain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/03/23 20:43:10 by rgermain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -75,7 +75,7 @@ SRC_MEMORY = 		ft_bzero.c ft_memalloc.c ft_memccpy.c  ft_memchr.c ft_memcmp.c \
 
 CSRC_PUT = $(addprefix $(D_PUT),$(SRC_PUT))
 D_PUT = print/
-SRC_PUT = 			ft_createtab.c ft_putchar.c ft_putendl.c ft_putnbr.c ft_putnbr_fd.c ft_putstr.c \
+SRC_PUT = 			ft_putchar.c ft_putendl.c ft_putnbr.c ft_putnbr_fd.c ft_putstr.c \
 					ft_printtab.c ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_base.c ft_putpstr_fd.c ft_putstr_fd.c 
 
 
