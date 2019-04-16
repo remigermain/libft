@@ -17,6 +17,7 @@
 # include "color.h"
 # include <stdarg.h>
 # define BUFF_PRINTF 128
+# define intmax_t long
 
 /*
 ** raccourcie list

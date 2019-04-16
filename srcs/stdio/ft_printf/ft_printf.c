@@ -82,10 +82,11 @@ int			ft_dprintf(int fd, const char *format, ...)
 	if (lst.buff_count != 0)
 		write(fd, lst.buff, lst.buff_count);
 	if (lst.str != NULL)
-		ft_memdel((void**)lst.str);
+		ft_memdel((void**)&(lst.str));
 	return (i);
 }
 
+#include <stdio.h>
 int			ft_printf(const char *format, ...)
 {
 	t_pf	lst;
@@ -99,6 +100,6 @@ int			ft_printf(const char *format, ...)
 	if (lst.buff_count != 0)
 		write(1, lst.buff, lst.buff_count);
 	if (lst.str != NULL)
-		ft_memdel((void**)lst.str);
+		ft_memdel((void**)&(lst.str));
 	return (i);
 }

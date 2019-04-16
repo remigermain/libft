@@ -15,7 +15,7 @@
 
 char	**ft_createtab(int len, char c)
 {
-	size_t	i;
+	int	i;
 	char	**tab;
 
 	i = 0;

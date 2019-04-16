@@ -13,6 +13,7 @@
 
 #ifndef STRINGS_H
 # define STRINGS_H
+# include "limit.h"
 
 char			*ft_itoa(int n);
 char			*ft_itoa_base(int n, int base);

@@ -18,8 +18,8 @@ CFLAGS = -Wall -Werror -Wextra -o3
 
 INCLUDE = -Iincludes
 
-HEADER = libft.h limit.h color.h ft_printf.h is_methode.h memory.h strings.h \
-		divers.h get_next_line.h lib_lst.h math.h print.h
+HEADER = libft.h color.h ft_printf.h is_methode.h memory.h strings.h \
+		divers.h get_next_line.h lib_lst.h math.h print.h limit.h
 
 OBJ = $(SRC:.c=.o)
 
