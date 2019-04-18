@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:22 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 19:32:56 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 20:12:00 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,7 +86,6 @@ int			ft_dprintf(int fd, const char *format, ...)
 	return (i);
 }
 
-#include <stdio.h>
 int			ft_printf(const char *format, ...)
 {
 	t_pf	lst;

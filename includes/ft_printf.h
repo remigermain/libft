@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:40:59 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 19:31:08 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/18 20:12:22 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,6 @@
 # include "color.h"
 # include <stdarg.h>
 # define BUFF_PRINTF 128
-# define intmax_t long
 
 /*
 ** raccourcie list
