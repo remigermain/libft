@@ -6,7 +6,7 @@
 #    By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
-#    Updated: 2019/03/23 20:43:10 by rgermain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/04/19 10:46:38 by rgermain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -14,7 +14,7 @@
 NAME = libft.a
 TYPE = " de la library"
 
-CFLAGS = -Wall -Werror -Wextra -o3
+CFLAGS = -Wall -Werror -Wextra -o3 -g
 
 INCLUDE = -Iincludes
 
