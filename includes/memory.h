@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 12:27:59 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/19 12:34:16 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,5 +24,5 @@ void			*ft_memalloc(size_t size);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			ft_memdel(void **ap);
 void			ft_memdeltab_char(char ***ap);
-void			ft_memdeltab_int(int ***ap);
+void			ft_memdeltab_int(int ***ap, int size);
 #endif
