@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:39:10 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 10:55:04 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 13:47:54 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,7 @@ void	convert_buff(t_pf *lst, void *tmp, size_t len)
 	len_malloc = lst->count + lst->buff_count + len + 1;
 	if ((new = (t_uchar*)ft_memalloc(len_malloc)) == NULL)
 		ERROR(lst, "comvert_buff", 1);
-	new[lst->count + lst->buff_count + len + 1] = '\0';
+	new[lst->count + lst->buff_count + len] = '\0';
 	ft_memcpy(new, lst->str, lst->count);
 	ft_memcpy(new + lst->count, lst->buff, lst->buff_count);
 	if (len > 0)
