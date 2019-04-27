@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 15:24:31 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 22:21:29 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 22:38:27 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,14 +16,18 @@
 static void	conv_boucle_char(t_pf *lst)
 {
 	char	c;
-	char	tmp[lst->flag.field + 1];
+	char	*tmp;
 
 	c = (char)va_arg(lst->va_copy, int);
+	if (!FIELD)
+		return ;
 	if (FIELD < 0)
 		FIELD = -FIELD;
-	ft_memset(tmp, c, FIELD);
-	tmp[FIELD] = 0;
-	put_buff(lst, tmp, FIELD, 0);
+	if (!(tmp = (char*)malloc(lst->flag.field + 1)))
+		ERROR(lst, "comv_boucle_char", 1);
+	ft_memset(tmp, c, lst->flag.field);
+	tmp[lst->flag.field] = 0;
+	put_buff(lst, tmp, FIELD, 1);
 }
 
 static void	conv_error(t_pf *lst)

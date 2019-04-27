@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:39:10 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 13:47:54 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 22:40:59 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,15 +75,18 @@ void	put_itoa(t_pf *lst, t_ulong n)
 void	put_prefix(t_pf *lst, int len, int nb, int point)
 {
 	size_t	llen;
-	t_uchar	tmp[nb - len];
+	t_uchar	*tmp;
 
 	llen = (nb - len);
 	if (len >= nb)
 		return ;
 	if ((llen + lst->buff_count) >= BUFF_PRINTF)
 	{
+		if (!(tmp = (t_uchar*)malloc(llen + 1)))
+			ERROR(lst, "put_prefix", 1);
 		ft_memset(tmp, (point == 1 ? '0' : ' '), llen);
 		convert_buff(lst, tmp, llen);
+		ft_memdel((void**)&tmp);
 	}
 	else
 	{
