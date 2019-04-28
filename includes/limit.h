@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/21 02:28:17 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 19:24:41 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 03:10:54 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,4 +31,15 @@ typedef unsigned char	t_muint;
 typedef char			t_mint;
 typedef unsigned long	t_ulong;
 typedef unsigned char	t_uchar;
+
+typedef struct	s_time
+{
+	int	year;
+	int	month;
+	int	day;
+	int	hour;
+	int	minute;
+	int	seconde;
+}				t_time;
+
 #endif
