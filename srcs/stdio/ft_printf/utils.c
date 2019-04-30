@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:55 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 19:34:49 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 16:25:30 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,7 +45,7 @@ size_t	len_pstrn(t_uchar *str, size_t len, size_t index)
 	a = 0;
 	if (index == 1)
 		len = ft_ustrlen(str) + 1;
-	while (str[i] != '\0' && i < len)
+	while (i < len && str[i] != '\0')
 	{
 		if (ft_isprint(str[i] && str[i] != '\n') || str[i] == '\t')
 			a++;
