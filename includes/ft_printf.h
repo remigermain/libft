@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:40:59 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 20:12:22 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 17:16:56 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,8 @@
 # include "color.h"
 # include <stdarg.h>
 # define BUFF_PRINTF 128
+# define KEEP_PF	1
+# define OUT_PF	0
 
 /*
 ** raccourcie list
@@ -62,6 +64,7 @@ typedef struct	s_printf
 {
 	va_list			va_lst;
 	va_list			va_copy;
+	t_ulong			buff_size;
 	int				buff_count;
 	t_uchar			buff[BUFF_PRINTF];
 	int				count;
@@ -74,6 +77,7 @@ typedef struct	s_printf
 **	ft_printf.c
 */
 int				ft_printf(const char *str, ...);
+int				ft_stprintf(char ind, const char *str, ...);
 int				ft_dprintf(int fd, const char *str, ...);
 int				ft_sprintf(t_uchar **dest, const char *format, ...);
 

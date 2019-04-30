@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:22 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 16:44:28 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 17:17:57 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,52 +56,27 @@ static int	ftprintf_base(char *str, t_pf *lst, size_t i, size_t j)
 	return (lst->count + lst->buff_count);
 }
 
-int			ft_sprintf(t_uchar **dest, const char *format, ...)
+int			ft_stprintf(char ind, const char *format, ...)
 {
-	t_pf	lst;
-	int		i;
+	static t_pf	lst;
+	static int	pass = 0;
+	int			i;
 
-	ft_bzero(&lst, sizeof(t_pf));
-	lst.buff_size = BUFF_PRINTF;
+	if (!pass)
+		ft_bzero(&lst, sizeof(t_pf));
 	va_start(lst.va_lst, format);
 	i = ftprintf_base((char*)format, &lst, 0, 0);
-	convert_buff(&lst, NULL, 0);
-	*dest = lst.str;
-	return (i);
-}
-
-int			ft_dprintf(int fd, const char *format, ...)
-{
-	t_pf	lst;
-	int		i;
-
-	ft_bzero(&lst, sizeof(t_pf));
-	lst.buff_size = BUFF_PRINTF;
-	va_start(lst.va_lst, format);
-	i = ftprintf_base((char*)format, &lst, 0, 0);
-	if (lst.count != 0)
-		write(fd, lst.str, lst.count);
-	if (lst.buff_count != 0)
-		write(fd, lst.buff, lst.buff_count);
-	if (lst.str != NULL)
-		ft_memdel((void**)&(lst.str));
-	return (i);
-}
-
-int			ft_printf(const char *format, ...)
-{
-	t_pf	lst;
-	int		i;
-
-	ft_bzero(&lst, sizeof(t_pf));
-	lst.buff_size = BUFF_PRINTF;
-	va_start(lst.va_lst, format);
-	i = ftprintf_base((char*)format, &lst, 0, 0);
-	if (lst.count != 0)
+	if (ind == OUT_ST && lst.count != 0)
+	{
 		write(1, lst.str, lst.count);
-	if (lst.buff_count != 0)
+		lst.count = 0;
+	}
+	if (ind == OUT_ST && lst.buff_count != 0)
+	{
 		write(1, lst.buff, lst.buff_count);
-	if (lst.str != NULL)
+		lst.buff_count = 0;
 		ft_memdel((void**)&(lst.str));
+	}
+	pass = 1;
 	return (i);
 }
