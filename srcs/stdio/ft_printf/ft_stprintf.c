@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:38:22 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 17:17:57 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 17:19:50 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,12 +66,12 @@ int			ft_stprintf(char ind, const char *format, ...)
 		ft_bzero(&lst, sizeof(t_pf));
 	va_start(lst.va_lst, format);
 	i = ftprintf_base((char*)format, &lst, 0, 0);
-	if (ind == OUT_ST && lst.count != 0)
+	if (ind == OUT_PF && lst.count != 0)
 	{
 		write(1, lst.str, lst.count);
 		lst.count = 0;
 	}
-	if (ind == OUT_ST && lst.buff_count != 0)
+	if (ind == OUT_PF && lst.buff_count != 0)
 	{
 		write(1, lst.buff, lst.buff_count);
 		lst.buff_count = 0;
