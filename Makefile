@@ -6,7 +6,7 @@
 #    By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
-#    Updated: 2019/04/30 16:31:34 by rgermain    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/06/10 18:51:01 by rgermain    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -87,7 +87,7 @@ SRC_STDIO = $(CSRC_PRINTF)
 CSRC_PRINTF = $(addprefix $(D_FT_PRINTF),$(SRC_PRINTF))
 D_FT_PRINTF = ft_printf/
 SRC_PRINTF =		conv_char.c conv_int.c conv_string.c ft_printf.c ft_stprintf.c lst_putdouble.c lst_putoption.c \
-					put_string.c conv_double.c conv_other.c conv_tabstring.c put_color.c utils.c
+					put_string.c conv_double.c conv_other.c conv_tabstring.c utils.c
 
 
 
