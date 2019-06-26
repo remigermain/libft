@@ -1,178 +1,169 @@
 #include "libft.h"
 
-# define RED "\033[31m"
-# define RESET "\033[0m"
-# define WHITE "\033[37m"
-
-# define ERR_LINE 1
-# define BLUE  "\033[34m"
-
-static void	ft_error_argv2(char **argv, int error, int error_2)
+enum	e_regex_op
 {
-	int i;
-
-	i = 0;
-	ft_dprintf(2, "\n%6@", "char", ' ');
-	while (argv[++i] && i < error)
-		ft_dprintf(2, "%*@ ", ft_strlen(argv[i]), "char", ' ');
-	if (i == error)
-	{
-		if (error_2)
-			ft_dprintf(2, "%*@ ", error_2 - 1, "char", ' ');
-		ft_dprintf(2, RED);
-		ft_dprintf(2, "^%*@\n", (!error_2 ? ft_strlen(argv[i]) - 1 : 0), "char", '~');
-		ft_dprintf(2, RESET);
-	}
-}
-
-void		ft_error_argv(char **argv, int error, int error_2)
-{
-	int	i;
-	int	j;
-	
-	i = 0;
-	j = -1;
-	ft_dprintf(2, "%6@", "char", ' ');
-	while (argv[++i])
-	{
-		if (i == error && !error_2)
-			ft_dprintf(2, "%s", (i == error) ? RED : "");
-		if (i != error || error_2 == 0)
-			ft_dprintf(2, "%s%s", argv[i], (argv[i + 1] ? " " : ""));
-		else
-			while (argv[i][++j])
-			{
-				ft_dprintf(2, "%s", (j == error_2) ? RED : "");
-				ft_dprintf(2, "%c", argv[i][j]);
-				ft_dprintf(2, "%s", (j == error_2) ? RESET : "");
-			}
-		if (i == error && !error_2)
-			ft_dprintf(2, "%s", (i == error) ? RESET : "");
-	}
-	ft_error_argv2(argv, error, error_2);
-}
-
-int	ft_error_line(char *str, int error, char *msg, char flag)
-{
-	int	i;
-
-	i = 0;
-	ft_dprintf(2, WHITE"%d:%d: ", ft_strlen(str), error);
-	if (flag & ERR_LINE)
-		ft_dprintf(2, RED"error: "WHITE"%s\n", msg);
-	else
-		ft_dprintf(2, BLUE"warning: "WHITE"%s\n", msg);
-	ft_dprintf(2, RESET"%6@%s\n", "char", ' ', str);
-	ft_dprintf(2, "%*@"RED"↑"RESET"\n", error, "char", ' ');
-	return (1);
-}
-
-enum	e_flags
-{
-	F_EXIST = 0b001,
-	F_ADD = 0b010,
-	F_RM = 0b011,
-	F_PRINT = 0b100
+	R_NOT = '^',
+	R_OR = '|',
+	R_RANG = '-',
 };
 
-int	flags_base(char fl, int mod)
+enum	e_regex
 {
-	static t_ulong	flags = 0;
+	CLASS_RANG,
+	CLASS_NOT,
+};
 
-	if (fl <= 90)
-		fl -= 65;
-	else
-		fl = (fl - 97) + 26;
-	if (mod == F_EXIST)
-		return ((flags >> fl) & 0x1);
-	else if (mod == F_ADD)
-		flags |= (unsigned long long)(1UL << fl);
-	else if (mod == F_RM)
-		flags ^= (1UL << fl);
-	else if (mod == F_PRINT)
-		ft_printf("%.31b%.31b\n", flags >> 31, flags & INT_MAX);
-	return (0);
-}
-
-int	exist_flags(char fl)
+enum	e_quantifier
 {
-	return(flags_base(ft_toupper(fl) - 'A', F_EXIST));
-}
+	QUAN_PLUS,
+	QUAN_STAR,
+	QUAN_INT
+};
 
-
-void	remove_flags(char fl)
+typedef struct s_quanti
 {
-	flags_base(ft_toupper(fl) - 'A', F_RM);
-}
+	int		qu1;
+	int		qu2;
+	unsigned	fl : 2;
+}		t_quanti;
 
-void	unknow_flags(char **argv, int i, int j)
+typedef struct s_class
 {
-	ft_dprintf(2, RED"error: "WHITE"unknow flags.\n"RESET);
-	ft_error_argv(argv, i, j);
-}
+	char		*regex;
+	int		rg1;
+	int		rg2;
+	int		stop;
+	unsigned 	fl : 2;
+}		t_class;
 
-# define MFLAG "er;e|diff;d|size;e|coucou;r|rr;t|op41;t|"
 
-void	parse_mflag(char **argv, int i, char *mflag)
+
+typedef struct	s_regex
 {
-	int	min;
-	int	max;
-	int	len;
+	char	*regex;
+	int	i;
+}		t_regex;
 
-	min = 0;
-	len = ft_strlen(mflag);
-	while (min < len)
+
+t_bool	ft_strchr_range(t_class *class, char *s1)
+{
+	int	i;
+
+	i = -1;
+	ft_printf("%c   %d\n", s1[0], class->stop);
+	while (s1[++i] && s1[i] != class->stop)
 	{
-		max = len - ft_strlen(ft_strchr(mflag + min, '|')) - min;
-		if (!ft_strncmp(argv[i] + 2, mflag + min, max - 3) &&
-			ft_strlen(argv[i] + 2) == (max - 2))
+//		ft_printf("s1[%d] >= %d  <= %d\n", s1[i], class->rg1, class->rg2);
+		if ((class->fl >> CLASS_NOT) & 0x1)
 		{
-			flags_base(mflag[max - 1], F_ADD);
-			return ;
+			if (s1[i] >= class->rg1 && s1[i] <= class->rg2)
+				return (FALSE);
 		}
-		min += max + 1;	
+		else if (s1[i] < class->rg1 || s1[i] > class->rg2)
+			return (FALSE);
 	}
-	unknow_flags(argv, i, 0);
+	return (TRUE);
 }
 
-void	init_flags(char **argv, char *flag, char *mflag)
+t_bool	ft_strchr_norange(t_class *class, char *s1)
 {
 	int	i;
 	int	j;
-	
-	i = 0;
-	while (argv[++i])
-	{
-		j = 1;
-		while (argv[i][j] && argv[i][0] == '-')
-		{
-			if (argv[i][1] != '-')
-			{
-				if (ft_strchr(flag, argv[i][j]))
-					flags_base(argv[i][j], F_ADD);
-				else
-					unknow_flags(argv, i, j);
-			}
-			else if (argv[i][1] == '-')
-			{
-				parse_mflag(argv, i, mflag);
-				break ;
-			}
-			j++;
-		}
 
+	i = -1;
+	while (class->regex[++i])
+	{
+		j = -1;
+		while (s1[++j] && s1[j] != class->stop)
+		{
+			if (s1[j] == class->regex[i])
+			{
+				if ((class->fl >> CLASS_NOT) & 0x1)
+					return (FALSE);
+				else
+					return (TRUE);
+			}
+		}
 	}
+	if ((class->fl >> CLASS_NOT) & 0x1)
+		return (TRUE);
+	return (FALSE);
 }
 
-# include <stdio.h>
+int	parse_quantifier(t_class *class, char *regex, int i)
+{
+}	
+
+int	parse_class(t_class *class, char *regex)
+{
+	int	i;
+
+	i = 0;
+	ft_bzero(class, sizeof(t_class));
+	class->regex = regex;
+	class->rg1 = -1;
+	class->rg2 = -1;
+	while (regex[++i] && regex[i] != ']')
+	{
+		if (regex[i] == R_NOT)
+			class->fl |= (1 << CLASS_NOT);
+		else if (regex[i] == R_RANG)
+			class->fl |= (1 << CLASS_RANG);
+		else if (class->rg1 == -1)
+			class->rg1 = regex[i];
+		else if (class->rg2 == -1)
+			class->rg2 = regex[i];
+	}
+	if (regex[i] == ']')
+		i++;
+	if (regex[i] == '{')
+		i += parse_quantifier(class, regex, i);
+	class->stop = regex[i];
+	return (i);
+}
+
+
+t_bool	regex_class(t_regex *reg, char *s1)
+{
+	t_class	class;
+
+	reg->i += parse_class(&class, reg->regex + reg->i);
+	if ((class.fl >> CLASS_RANG) & 0x1)
+		return (ft_strchr_range(&class, s1));
+	else
+		return (ft_strchr_norange(&class, s1));
+
+}
+
+t_bool	match(char *s1, char *regex)
+{
+	t_regex	reg;
+	t_bool	ret;
+	int	i;
+
+	ft_bzero(&reg, sizeof(t_regex));
+	reg.regex = regex;
+	ret = FALSE;
+	i = 0;
+	while (s1[i] && reg.regex[reg.i])
+	{
+		if (reg.regex[reg.i] == '[')
+			ret = regex_class(&reg, s1 + i);
+		else
+		{
+			if (s1[i] == reg.regex[reg.i])
+				reg.i++;
+			else
+				return (FALSE);
+			i++;
+		}
+	}
+	ft_printf("\n\n[FINISH]\n%s  %s     [%c]\n", s1 + i, reg.regex + reg.i, reg.regex[reg.i]);
+	return (ret);
+}
 
 int main(int argc, char **argv)
 {
-	ft_printf("%d\n", ft_strlen(argv[1]));
-	init_flags(argv, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", MFLAG);
-
-	flags_base(' ', F_PRINT);
-//	ft_error_line(argv[1], ft_atoi(argv[2]), argv[3]);
-//	ft_error_argv(argv, argc - 2);
+	ft_printf("match = %s\n", (match(argv[1], argv[2]) ?  "\033[1;32mTRUE" : "\033[1;31mFALSE"));
 	return (0);
 }
