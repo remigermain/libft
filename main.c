@@ -33,6 +33,7 @@ typedef struct s_class
 	int		rg1;
 	int		rg2;
 	int		stop;
+	int		*mem;
 	unsigned 	fl : 2;
 }		t_class;
 
@@ -45,7 +46,7 @@ typedef struct	s_regex
 }		t_regex;
 
 
-t_bool	ft_strchr_range(t_class *class, char *s1)
+t_bool	ft_strchr_range(t_class *class, char *s1, int *mem)
 {
 	int	i;
 
@@ -57,15 +58,22 @@ t_bool	ft_strchr_range(t_class *class, char *s1)
 		if ((class->fl >> CLASS_NOT) & 0x1)
 		{
 			if (s1[i] >= class->rg1 && s1[i] <= class->rg2)
+			{
+				(*mem) += i;
 				return (FALSE);
+			}
 		}
 		else if (s1[i] < class->rg1 || s1[i] > class->rg2)
+		{
+			(*mem) += i;
 			return (FALSE);
+		}
 	}
+	(*mem) += i;
 	return (TRUE);
 }
 
-t_bool	ft_strchr_norange(t_class *class, char *s1)
+t_bool	ft_strchr_norange(t_class *class, char *s1, int *mem)
 {
 	int	i;
 	int	j;
@@ -78,6 +86,7 @@ t_bool	ft_strchr_norange(t_class *class, char *s1)
 		{
 			if (s1[j] == class->regex[i])
 			{
+				(*mem) += j;
 				if ((class->fl >> CLASS_NOT) & 0x1)
 					return (FALSE);
 				else
@@ -85,6 +94,7 @@ t_bool	ft_strchr_norange(t_class *class, char *s1)
 			}
 		}
 	}
+	(*mem) += j;
 	if ((class->fl >> CLASS_NOT) & 0x1)
 		return (TRUE);
 	return (FALSE);
@@ -123,19 +133,19 @@ int	parse_class(t_class *class, char *regex)
 }
 
 
-t_bool	regex_class(t_regex *reg, char *s1)
+t_bool	regex_class(t_regex *reg, char *s1, int *i)
 {
 	t_class	class;
 
 	reg->i += parse_class(&class, reg->regex + reg->i);
 	if ((class.fl >> CLASS_RANG) & 0x1)
-		return (ft_strchr_range(&class, s1));
+		return (ft_strchr_range(&class, s1, i));
 	else
-		return (ft_strchr_norange(&class, s1));
+		return (ft_strchr_norange(&class, s1, i));
 
 }
 
-t_bool	match(char *s1, char *regex)
+t_bool	match2(char *s1, char *regex)
 {
 	t_regex	reg;
 	t_bool	ret;
@@ -148,7 +158,11 @@ t_bool	match(char *s1, char *regex)
 	while (s1[i] && reg.regex[reg.i])
 	{
 		if (reg.regex[reg.i] == '[')
-			ret = regex_class(&reg, s1 + i);
+		{
+			ft_printf("i = %d\n", i);
+			ret = regex_class(&reg, s1 + i, &i);
+			ft_printf("i = %d\n", i);
+		}
 		else
 		{
 			if (s1[i] == reg.regex[reg.i])
@@ -158,8 +172,22 @@ t_bool	match(char *s1, char *regex)
 			i++;
 		}
 	}
-	ft_printf("\n\n[FINISH]\n%s  %s     [%c]\n", s1 + i, reg.regex + reg.i, reg.regex[reg.i]);
-	return (ret);
+	if (reg.regex[reg.i] == s1[i])
+		return (TRUE);
+	return (FALSE);
+}
+
+t_bool	match(char *s1, char *regex)
+{
+	int	i;
+
+	i = -1;
+	while (s1[++i])
+	{
+		if (match2(s1 + i, regex))
+			return (TRUE);
+	}
+	return (FALSE);
 }
 
 int main(int argc, char **argv)
