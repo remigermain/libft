@@ -59,13 +59,13 @@ t_bool	ft_strchr_range(t_class *class, char *s1, int *mem)
 		{
 			if (s1[i] >= class->rg1 && s1[i] <= class->rg2)
 			{
-				(*mem) += i;
+			//	(*mem) += i;
 				return (FALSE);
 			}
 		}
 		else if (s1[i] < class->rg1 || s1[i] > class->rg2)
 		{
-			(*mem) += i;
+		//	(*mem) += i;
 			return (FALSE);
 		}
 	}
@@ -79,6 +79,7 @@ t_bool	ft_strchr_norange(t_class *class, char *s1, int *mem)
 	int	j;
 
 	i = -1;
+	j = 0;
 	while (class->regex[++i])
 	{
 		j = -1;
@@ -86,17 +87,21 @@ t_bool	ft_strchr_norange(t_class *class, char *s1, int *mem)
 		{
 			if (s1[j] == class->regex[i])
 			{
-				(*mem) += j;
 				if ((class->fl >> CLASS_NOT) & 0x1)
 					return (FALSE);
 				else
+				{
+					(*mem) += j;
 					return (TRUE);
+				}
 			}
 		}
 	}
-	(*mem) += j;
 	if ((class->fl >> CLASS_NOT) & 0x1)
+	{
+		(*mem) += j;
 		return (TRUE);
+	}
 	return (FALSE);
 }
 
