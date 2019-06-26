@@ -19,7 +19,6 @@
 # define BUFF_PRINTF 128
 # define KEEP_PF	1
 # define OUT_PF	0
-# define intmax_t long
 
 /*
 ** raccourcie list

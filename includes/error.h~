@@ -1,0 +1,17 @@
+#ifndef ERROR_H
+#define ERROR_H
+
+enum	e_flags
+{
+	F_EXIST = 0b001,
+	F_ADD = 0b010,
+	F_RM = 0b011,
+	F_PRINT = 0b100,
+};
+
+int	exist_flags(char fl);
+int	remove_flags(char fl);
+int	unknow_flags(char fl);
+void	init_flags(char **argv, char *flag, char *mflag);
+
+#endif
