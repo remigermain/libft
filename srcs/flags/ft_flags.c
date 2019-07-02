@@ -21,13 +21,13 @@ int	flags_base(char fl, enum e_flags mod)
 
 int	exist_flags(char fl)
 {
-	return(flags_base(ft_toupper(fl) - 'A', F_EXIST));
+	return(flags_base(fl, F_EXIST));
 }
 
 
 void	remove_flags(char fl)
 {
-	flags_base(ft_toupper(fl) - 'A', F_RM);
+	flags_base(fl, F_RM);
 }
 
 void	unknow_flags(char **argv, int i, int j)

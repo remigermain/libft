@@ -22,7 +22,7 @@ static void	parse_mflag(char **argv, int i, char *mflag)
 	unknow_flags(argv, i, 0);
 }
 
-void	init_flags(char **argv, char *flag, char *mflag)
+void	init_flags(char **argv, char *flag, char *mflag, enum e_flags mod)
 {
 	int	i;
 	int	j;
@@ -31,6 +31,8 @@ void	init_flags(char **argv, char *flag, char *mflag)
 	while (argv[++i])
 	{
 		j = 1;
+		if (argv[i][0] != '-' && mod == F_STOP)
+			return ;
 		while (argv[i][j] && argv[i][0] == '-')
 		{
 			if (argv[i][1] != '-')
