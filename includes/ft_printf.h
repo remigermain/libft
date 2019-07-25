@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/04 16:40:59 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 17:16:56 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/07/20 16:23:24 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,10 +16,9 @@
 # include "libft.h"
 # include "color.h"
 # include <stdarg.h>
-# define BUFF_PRINTF 128
+# define BUFF_PRINTF 10000
 # define KEEP_PF	1
 # define OUT_PF	0
-# define intmax_t long
 
 /*
 ** raccourcie list
@@ -67,6 +66,7 @@ typedef struct	s_printf
 	va_list			va_copy;
 	t_ulong			buff_size;
 	int				buff_count;
+	char			st_pf;
 	t_uchar			buff[BUFF_PRINTF];
 	int				count;
 	t_uchar			*str;
