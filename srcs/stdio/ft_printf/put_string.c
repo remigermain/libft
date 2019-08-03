@@ -98,8 +98,7 @@ void	put_prefix(t_pf *lst, int len, int nb, int point)
 		if (!(tmp = (t_uchar*)malloc(llen + 1)))
 			ERROR(lst, "put_prefix", 1);
 		ft_memset(tmp, (point == 1 ? '0' : ' '), llen);
-		convert_buff(lst, tmp, llen);
-		ft_memdel((void**)&tmp);
+		put_buff(lst, tmp, llen, 1);
 	}
 	else
 	{
