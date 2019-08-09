@@ -23,6 +23,19 @@ enum	e_flags
 	F_STOP,
 };
 
+typedef struct	s_flag
+{
+	char			*mflag;
+	char			*flag;
+	char			**argv;
+	int				argc;
+	int				i;
+	int				j;
+	int				error;
+	int				add;
+	enum e_flags 	mod;
+}				t_flag;
+
 int		print_flags(void);
 int		exist_flags(char fl);
 void	remove_flags(char fl);

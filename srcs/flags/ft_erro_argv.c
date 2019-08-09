@@ -53,8 +53,8 @@ void		ft_error_argv(char **argv, int error, int error_2)
 				ft_dprintf(2, "%c", argv[i][j]);
 				ft_dprintf(2, "%s", (j == error_2) ? T_WHITE : "");
 			}
-		if (i == error && !error_2)
-			ft_dprintf(2, "%s", (i == error) ? T_WHITE : "");
+		if (i == error)
+			ft_dprintf(2, "%s ", T_WHITE);
 	}
 	ft_error_argv2(argv, error, error_2);
 }

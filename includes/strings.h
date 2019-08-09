@@ -52,8 +52,6 @@ size_t			ft_strnlen(const char *s, size_t len);
 char			*ft_strrev(char *str);
 int				ft_str_is_alpha(char *str);
 int				ft_str_is_lowercase(char *str);
-int				ft_islowercase(char c);
-int				ft_isuppercase(char c);
 int				ft_str_is_numeric(char *str);
 int				ft_str_is_printable(char *str);
 int				ft_str_is_uppercase(char *str);

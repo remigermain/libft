@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-int	ft_isgraph(char c)
+int	ft_isgraph(int c)
 {
 	if (ft_iscntrl(c) || c == 32)
 		return (0);
