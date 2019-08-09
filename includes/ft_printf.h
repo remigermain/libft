@@ -19,6 +19,11 @@
 # define BUFF_PRINTF 10000
 # define KEEP_PF	1
 # define OUT_PF	0
+#if defined(__APPLE__)
+# define INTMAX_T intmax_t
+#else
+# define INTMAX_T long long
+#endif
 
 /*
 ** raccourcie list

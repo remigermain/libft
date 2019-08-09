@@ -13,6 +13,8 @@
 
 #ifndef FLAGS_H
 # define FLAGS_H
+# define FSPACE 1
+# define FNO_SPACE 0
 
 enum	e_flags
 {
@@ -22,6 +24,19 @@ enum	e_flags
 	F_PRINT = 0b100,
 	F_STOP,
 };
+
+typedef struct s_foption
+{
+	int	nb_arg;
+	int	nb;
+}				t_foption;
+
+typedef struct	s_fint
+{
+	int			min;
+	int			max;
+	unsigned	isset : 2;
+}				t_fint;
 
 typedef struct	s_flag
 {
