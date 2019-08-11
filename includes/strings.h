@@ -61,5 +61,22 @@ char			*ft_strupcase(char *str);
 char			*ft_itoa_base(int n, int base);
 char			*ft_strncpychr(const char *str, int c);
 char			*ft_strcpychr(const char *str, int c);
+/*
+**-----------------------------------------------------------
+**          ft_span.c
+**-----------------------------------------------------------
+*/
+int			ft_spantype(char *str, int (*func)(int));
+int			ft_spancharspace(char *flag, char *str);
+int			ft_spanchar(char *flag, char *str);
+
+/*
+**-----------------------------------------------------------
+**          ft_itoa.c
+**-----------------------------------------------------------
+*/
+void	    ft_itoabuffer(char *buff, int nb);
+void	    ft_itoabasebuffer(char *buff, int nb2, int base);
+
 
 #endif

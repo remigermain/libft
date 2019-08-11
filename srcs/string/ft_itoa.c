@@ -46,3 +46,24 @@ char		*ft_itoa(int n)
 	len--;
 	return (ft_itoa_cal(str, n, len));
 }
+
+void	ft_itoabasebuffer(char *buff, int nb2, int base)
+{
+	long	nb;
+	int		len;
+
+	nb = (long)nb2;
+	len = ft_intlen(nb);
+	buff[len] = 0;
+	while (len)
+	{ 
+		buff[--len] = nb % 10 + '0';
+		nb /= 10;
+	}
+}
+
+void	ft_itoabuffer(char *buff, int nb)
+{
+	ft_itoabasebuffer(buff, nb, 10);
+}
+

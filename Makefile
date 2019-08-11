@@ -48,8 +48,8 @@ SRC_divers = 		ft_countwchar.c ft_match.c ft_sort_integer_table.c ft_swap.c get_
 
 CSRC_FLAGS = $(addprefix $(D_FLAGS),$(SRC_flags))
 D_FLAGS = flags/
-SRC_flags = 	ft_erro_argv.c ft_flags.c ft_parse_argv.c
-
+SRC_flags = 	ft_erro_argv.c ft_flags.c ft_parse_argv.c ft_error_flags.c ft_option_flags.c ft_type_flags.c ft_type_option.c \
+				ft_usage_flags.c
 
 CSRC_ISMETHODE = $(addprefix $(D_IS_METHODE),$(SRC_ISMETHODE))  
 D_IS_METHODE = is_methode/
@@ -103,7 +103,7 @@ SRC_STRINGS =		ft_atoi.c ft_str_is_uppercase.c ft_strcpychr.c ft_strlcat.c ft_st
 					ft_str_is_alpha.c ft_strchr.c ft_strequ.c ft_strlowcase.c ft_strnequ.c ft_strsub.c \
 					ft_str_is_lowercase.c ft_strclr.c ft_striter.c ft_strmap.c ft_strnew.c ft_strtrim.c \
 					ft_str_is_numeric.c ft_strcmp.c ft_striteri.c ft_strmapi.c ft_strnstr.c ft_strupcase.c \
-					ft_str_is_printable.c ft_strcpy.c ft_strjoin.c ft_strncat.c ft_strrchr.c
+					ft_str_is_printable.c ft_strcpy.c ft_strjoin.c ft_strncat.c ft_strrchr.c ft_span.c
 
 COUNT = "1"
 SPACE = "                  "

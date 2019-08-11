@@ -17,7 +17,7 @@
 /*
 ** Text
 */
-
+#if defined(__APPLE__)
 # define T_WHITE	"\033[0m"
 # define T_BLACK	"\033[30m"
 # define T_RED		"\033[38;5;265m"
@@ -27,15 +27,17 @@
 # define T_PURPLE	"\033[35m"
 # define T_CYAN		"\033[36m"
 # define T_LGREY "\033[37m"
-
-# define T_DGREY	"\033[1;30m"
-# define T_LRED		"\033[1;31m"
-# define T_LGREEN	"\033[1;32m"
-# define T_LYELLOW	"\033[1;33m"
-# define T_LBLUE	"\033[1;34m"
-# define T_LPURPLE	"\033[1;35m"
-# define T_LCYAN	"\033[1;36m"
-
+#else
+# define T_WHITE	"\033[0m"
+# define T_GREY	"\033[1;30m"
+# define T_LGREY "\033[37m"
+# define T_RED		"\033[1;31m"
+# define T_GREEN	"\033[1;32m"
+# define T_YELLOW	"\033[1;33m"
+# define T_BLUE	"\033[1;34m"
+# define T_PURPLE	"\033[1;35m"
+# define T_CYAN	"\033[1;36m"
+#endif
 /*
 ** BackGround
 */

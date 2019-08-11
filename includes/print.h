@@ -13,6 +13,7 @@
 
 #ifndef PRINT_H
 # define PRINT_H
+# define TAB_LENGHT 0
 
 int				ft_putchar(char c);
 int				ft_putchar_fd(char c, int fd);
