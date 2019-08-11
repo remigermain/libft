@@ -46,21 +46,20 @@ void	print_flag(t_flagav *av)
 	ft_printf("}\n");
 }
 
-int		flag_getindice(t_flagav *av, char fl)
+int		flag_getindice(t_flagav *av, int fl)
 {
 	int		i;
-	char	sfl;
 
 	i = -1;
 	while (i < MAX_FLAGS)
 	{
-		if (av[i].fl == sfl)
+		if (av[i].fl == fl)
 			return (i);
 	}
 	return (-1);
 }
 
-void	flag_remove(t_flagav *av, char fl)
+void	flag_remove(t_flagav *av, int fl)
 {
 	int i;
 
@@ -69,7 +68,7 @@ void	flag_remove(t_flagav *av, char fl)
 		ft_bzero(&(av[i]), sizeof(t_flagav));
 }
 
-t_bool	flag_add(t_flagav *av, char fl, void *value, enum e_type type)
+t_bool	flag_add(t_flagav *av, int fl, void *value, enum e_type type)
 {
 	if (!av[fl].fl)
 		av[fl].fl = fl;
@@ -96,7 +95,7 @@ t_bool	flag_add(t_flagav *av, char fl, void *value, enum e_type type)
 	return (TRUE);
 }
 
-t_bool	flags_base(char fl, enum e_flags mod, void *value, enum e_type type)
+t_bool	flags_base(int fl, enum e_flags mod, void *value, enum e_type type)
 {
 	static t_flagav av[MAX_FLAGS];
 
@@ -111,22 +110,22 @@ t_bool	flags_base(char fl, enum e_flags mod, void *value, enum e_type type)
 	return (TRUE);
 }
 
-t_bool	add_flags_av(char fl, void *value, enum e_type type)
+t_bool	add_flags_av(int fl, void *value, enum e_type type)
 {
 	return (flags_base(fl, F_ADD, value, type));
 }
 
-int		add_flags(char fl)
+t_bool	add_flags(int fl)
 {
-	flags_base(fl, F_ADD, NULL, 0);
+	return (flags_base(fl, F_ADD, NULL, 0));
 }
 
-int		exist_flags(char fl)
+int		exist_flags(int fl)
 {
 	return (flags_base(fl, F_EXIST, NULL, 0));
 }
 
-void	remove_flags(char fl)
+void	remove_flags(int fl)
 {
 	flags_base(fl, F_RM, NULL, 0);
 }

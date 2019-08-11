@@ -53,11 +53,11 @@ void	ft_itoabasebuffer(char *buff, int nb2, int base)
 	int		len;
 
 	nb = (long)nb2;
-	len = ft_intlen(nb);
+	len = ft_intlen_base(nb, base);
 	buff[len] = 0;
 	while (len)
 	{ 
-		buff[--len] = nb % 10 + '0';
+		buff[--len] = nb % base + '0';
 		nb /= 10;
 	}
 }

@@ -26,7 +26,7 @@ int			type_int(t_flag *st, char fl, char *flag, char *str)
 	{
 		ft_bzero(&it, sizeof(t_finfo));
 		nb = ft_atoi(str); // nedd 
-		i += parse_typeoption(st, &it, flag);
+		i += parse_typeoption(&it, flag);
 		error_optionInt(st, &it, nb);
 		if (!it.error)
 			add_flags_av(fl, (void*)&nb, INT);
@@ -46,7 +46,7 @@ int			type_string(t_flag *st, char fl, char *flag, char *str)
 	if (str[0] && str[0] != '-')
 	{
 		ft_bzero(&it, sizeof(t_finfo));
-		i += parse_typeoption(st, &it, flag);
+		i += parse_typeoption(&it, flag);
 		error_optionString(st, &it, str);
 		if ((it.isset >> 2) & 0x1)
 			name_option_match(st, &it, str);
@@ -68,7 +68,7 @@ int			type_char(t_flag *st, char fl, char *flag, char *str)
 	if (str[0] && str[0] != '-' && !str[1])
 	{
 		ft_bzero(&it, sizeof(t_finfo));
-		i += parse_typeoption(st, &it, flag);
+		i += parse_typeoption(&it, flag);
 		if (it.isset >> 2 & 0x1)
 			name_option_match(st, &it, str);
 		if (!it.error)

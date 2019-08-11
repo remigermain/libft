@@ -50,14 +50,12 @@ void    print_text_flag(char fl)
     ft_printf("\n");
 }
 
-int parse_usageoption2(t_flag *st, char *flag)
+int parse_usageoption2(char *flag)
 {
     t_finfo it;
-    int     i;
 
-    i = 0;
     ft_bzero(&it, sizeof(t_finfo));
-    i = parse_typeoption(st, &it, flag);
+    parse_typeoption(&it, flag);
     if (it.isset & 0x1)
         ft_printf(" min: %d ", it.min);
     if (it.isset >> 1 & 0x1)
@@ -68,7 +66,7 @@ int parse_usageoption2(t_flag *st, char *flag)
     return (ft_spanoption(flag));
 }
 
-int parse_usageoption(t_flag *st, char *flag)
+int parse_usageoption(char *flag)
 {
     int i;
     int j;
@@ -90,7 +88,7 @@ int parse_usageoption(t_flag *st, char *flag)
                 ft_printf("< string ");
 		    else if (!ft_strncmp(flag + i, "char", 4))
                 ft_printf("< character ");
-            i += parse_usageoption2(st, flag + i + j) + j;
+            i += parse_usageoption2(flag + i + j) + j;
 			i += ft_spantype(flag + i, ft_isspace);
 		}
 	}
@@ -102,11 +100,8 @@ int parse_usageoption(t_flag *st, char *flag)
 
 void       print_usage(t_flag *st)
 {
-    char    *text;
     int     i;
-    int     j;
 
-    text = text_usage(NULL);
     i = 0;
     ft_printf("%s usage\n\n\t[ FLAGS ]\n", st->argv[0]);
     while (st->flag[i] && st->flag[i] != '|')
@@ -117,10 +112,10 @@ void       print_usage(t_flag *st)
 		if (i > 0 && st->flag[i - 1] == '|')
         {
             print_text_flag(st->flag[i++]);
-            i += parse_usageoption(st, st->flag + i);
+            i += parse_usageoption(st->flag + i);
         }
         else
-		    i += span_alloption(st, st->flag + i);
+		    i += span_alloption(st->flag + i);
 	}
     ft_printf("\n");
 }

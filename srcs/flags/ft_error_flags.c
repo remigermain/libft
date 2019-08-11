@@ -79,6 +79,7 @@ int		not_match(t_flag *st, char *str, char *match)
 int		missing_argv(t_flag *st)
 {
 	ft_dprintf(2, T_RED"error: "T_LGREY"Missing arguments.\n"T_WHITE);
+	ft_error_argv(st->argv, st->i + st->add, 0);
 	return (cout_error_argv(ERROR_SET));
 }
 

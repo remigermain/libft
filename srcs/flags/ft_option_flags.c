@@ -24,7 +24,7 @@ int	ft_spanoption(char *flag)
 	return (j);
 }
 
-int span_alloption(t_flag *st, char *flag)
+int span_alloption(char *flag)
 {
 	int i;
 

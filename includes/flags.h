@@ -88,13 +88,13 @@ typedef struct	s_flag
 **          ft_flags.c
 **-----------------------------------------------------------
 */
-t_bool		flags_base(char fl, enum e_flags mod, void *value, enum e_type type);
+t_bool		flags_base(int fl, enum e_flags mod, void *value, enum e_type type);
 //int		flags_base(char fl, enum e_flags mod);
 int		print_flags(void);
-int		add_flags(char fl);
-t_bool	add_flags_av(char fl, void *value, enum e_type type);
-int		exist_flags(char fl);
-void	remove_flags(char fl);
+t_bool		add_flags(int fl);
+t_bool	add_flags_av(int fl, void *value, enum e_type type);
+int		exist_flags(int fl);
+void	remove_flags(int fl);
 int		unknow_flags(char **argv, int i, int j);
 
 /*
@@ -132,7 +132,7 @@ void		error_optionInt(t_flag *st, t_finfo *it, int nb);
 **          ft_type_option.c
 **-----------------------------------------------------------
 */
-int			parse_typeoption(t_flag *st, t_finfo *it, char *flag);
+int			parse_typeoption(t_finfo *it, char *flag);
 void		name_option_match(t_flag *st, t_finfo *it, char *str);
 int			ft_spanoption(char *flag);
 
@@ -154,7 +154,7 @@ int			type_int(t_flag *st, char fl, char *flag, char *str);
 **-----------------------------------------------------------
 */
 int 		parse_option(t_flag *st, char fl, char *flag);
-int			span_alloption(t_flag *st, char *flag);
+int			span_alloption(char *flag);
 
 /*
 **-----------------------------------------------------------

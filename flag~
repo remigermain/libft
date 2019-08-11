@@ -1,3 +1,0 @@
-make > /dev/null && gcc main.c libft.a > /dev/null
-echo ""
-./a.out $@

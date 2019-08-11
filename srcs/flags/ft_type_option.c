@@ -36,7 +36,7 @@ void		name_option_match(t_flag *st, t_finfo *it, char *str)
 	it->error = not_match(st, str, it->str);
 }
 
-int			parse_typeoption(t_flag *st, t_finfo *it, char *flag)
+int			parse_typeoption(t_finfo *it, char *flag)
 {
 	int j;
 

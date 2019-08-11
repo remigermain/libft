@@ -21,7 +21,7 @@ static int	find_flags2(t_flag *st, char *flag)
 	i = 0;
 	j = 0;
 	add_flags(flag[i]);
-	i += parse_option(st, flag[i++], flag + 1);
+	i = parse_option(st, flag[i], flag + 1) + 1;
 	while (flag[i] && flag[i] != '|' && j != 2)
 	{
 		if (flag[i] == ';' && (++j))
@@ -46,7 +46,7 @@ static int	find_flags(t_flag *st, char c)
 		if (st->flag[i] == c && i > 0 && st->flag[i - 1] == '|')
 			return (find_flags2(st, st->flag + i));
 		else
-			i += span_alloption(st, st->flag + i);
+			i += span_alloption(st->flag + i);
 	}
 	return (0);
 }

@@ -14,7 +14,7 @@
 NAME = libft.a
 TYPE = " de la library"
 
-CFLAGS =  -g3
+CFLAGS =  -Wall -Wextra -g3
 
 INCLUDE = -Iincludes
 
