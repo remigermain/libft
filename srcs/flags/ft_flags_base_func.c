@@ -13,60 +13,27 @@
 
 #include "libft.h"
 
-int	ft_spanoption(char *flag)
+t_bool	add_flags_av(int fl, void *value, enum e_type type)
 {
-	int j;
-
-	j = 0;
-	if (flag[0] == '{')
-		j = ft_spancharspace(flag, "}");
-	j += ft_spancharspace(flag + j, ",;");
-	return (j);
+	return (flags_base(fl, F_ADD, value, type));
 }
 
-int span_alloption(char *flag)
+t_bool	add_flags(int fl)
 {
-	int i;
-
-	i = 0;
-	if (flag[i] == '{' && (++i))
-	{
-		while (flag[i] && flag[i] != '}' && flag[i] != ';')
-		{
-			if (flag[i] == ',')
-				i++;
-			i += ft_spantype(flag + i, ft_isspace);
-			i += ft_spanoption(flag + i);
-			i += ft_spantype(flag + i, ft_isspace);
-		}
-	}
-	if (flag[i] == '}')
-		i++;
-	return (i);
+	return (flags_base(fl, F_ADD, NULL, 0));
 }
 
-int parse_option(t_flag *st, char fl, char *flag)
+int		exist_flags(int fl)
 {
-	t_foption	op;
-	int i;
-
-	op.nb = 0;
-	op.fl = fl;
-	i = 0;
-	if (flag[i] == '{' && (++i))
-	{
-		while (flag[i] && flag[i] != '}' && flag[i] != ';')
-		{
-			if (flag[i] == ',')
-				i++;
-			op.nb++;
-			i += ft_spantype(flag + i, ft_isspace);
-			i += is_type(st, &op, flag + i);
-			i += ft_spantype(flag + i, ft_isspace);
-		}
-	}
-	if (flag[i] == '}')
-		i++;
-	return (i);
+	return (flags_base(fl, F_EXIST, NULL, 0));
 }
 
+void	remove_flags(int fl)
+{
+	flags_base(fl, F_RM, NULL, 0);
+}
+
+int		print_flags(void)
+{
+	return (flags_base('f', F_PRINT, NULL, 0));
+}

@@ -13,39 +13,60 @@
 
 #include "libft.h"
 
-int		cout_error_argv(enum e_error_flag mod)
+int	span_option(char *flag)
 {
-	static int error = 0;
-	
-	if (mod & ERROR_SET)
-		error++;
-	if (mod & ERROR_GET && mod & ERROR_PRINT && error)
+	int j;
+
+	j = 0;
+	if (flag[0] == '{')
+		j = ft_spancharspace(flag, "}");
+	j += ft_spancharspace(flag + j, ",;");
+	return (j);
+}
+
+int span_alloption(char *flag)
+{
+	int i;
+
+	i = 0;
+	if (flag[i] == '{' && (++i))
 	{
-		ft_dprintf(2, "%d%s ", error, (error > MAX_ERROR ? "+" : ""));
-		ft_dprintf(2, "error generate\n", error);
+		while (flag[i] && flag[i] != '}' && flag[i] != ';')
+		{
+			if (flag[i] == ',')
+				i++;
+			i += ft_spantype(flag + i, ft_isspace);
+			i += span_option(flag + i);
+			i += ft_spantype(flag + i, ft_isspace);
+		}
 	}
-	return (error);
+	if (flag[i] == '}')
+		i++;
+	return (i);
 }
 
-int		wrong_type(t_flag *st, char *type)
+int parse_option(t_flag *st, char fl, char *flag)
 {
-	ft_dprintf(2, T_RED"error: "T_LGREY"Wrong argument type, need "\
-		 "%s.\n"T_WHITE, type);
-	ft_error_argv(st->argv, st->i + st->add, 0);
-	return (cout_error_argv(ERROR_SET));
-}
+	t_foption	op;
+	int i;
 
-int		error_argv(t_flag *st, char *str)
-{
-	ft_dprintf(2, T_RED"error: "T_LGREY"%s.\n"T_WHITE, str);
-	ft_error_argv(st->argv, st->i + st->add, 0);
-	return (cout_error_argv(ERROR_SET));
-}
-
-int		error_unkflag(t_flag *st, char *str, int i, int j)
-{
-	ft_dprintf(2, T_RED"error: "T_LGREY"%s.\n"T_WHITE, str);
-	ft_error_argv(st->argv, i, j);
-	return (cout_error_argv(ERROR_SET));
+	op.nb = 0;
+	op.fl = fl;
+	i = 0;
+	if (flag[i] == '{' && (++i))
+	{
+		while (flag[i] && flag[i] != '}' && flag[i] != ';')
+		{
+			if (flag[i] == ',')
+				i++;
+			op.nb++;
+			i += ft_spantype(flag + i, ft_isspace);
+			i += is_type(st, &op, flag + i);
+			i += ft_spantype(flag + i, ft_isspace);
+		}
+	}
+	if (flag[i] == '}')
+		i++;
+	return (i);
 }
 

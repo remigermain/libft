@@ -48,8 +48,9 @@ SRC_divers = 		ft_countwchar.c ft_match.c ft_sort_integer_table.c ft_swap.c get_
 
 CSRC_FLAGS = $(addprefix $(D_FLAGS),$(SRC_flags))
 D_FLAGS = flags/
-SRC_flags = 	ft_erro_argv.c ft_flags.c ft_parse_argv.c ft_error_flags.c ft_option_flags.c ft_type_flags.c ft_type_option.c \
-				ft_usage_flags.c
+SRC_flags = 	ft_call_types_func.c ft_erro_argv.c ft_error_flags.c ft_flags_base.c ft_flags_base_func.c \
+				ft_func_type.c ft_func_type_obj.c ft_get_type_option.c ft_parse_argv.c ft_parse_type.c ft_usage_flags.c
+
 
 CSRC_ISMETHODE = $(addprefix $(D_IS_METHODE),$(SRC_ISMETHODE))  
 D_IS_METHODE = is_methode/

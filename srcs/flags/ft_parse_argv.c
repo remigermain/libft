@@ -37,6 +37,8 @@ static int	find_flags(t_flag *st, char c)
 	int	i;
 
 	i = 0;
+	if (c == 'h')
+		print_usage(st);
 	while (st->flag[i] && st->flag[i] != '|' && st->flag[i] != c)
 		i++;
 	if (st->flag[i] == c)
@@ -59,6 +61,8 @@ static int	parse_mflag(t_flag *st)
 
 	min = 0;
 	len = 0;
+	if (!strcmp(ft_strlowcase(st->argv[st->i] + 2), "help"))
+		print_usage(st);
 	if (st->mflag)
 		len = ft_strlen(st->mflag);
 	while (min < len)
@@ -73,16 +77,11 @@ static int	parse_mflag(t_flag *st)
 		}
 		min += max + 1;
 	}
-	unknow_flags(st->argv, st->i, 0);
+	error_unkflag(st, "unknow flags", st->i, 0);
 	return (1);
 }
 
-/*
-**		flags| flag ; set_flag ; unset_flag | ... ect
-**		mflag ; set_flag | ... ect
-*/
-
-int			call_flags(t_flag *st)
+static int	call_flags(t_flag *st)
 {
 	st->j = 0;
 	while (st->argv[st->i][++st->j])
@@ -90,13 +89,31 @@ int			call_flags(t_flag *st)
 		if (st->argv[st->i][1] != '-')
 		{
 			if (!find_flags(st, st->argv[st->i][st->j]))
-				unknow_flags(st->argv, st->i, st->j);
+				error_unkflag(st, "unknow flags", st->i, st->j);
 		}
 		else if (st->argv[st->i][1] == '-')
 			return (parse_mflag(st));
 	}
 	return (0);
 }
+
+/*
+**		usage :
+**
+**		mod :  F_STOP  stop get flag when he have other than '-'
+**
+**		alone_flag  |  flag  { type {min, max, pattern} , ....} ; set_flag ; unset_flag | ... ect
+**		type :  char*	{min, max, pattern}
+**				int		{min, max}
+**				char	{min, max, pattern}
+**				file	{min, max, pattern}
+**
+**		pattern :  name  | name | ..ect
+**		pipe is for "or"
+**		in name  *  for all character like : *.cor math with  explosivekitty.cor or bazou.cor
+**
+**		mflag ; set_flag | ... ect
+*/
 
 int			init_flags(char **argv, char *flag, char *mflag, enum e_flags mod)
 {
@@ -110,16 +127,18 @@ int			init_flags(char **argv, char *flag, char *mflag, enum e_flags mod)
 	st.argc = ft_maxlen_tab(argv, TAB_LENGHT);
 	while (st.argv[st.i] && cout_error_argv(ERROR_GET) < MAX_ERROR)
 	{
-		if (st.argv[st.i][0] != '-' && st.mod == F_STOP)
+		if ((st.argv[st.i][0] != '-' && st.mod == F_STOP) ||
+				!ft_strcmp("--", st.argv[st.i]))
 			break ;
 		st.add = 1;
 		if (st.argv[st.i][0] == '-')
 			call_flags(&st);
 		else if (!add_flags_av(FLAG_ARGV, (void*)st.argv[st.i], STRING))
-			return (-many_argv(&st));
+			return (error_argv(&st, "To many arguments"));
 		st.i += st.add;
 	}
-    print_usage(&st);
+	while (st.argv[st.i])
+		add_flags_av(FLAG_ARGV, (void*)st.argv[st.i++], STRING);
 	if (cout_error_argv(ERROR_GET | ERROR_PRINT))
 		return (-1);
 	return (st.i);

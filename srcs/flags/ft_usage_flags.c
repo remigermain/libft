@@ -13,66 +13,50 @@
 
 #include "libft.h"
 
-char   *text_usage(char *str)
-{
-    static char *text = NULL;
-
-    if (!text)
-        text = str;
-    return (text);
-}
-
-void    print_text_flag(char fl)
+static void usage_flag_text(char fl)
 {
     char    *text;
     int     i;
     int     j;
 
-    text = text_usage(NULL);
     i = 0;
+    text = init_usage(NULL);
     ft_printf("\t-%c", fl);
-    if (text)
+    while(text && text[i])
     {
-        while(text[i])
+        if(text[i] == fl)
         {
-            if(text[i] == fl)
-            {
-                i += 2;
-                j = ft_spancharspace(text + i, "|");
-                ft_printf("\t%.*s\n", j, text + i);
-                break ;
-            }
-            else
-                i += 2;
-            i += ft_spancharspace(text + i, "|") + 1;
+            j = ft_spancharspace(text + i + 2, "|");
+            ft_printf("\t%.*s\n", j, text + i + 2);
+            break ;
         }
+        i += ft_spancharspace(text + i + 2, "|") + 3;
     }
     ft_printf("\n");
 }
 
-int parse_usageoption2(char *flag)
+static int  usage_option(char *flag)
 {
     t_finfo it;
 
     ft_bzero(&it, sizeof(t_finfo));
     parse_typeoption(&it, flag);
-    if (it.isset & 0x1)
+    if (it.isset & OP_MAX)
         ft_printf(" min: %d ", it.min);
-    if (it.isset >> 1 & 0x1)
+    if (it.isset & OP_MIN)
         ft_printf(" max: %d ", it.max);
-    if (it.isset >> 2 & 0x1)
+    if (it.isset & OP_PATTERN)
         ft_printf(" pattern: %s ", it.str);
     ft_printf(">\n");
-    return (ft_spanoption(flag));
+    return (span_option(flag));
 }
 
-int parse_usageoption(char *flag)
+static int  usage_type(char *flag)
 {
     int i;
     int j;
 
     i = 0;
-    j = -1;
 	if (flag[i] == '{' && (++i))
 	{
 		while (flag[i] && flag[i] != '}' && flag[i] != ';')
@@ -88,34 +72,42 @@ int parse_usageoption(char *flag)
                 ft_printf("< string ");
 		    else if (!ft_strncmp(flag + i, "char", 4))
                 ft_printf("< character ");
-            i += parse_usageoption2(flag + i + j) + j;
+            i += usage_option(flag + i + j) + j;
 			i += ft_spantype(flag + i, ft_isspace);
 		}
 	}
-	if (flag[i] == '}')
-		i++;
     ft_printf("\n");
-	return (i);
+	return (i + (flag[i] == '}' ? 1 : 0));
 }
 
-void       print_usage(t_flag *st)
+char   *init_usage(char *str)
+{
+    static char *text = NULL;
+
+    if (!text)
+        text = str;
+    return (text);
+}
+
+void        print_usage(t_flag *st)
 {
     int     i;
 
     i = 0;
     ft_printf("%s usage\n\n\t[ FLAGS ]\n", st->argv[0]);
     while (st->flag[i] && st->flag[i] != '|')
-		print_text_flag(st->flag[i++]);
+		usage_flag_text(st->flag[i++]);
     ft_printf("\n\t[ FLAGS With ARGV ]\n\n");
 	while (st->flag[++i])
 	{
 		if (i > 0 && st->flag[i - 1] == '|')
         {
-            print_text_flag(st->flag[i++]);
-            i += parse_usageoption(st->flag + i);
+            usage_flag_text(st->flag[i++]);
+            i += usage_type(st->flag + i);
         }
         else
 		    i += span_alloption(st->flag + i);
 	}
     ft_printf("\n");
+    exit(0);
 }

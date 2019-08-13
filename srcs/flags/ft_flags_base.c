@@ -13,18 +13,24 @@
 
 #include "libft.h"
 
-void	print_flag(t_flagav *av)
+static int	flag_getindice(t_flagav *av, int fl)
 {
-	int i;
-	int j;
+	int		i;
 
 	i = -1;
+	while (i < MAX_FLAGS)
+		if (av[i].fl == fl)
+			return (i);
+	return (-1);
+}
+
+void		print_flag(t_flagav *av, int i, int j)
+{
 	ft_printf("\n[ PRINT FLAG ]\n{\n");
 	while (++i < MAX_FLAGS)
 	{
-		if (av[i].fl || av[i].nb_arg)
+		if ((av[i].fl || av[i].nb_arg) && (j = -1))
 		{
-			j = -1;
 			if (i == FLAG_ARGV)
 				ft_printf("\t[ NO FLAG ]\n\t{\n");
 			else
@@ -46,20 +52,7 @@ void	print_flag(t_flagav *av)
 	ft_printf("}\n");
 }
 
-int		flag_getindice(t_flagav *av, int fl)
-{
-	int		i;
-
-	i = -1;
-	while (i < MAX_FLAGS)
-	{
-		if (av[i].fl == fl)
-			return (i);
-	}
-	return (-1);
-}
-
-void	flag_remove(t_flagav *av, int fl)
+void		flag_remove(t_flagav *av, int fl)
 {
 	int i;
 
@@ -68,11 +61,11 @@ void	flag_remove(t_flagav *av, int fl)
 		ft_bzero(&(av[i]), sizeof(t_flagav));
 }
 
-t_bool	flag_add(t_flagav *av, int fl, void *value, enum e_type type)
+t_bool		flag_add(t_flagav *av, int fl, void *value, enum e_type type)
 {
 	if (!av[fl].fl)
 		av[fl].fl = fl;
-	if (value && av[fl].nb_arg < 30)
+	if (value && av[fl].nb_arg < 30 && ft_strcmp((char*)value, "--"))
 	{
 		if (type == STRING)
 		{
@@ -106,31 +99,6 @@ t_bool	flags_base(int fl, enum e_flags mod, void *value, enum e_type type)
 	else if (mod == F_RM)
 		flag_remove(av, fl);
 	else if (mod == F_PRINT)
-		print_flag(av);
+		print_flag(av, -1, 0);
 	return (TRUE);
-}
-
-t_bool	add_flags_av(int fl, void *value, enum e_type type)
-{
-	return (flags_base(fl, F_ADD, value, type));
-}
-
-t_bool	add_flags(int fl)
-{
-	return (flags_base(fl, F_ADD, NULL, 0));
-}
-
-int		exist_flags(int fl)
-{
-	return (flags_base(fl, F_EXIST, NULL, 0));
-}
-
-void	remove_flags(int fl)
-{
-	flags_base(fl, F_RM, NULL, 0);
-}
-
-int		print_flags(void)
-{
-	return (flags_base('f', F_PRINT, NULL, 0));
 }

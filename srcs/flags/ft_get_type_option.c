@@ -13,39 +13,46 @@
 
 #include "libft.h"
 
-int		cout_error_argv(enum e_error_flag mod)
+static int	parse_number(char *flag, int *number, int *set, enum e_option e_set)
 {
-	static int error = 0;
-	
-	if (mod & ERROR_SET)
-		error++;
-	if (mod & ERROR_GET && mod & ERROR_PRINT && error)
+	int i;
+
+	i = 0;
+	if (flag[i] && flag[i] != '}' && flag[i] != ',')
 	{
-		ft_dprintf(2, "%d%s ", error, (error > MAX_ERROR ? "+" : ""));
-		ft_dprintf(2, "error generate\n", error);
+		(*number) = ft_atoi(flag + i );
+		(*set) |= e_set;
+		i += ft_spancharspace(flag + i, ",}");
 	}
-	return (error);
+	return (i);
 }
 
-int		wrong_type(t_flag *st, char *type)
+static int	parse_pattern(char *flag, char *str, int *set, enum e_option e_set)
 {
-	ft_dprintf(2, T_RED"error: "T_LGREY"Wrong argument type, need "\
-		 "%s.\n"T_WHITE, type);
-	ft_error_argv(st->argv, st->i + st->add, 0);
-	return (cout_error_argv(ERROR_SET));
+	int i;
+
+	i = 0;
+	if (flag[i] && flag[i] != '}' && flag[i] != ',')
+	{
+		ft_strncpy(str, flag + i, ft_spancharspace(flag + i, "}"));
+		(*set) |= e_set;
+		i += ft_spancharspace(flag + i, ",}");
+	}
+	return (i);
 }
 
-int		error_argv(t_flag *st, char *str)
+int			parse_typeoption(t_finfo *it, char *flag)
 {
-	ft_dprintf(2, T_RED"error: "T_LGREY"%s.\n"T_WHITE, str);
-	ft_error_argv(st->argv, st->i + st->add, 0);
-	return (cout_error_argv(ERROR_SET));
-}
+	int i;
 
-int		error_unkflag(t_flag *st, char *str, int i, int j)
-{
-	ft_dprintf(2, T_RED"error: "T_LGREY"%s.\n"T_WHITE, str);
-	ft_error_argv(st->argv, i, j);
-	return (cout_error_argv(ERROR_SET));
+	i = 1;
+	if (flag[0] != '{' || flag[1] == '}')
+		return (0);
+	i += ft_spantype(flag, ft_isspace);
+	i += parse_number(flag + i, &(it->min), &(it->isset), OP_MIN);
+	i += ft_spantype(flag + i, ft_isspace) + 1;
+	i += parse_number(flag + i, &(it->max), &(it->isset), OP_MAX);
+	i += ft_spantype(flag + i, ft_isspace) + 1;
+	i += parse_pattern(flag + i, it->str, &(it->isset), OP_PATTERN);
+	return (i);
 }
-

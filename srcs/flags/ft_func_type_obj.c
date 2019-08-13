@@ -13,56 +13,66 @@
 
 #include "libft.h"
 
-void		name_option_match(t_flag *st, t_finfo *it, char *str)
+static void	print_pattern(char *str)
 {
 	char mem[127];
+	int	pass;
 	int i;
 	int j;
+
+	i = 0;
+	pass = 0;
+	ft_bzero(mem, 127);
+	ft_printf(T_LGREY" Pattern"T_WHITE" can be : ");
+	while (str[i])
+	{
+		i += (str[i] == '|' ? 1 : 0);
+		i += ft_spantype(str + i, ft_isspace);		
+		j = ft_spanchar(str + i, "|");
+		ft_strncpy(mem, str + i, j);
+		if (pass && !str[i + ft_spantype(str + i + j, ft_isspace) + j])
+			ft_printf(" or ");
+		else if (pass && str[i])
+			ft_dprintf(2, ", ");
+		ft_dprintf(2, T_LGREY"%s"T_WHITE, mem);
+		i += ft_spantype(str + i + j, ft_isspace) + j;
+		pass = 1;
+	}
+	ft_dprintf(2, ".\n");
+}
+
+void		func_obj_match(t_flag *st, t_finfo *it, char *str)
+{
+	char	mem[127];
+	int		i;
+	int		j;
 
 	i = 0;
 	ft_bzero(mem, 127);
 	while (it->str[i])
 	{
-		if (it->str[i] == '|')
-			i++;
+		i += (it->str[i] == '|' ? 1 : 0);
 		i += ft_spantype(it->str + i, ft_isspace);		
 		j = ft_spanchar(it->str + i, "|");
 		ft_strncpy(mem, it->str + i, j);
 		if (ft_match(str, mem))
 			return ;
-		i += j;
-		i += ft_spantype(it->str + i, ft_isspace);
+		i += ft_spantype(it->str + i + j, ft_isspace) + j;
 	}
-	it->error = not_match(st, str, it->str);
+	ft_dprintf(2, T_RED"error: "T_LGREY"String not match \"%s\""\
+		 ".\n"T_WHITE, str);
+	print_pattern(it->str);
+	ft_error_argv(st->argv, st->i + st->add, 0);
+	it->error = cout_error_argv(ERROR_SET);
 }
 
-int			parse_typeoption(t_finfo *it, char *flag)
-{
-	int j;
 
-	j = 1;
-	if (flag[0] != '{' || flag[1] == '}')
-		return (0);
-	j += ft_spantype(flag, ft_isspace);
-	if (flag[j] != ',')
-	{
-		it->min = ft_atoi(flag + j );
-		it->isset |= 0b1;
-		j += ft_spancharspace(flag + j, ",}");
-	}
-	j += ft_spantype(flag + j, ft_isspace) + 1;
-	if (flag[j] != '}' && flag[j] != ',')
-	{
-		it->max = ft_atoi(flag + j);
-		it->isset |= 0b10;
-		j += ft_spancharspace(flag + j, ",}");
-	}
-	j += ft_spantype(flag + j, ft_isspace);
-	if (flag[j++] == ',')
-	{
-		ft_strncpy(it->str, flag + j, ft_spancharspace(flag + j, "}"));
-		it->isset |= 0b100;
-		j += ft_spancharspace(flag + j, ",}");
-	}
-	return (j);
+void    func_obj_minmax(t_flag *st, t_finfo *it, char *type, enum e_type mod)
+{
+	unsigned char	*msg;
+
+	ft_sprintf(&msg, "%s c'ant be %s than \"%d\"", type, 
+    (mod == MAX ? "more" : "less"), (mod == MAX ? it->max : it->min));
+	it->error = error_argv(st, (char*)msg);
+	ft_strdel((char**)&msg);
 }
