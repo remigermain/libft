@@ -15,25 +15,54 @@
 
 t_bool	add_flags_av(int fl, void *value, enum e_type type)
 {
-	return (flags_base(fl, F_ADD, value, type));
+	t_flagav *av;
+
+	av = flags_av_struct();
+	return (flag_add(av, fl, value, type));
 }
 
 t_bool	add_flags(int fl)
 {
-	return (flags_base(fl, F_ADD, NULL, 0));
+	t_flagav *av;
+
+	av = flags_av_struct();
+	return (flag_add(av, fl, NULL, 0));
 }
 
-int		exist_flags(int fl)
+t_bool	exist_flags(int fl)
 {
-	return (flags_base(fl, F_EXIST, NULL, 0));
+	t_flagav *av;
+
+	av = flags_av_struct();
+	return (flag_getindice(av, fl) == -1 ? FALSE : TRUE);
 }
 
 void	remove_flags(int fl)
 {
-	flags_base(fl, F_RM, NULL, 0);
+	t_flagav *av;
+	int i;
+
+	av = flags_av_struct();
+	i = flag_getindice(av, fl);
+	if (i != -1)
+		ft_bzero(&(av[i]), sizeof(t_flagav));
 }
 
-int		print_flags(void)
+void	*get_flags_av(int fl, int nb)
 {
-	return (flags_base('f', F_PRINT, NULL, 0));
+	t_flagav *av;
+
+	av = flags_av_struct();
+	if (flag_getindice(av, fl) == -1)
+		return (NULL);
+	if (av[fl].fl == fl && av[fl].nb_arg > nb)
+	{
+		if (av[fl].exist_string & (1 << nb))
+			return((void**)(av[fl].string[nb]));
+		if (av[fl].exist_char & (1 << nb))
+			return((void**)&(av[fl].schar[nb]));
+		if (av[fl].exist_int & (1 << nb))
+			return((void**)&(av[fl].number[nb]));
+	}
+	return (NULL);
 }

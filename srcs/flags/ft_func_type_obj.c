@@ -73,6 +73,6 @@ void    func_obj_minmax(t_flag *st, t_finfo *it, char *type, enum e_type mod)
 
 	ft_sprintf(&msg, "%s c'ant be %s than \"%d\"", type, 
     (mod == MAX ? "more" : "less"), (mod == MAX ? it->max : it->min));
-	it->error = error_argv(st, (char*)msg);
+	it->error = error_argv(st, (char*)msg, st->i + st->add, 0);
 	ft_strdel((char**)&msg);
 }

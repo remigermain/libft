@@ -25,7 +25,7 @@ t_bool		check_uint(t_flag *st, t_finfo *it, char *str, enum e_type mod)
 	else if ((mod == MAX && it->max < nb) || (mod == MIN && it->min > nb))
         func_obj_minmax(st, it, "number", mod);
 	else if (mod == ADD)
-			add_flags_av(it->fl, (void*)&nb, INT);
+		add_flags_av(it->fl, (void*)&nb, INT);
     ft_printf("it->max = %d  %d\n", it->max, nb);
 	return (TRUE);
 }
@@ -67,6 +67,6 @@ t_bool		check_int(t_flag *st, t_finfo *it, char *str, enum e_type mod)
 	else if ((mod == MAX && it->max < nb) || (mod == MIN && it->min > nb))
         func_obj_minmax(st, it, "number", mod);
 	else if (mod == ADD)
-			add_flags_av(it->fl, (void*)&nb, INT);
+		add_flags_av(it->fl, (void*)&nb, INT);
 	return (TRUE);
 }

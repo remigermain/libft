@@ -47,21 +47,20 @@ int span_alloption(char *flag)
 
 int parse_option(t_flag *st, char fl, char *flag)
 {
-	t_foption	op;
+	int	nb;
 	int i;
 
-	op.nb = 0;
-	op.fl = fl;
 	i = 0;
+	nb = 0;
 	if (flag[i] == '{' && (++i))
 	{
 		while (flag[i] && flag[i] != '}' && flag[i] != ';')
 		{
 			if (flag[i] == ',')
 				i++;
-			op.nb++;
+			nb++;
 			i += ft_spantype(flag + i, ft_isspace);
-			i += is_type(st, &op, flag + i);
+			i += is_type(st, flag + i, nb, fl);
 			i += ft_spantype(flag + i, ft_isspace);
 		}
 	}

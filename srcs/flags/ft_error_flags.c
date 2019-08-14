@@ -21,6 +21,8 @@ int		cout_error_argv(enum e_error_flag mod)
 		error++;
 	if (mod & ERROR_GET && mod & ERROR_PRINT && error)
 	{
+		if (error > MAX_ERROR)
+			ft_dprintf(2, T_RED"error: "T_LGREY"To many error.\n"T_WHITE);
 		ft_dprintf(2, "%d%s ", error, (error > MAX_ERROR ? "+" : ""));
 		ft_dprintf(2, "error generate\n", error);
 	}
@@ -35,17 +37,9 @@ int		wrong_type(t_flag *st, char *type)
 	return (cout_error_argv(ERROR_SET));
 }
 
-int		error_argv(t_flag *st, char *str)
+int		error_argv(t_flag *st, char *str, int i, int j)
 {
-	ft_dprintf(2, T_RED"error: "T_LGREY"%s.\n"T_WHITE, str);
-	ft_error_argv(st->argv, st->i + st->add, 0);
-	return (cout_error_argv(ERROR_SET));
-}
-
-int		error_unkflag(t_flag *st, char *str, int i, int j)
-{
-	ft_dprintf(2, T_RED"error: "T_LGREY"%s.\n"T_WHITE, str);
+	error_line(str);
 	ft_error_argv(st->argv, i, j);
 	return (cout_error_argv(ERROR_SET));
 }
-

@@ -27,7 +27,12 @@ static int	find_flags2(t_flag *st, char *flag)
 		if (flag[i] == ';' && (++j))
 			i++;
 		while (flag[i] && flag[i] != ';' && flag[i] != '|')
-			flags_base(flag[i++], (j == 1 ? F_ADD : F_RM), NULL, 0);
+		{
+			if (j == 1)
+				add_flags(flag[i++]);
+			else
+				remove_flags(flag[i++]);
+		}
 	}
 	return (1);
 }
@@ -71,25 +76,25 @@ static int	parse_mflag(t_flag *st)
 		if (!ft_strncmp(st->argv[st->i] + 2, st->mflag + min, max - 3) &&
 			(int)ft_strlen(st->argv[st->i] + 2) == (max - 2))
 		{
-			flags_base(st->mflag[max - 1], F_ADD, NULL, 0);
+			add_flags(st->mflag[max - 1]);
 			find_flags(st, st->mflag[max - 1]);
 			return (1);
 		}
 		min += max + 1;
 	}
-	error_unkflag(st, "unknow flags", st->i, 0);
+	error_argv(st, "unknow flags", st->i, 0);
 	return (1);
 }
 
 static int	call_flags(t_flag *st)
 {
 	st->j = 0;
-	while (st->argv[st->i][++st->j])
+	while (st->argv[st->i][++st->j] && cout_error_argv(ERROR_GET) < MAX_ERROR)
 	{
 		if (st->argv[st->i][1] != '-')
 		{
 			if (!find_flags(st, st->argv[st->i][st->j]))
-				error_unkflag(st, "unknow flags", st->i, st->j);
+				error_argv(st, "unknow flags", st->i, st->j);
 		}
 		else if (st->argv[st->i][1] == '-')
 			return (parse_mflag(st));
@@ -134,7 +139,7 @@ int			init_flags(char **argv, char *flag, char *mflag, enum e_flags mod)
 		if (st.argv[st.i][0] == '-')
 			call_flags(&st);
 		else if (!add_flags_av(FLAG_ARGV, (void*)st.argv[st.i], STRING))
-			return (error_argv(&st, "To many arguments"));
+			return (error_argv(&st, "To many arguments", st.i + st.add, 0));
 		st.i += st.add;
 	}
 	while (st.argv[st.i])

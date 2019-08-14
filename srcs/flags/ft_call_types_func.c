@@ -57,17 +57,15 @@ int			find_type(t_flag *st, char *flag, char fl, int i)
 	return (ret);
 }
 
-int			is_type(t_flag *st, t_foption *op, char *flag)
+int			is_type(t_flag *st, char *flag, int nb, char fl)
 {
 	int	i;
 
 	i = ft_spancharspace(flag, ",}{");
-	if ((st->i + op->nb) < st->argc)
-	{
-		ft_bzero(&(st->it), sizeof(t_finfo));
-		i += find_type(st, flag, op->fl, (st->i + op->nb));
-	}
+	ft_bzero(&(st->it), sizeof(t_finfo));
+	if ((st->i + nb) < st->argc)
+		i += find_type(st, flag, fl, (st->i + nb));
 	else
-		error_argv(st, "Missing arguments");
+		error_argv(st, "Missing arguments", st->i + st->add, 0);
 	return (span_option(flag + i) + i);
 }

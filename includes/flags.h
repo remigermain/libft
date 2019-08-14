@@ -18,6 +18,15 @@
 # define MAX_ARG 30
 # define MAX_ERROR 30
 
+/*
+**-----------------------------------------------------------
+**      Macro for convert return argument
+**-----------------------------------------------------------
+*/
+# define F_INT(ptr) ((int)*((int*)ptr))
+# define F_CHAR(ptr) ((int)*((int*)ptr))
+# define F_CHARS(ptr) ((char*)ptr)
+
 enum	e_flags
 {
 	FLAG_ARGV = 0,
@@ -57,24 +66,29 @@ enum	e_error_flag
 	ERROR_PRINT = 0b100,
 };
 
+/*
+**-----------------------------------------------------------
+**      struct base for flag
+**-----------------------------------------------------------
+*/
+
 typedef struct s_flagav
 {
 	char	*string[MAX_ARG];
 	char	schar[MAX_ARG];
 	int		number[MAX_ARG];
-	char	fl;
 	int		exist_string;
-	int		exist_int;
 	int		exist_char;
+	int		exist_int;
 	int		nb_arg;
+	char	fl;
 }				t_flagav;
 
-typedef struct s_foption
-{
-	int		nb_arg;
-	int		nb;
-	char	fl;
-}				t_foption;
+/*
+**-----------------------------------------------------------
+**      struct for type's option
+**-----------------------------------------------------------
+*/
 
 typedef struct	s_finfo
 {
@@ -87,6 +101,12 @@ typedef struct	s_finfo
 	char	*flag;
 	char	*av;
 }				t_finfo;
+
+/*
+**-----------------------------------------------------------
+**      struct whith all need
+**-----------------------------------------------------------
+*/
 
 typedef struct	s_flag
 {
@@ -101,63 +121,67 @@ typedef struct	s_flag
 	enum e_flags 	mod;
 }				t_flag;
 
-
 /*
 **-----------------------------------------------------------
 **          ft_flags_base.c
 **-----------------------------------------------------------
 */
-void		print_flag(t_flagav *av, int i, int j);
-void		flag_remove(t_flagav *av, int fl);
-t_bool		flag_add(t_flagav *av, int fl, void *value, enum e_type type);
-t_bool		flags_base(int fl, enum e_flags mod, void *value,
-														enum e_type type);
+t_flagav		*flags_av_struct(void);
+int				flag_getindice(t_flagav *av, int fl);
+t_bool			flag_add(t_flagav *av, int fl, void *value, enum e_type type);
+void			print_flags(void);
 
 /*
 **-----------------------------------------------------------
 **          ft_flags_base_func.c
 **-----------------------------------------------------------
 */
-int			print_flags(void);
-void		remove_flags(int fl);
-int			exist_flags(int fl);
-t_bool		add_flags(int fl);
-t_bool		add_flags_av(int fl, void *value, enum e_type type);
+void			*get_flags_av(int fl, int nb);
+void			remove_flags(int fl);
+t_bool			exist_flags(int fl);
+t_bool			add_flags(int fl);
+t_bool			add_flags_av(int fl, void *value, enum e_type type);
 
 /*
 **-----------------------------------------------------------
 **          ft_parse_argv.c
 **-----------------------------------------------------------
 */
-int			init_flags(char **argv, char *flag, char *mflag, enum e_flags mod);
+int				init_flags(char **argv, char *flag, char *mflag, enum e_flags mod);
 
 /*
 **-----------------------------------------------------------
 **          ft_error_argv.c
 **-----------------------------------------------------------
 */
-void		ft_error_argv(char **argv, int error, int error_2);
+void			ft_error_argv(char **argv, int error, int error_2);
+
+/*
+**-----------------------------------------------------------
+**          ft_error_line.c
+**-----------------------------------------------------------
+*/
+void    		error_line(char *str);
 
 /*
 **-----------------------------------------------------------
 **          ft_error_flags.c
 **-----------------------------------------------------------
 */
-int			cout_error_argv(enum e_error_flag mod);
-int			not_match(t_flag *st, char *str, char *match);
-int			wrong_type(t_flag *st, char *type);
-int			error_argv(t_flag *st, char *str);
-int			error_unkflag(t_flag *st, char *str, int i, int j);
+int				cout_error_argv(enum e_error_flag mod);
+int				not_match(t_flag *st, char *str, char *match);
+int				wrong_type(t_flag *st, char *type);
+int				error_argv(t_flag *st, char *str, int i, int j);
 
 /*
 **-----------------------------------------------------------
 **          ft_func_type.c
 **-----------------------------------------------------------
 */
-t_bool		check_int(t_flag *st, t_finfo *it, char *str, enum e_type mod);
-t_bool		check_uint(t_flag *st, t_finfo *it, char *str, enum e_type mod);
-t_bool		check_string(t_flag *st, t_finfo *it, char *str, enum e_type mod);
-t_bool		check_char(t_flag *st, t_finfo *it, char *str, enum e_type mod);
+t_bool			check_int(t_flag *st, t_finfo *it, char *str, enum e_type mod);
+t_bool			check_uint(t_flag *st, t_finfo *it, char *str, enum e_type mod);
+t_bool			check_string(t_flag *st, t_finfo *it, char *str, enum e_type mod);
+t_bool			check_char(t_flag *st, t_finfo *it, char *str, enum e_type mod);
 
 
 /*
@@ -165,41 +189,42 @@ t_bool		check_char(t_flag *st, t_finfo *it, char *str, enum e_type mod);
 **          ft_func_type_obj.c
 **-----------------------------------------------------------
 */
-void		func_obj_match(t_flag *st, t_finfo *it, char *str);
-void    	func_obj_minmax(t_flag *st, t_finfo *it, char *type, enum e_type mod);
+void			func_obj_match(t_flag *st, t_finfo *it, char *str);
+void    		func_obj_minmax(t_flag *st, t_finfo *it, char *type, enum e_type mod);
 
 /*
 **-----------------------------------------------------------
 **          ft_parse_type.c
 **-----------------------------------------------------------
 */
-int			parse_typeoption(t_finfo *it, char *flag);
-void		option_match(t_flag *st, t_finfo *it, char *str);
-int			span_option(char *flag);
+int				parse_typeoption(t_finfo *it, char *flag);
+void			option_match(t_flag *st, t_finfo *it, char *str);
+int				span_option(char *flag);
 
 /*
 **-----------------------------------------------------------
 **          ft_call_types.c
 **-----------------------------------------------------------
 */
-int			type_all(t_flag *st, t_finfo *it, t_bool(*type_av)
-						(t_flag *st, t_finfo*, char*, enum e_type));
-int			find_type(t_flag *st, char *flag, char fl, int i);
-int			is_type(t_flag *st, t_foption *op, char *flag);
+int				type_all(t_flag *st, t_finfo *it, t_bool(*type_av)
+							(t_flag *st, t_finfo*, char*, enum e_type));
+int				find_type(t_flag *st, char *flag, char fl, int i);
+int				is_type(t_flag *st, char *flag, int nb, char fl);
 
 /*
 **-----------------------------------------------------------
 **          ft_option_flag.c
 **-----------------------------------------------------------
 */
-int 		parse_option(t_flag *st, char fl, char *flag);
-int			span_alloption(char *flag);
+int 			parse_option(t_flag *st, char fl, char *flag);
+int				span_alloption(char *flag);
 
 /*
 **-----------------------------------------------------------
 **          ft_usage_flag.c
 **-----------------------------------------------------------
 */
-char   		*init_usage(char *str);
-void        print_usage(t_flag *st);
+char   			*init_usage(char *str);
+void        	print_usage(t_flag *st);
+
 #endif
