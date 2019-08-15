@@ -15,27 +15,5 @@
 
 void	ft_putnbr_base(int n, int base)
 {
-	char	str[12];
-	int		i;
-	t_mint	max;
-
-	ft_bzero(str, 12);
-	i = ft_intlen_base(n, base);
-	max = 0;
-	if (n < 0 && base == 10)
-	{
-		str[0] = '-';
-		max = 1;
-	}
-	if (n < 0)
-		n = -n;
-	else
-		i -= 1;
-	while (i >= max)
-	{
-		str[i] = (n % base) + 48;
-		i--;
-		n /= base;
-	}
-	ft_putstr_fd(str, 1);
+	ft_putnbr_base_fd(n, base, 1);
 }

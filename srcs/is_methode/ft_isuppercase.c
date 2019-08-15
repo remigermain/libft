@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strchr.c                                      .::    .:/ .      .::   */
+/*   ft_str_is_lowercase.c                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 18:06:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 20:05:29 by alepercq    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/06 12:03:26 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/06 14:31:19 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int c)
+t_bool	ft_isuppercase(int c)
 {
-	while ((*str) && (*str) != c)
-		str++;
-	if ((*str) == c)
-		return ((char*)str);
-	return (NULL);
+	if (c >= 'A' && c <= 'Z')
+		return (TRUE);
+	return (FALSE);
 }

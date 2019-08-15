@@ -22,22 +22,3 @@ void	ft_memdel(void **ap)
 	}
 }
 
-void	ft_memdeltab_int(int ***ap, int size)
-{
-	int count;
-
-	count = 0;
-	while ((*ap) && count < size)
-		ft_memdel((void**)&((*ap)[count++]));
-	ft_memdel((void**)ap);
-}
-
-void	ft_memdeltab_char(char ***ap)
-{
-	size_t count;
-
-	count = 0;
-	while ((*ap) && ((*ap)[count]))
-		ft_memdel((void**)&((*ap)[count++]));
-	ft_memdel((void**)ap);
-}

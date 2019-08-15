@@ -17,18 +17,3 @@ int	ft_putstr(char const *str)
 {
 	return (ft_putstr_fd(str, 1));
 }
-
-int	ft_putnstr(char const *str, int len)
-{
-	return (ft_putnstr_fd(str, len, 1));
-}
-
-int	ft_putstrw(wchar_t const *str)
-{
-	return (ft_putstrw_fd(str, 1));
-}
-
-int	ft_putnstrw(wchar_t const *str, int len)
-{
-	return (ft_putnstrw_fd(str, len, 1));
-}

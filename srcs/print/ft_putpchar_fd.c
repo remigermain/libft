@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strchr.c                                      .::    .:/ .      .::   */
+/*   ft_putstr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 18:06:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 20:05:29 by alepercq    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 16:24:32 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 18:52:01 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int c)
+int	ft_putpchar_fd(char c, int fd)
 {
-	while ((*str) && (*str) != c)
-		str++;
-	if ((*str) == c)
-		return ((char*)str);
-	return (NULL);
+	if (ft_isprint(c) || (c >= 9 && c <= 13))
+		return (ft_putchar_fd(c, fd));
+	else
+	{
+		ft_putchar_fd('^', fd);
+		ft_putchar_fd(c + 64, fd);
+		return (2);
+	}
 }

@@ -13,16 +13,10 @@
 
 #include "libft.h"
 
-void	ft_strclr(char *s)
+void	ft_strclr(char *str)
 {
-	int count;
+	size_t	len;
 
-	count = 0;
-	if (!s)
-		return ;
-	while (s[count] != '\0')
-	{
-		s[count] = '\0';
-		count++;
-	}
+	len = ft_strlen(str);
+	ft_bzero(str, sizeof(char) * len);
 }

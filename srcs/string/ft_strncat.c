@@ -23,11 +23,7 @@ char	*ft_strncat(char *restrict s1, const char *restrict s2, size_t n)
 	while (s1[count_s1] != '\0')
 		count_s1++;
 	while (s2[count_s2] != '\0' && count_s2 < n)
-	{
-		s1[count_s1] = s2[count_s2];
-		count_s1++;
-		count_s2++;
-	}
+		s1[count_s1++] = s2[count_s2++];
 	s1[count_s1] = '\0';
 	return (s1);
 }

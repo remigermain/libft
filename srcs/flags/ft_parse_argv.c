@@ -115,7 +115,7 @@ static int	call_flags(t_flag *st)
 **
 **		pattern :  name  | name | ..ect
 **		pipe is for "or"
-**		in name  *  for all character like : *.cor math with  explosivekitty.cor or bazou.cor
+**		if in name as * , is match for all character like : *.cor match with  explosivekitty.cor or bazou.cor
 **
 **		mflag ; set_flag | ... ect
 */

@@ -25,14 +25,3 @@ int	ft_putpstr_fd(char const *s, int fd)
 	return (count);
 }
 
-int	ft_putpnstr_fd(char const *s, int len, int fd)
-{
-	int count;
-
-	count = 0;
-	if (!s)
-		return (-1);
-	while (s[count] != '\0' && count < len)
-		ft_putpchar_fd(s[count++], fd);
-	return (count);
-}

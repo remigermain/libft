@@ -17,10 +17,8 @@ char	*ft_strnew(size_t size)
 {
 	char *new;
 
-	if (size > 2147483647 || (int)size < 0)
-		return (NULL);
 	if (!(new = (char *)malloc(sizeof(char) * size + 1)))
 		return (NULL);
-	ft_memset(new, 0, size + 1);
+	ft_bzero(new, sizeof(char) * size);
 	return (new);
 }

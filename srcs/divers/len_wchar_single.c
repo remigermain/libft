@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strchr.c                                      .::    .:/ .      .::   */
+/*   ft_countwchar.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 18:06:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 20:05:29 by alepercq    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/12/19 21:57:13 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/04 15:57:51 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int c)
+int		len_wchar_single(wchar_t c)
 {
-	while ((*str) && (*str) != c)
-		str++;
-	if ((*str) == c)
-		return ((char*)str);
-	return (NULL);
+	if (c <= 0x7F)
+		return (1);
+	if (c <= 0x7FF)
+		return (2);
+	if (c <= 0xFFFF)
+		return (3);
+	if (c <= 0x10FFFF)
+		return (4);
+	return (0);
 }

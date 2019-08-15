@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strchar.c                                     .::    .:/ .      .::   */
+/*   ft_itoa.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 18:06:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 11:07:45 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 15:24:04 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/30 20:46:27 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+void	ft_itoabase_buffer(char *buff, int nb2, int base)
 {
-	int		locat;
-	int		locat_on;
-	int		count;
-	char	*dest;
+	long	nb;
+	int		len;
 
-	locat = 0;
-	locat_on = 0;
-	count = 0;
-	dest = (char*)s;
-	while (dest[count] != '\0')
-	{
-		if (dest[count] == (char)c)
-		{
-			locat = count;
-			locat_on = 1;
-		}
-		count++;
+	nb = (long)nb2;
+	len = ft_intlen_base(nb, base);
+	buff[len] = 0;
+    if (nb2 < 0 && (++len))
+        buff[0] = '-';
+	while (len)
+	{ 
+		buff[--len] = nb % base + '0';
+		nb /= 10;
 	}
-	if (dest[count] == (char)c)
-		return (dest + count);
-	if (locat_on == 1)
-		return (dest + locat);
-	return (NULL);
 }

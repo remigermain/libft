@@ -66,7 +66,7 @@ void		print_flags(void)
 	int			i;
 	int			j;
 
-	i = 0;
+	i = -1;
 	av = flags_av_struct();
 	ft_printf("\n[ PRINT FLAG ]\n{\n");
 	while (++i < MAX_FLAGS)
@@ -85,7 +85,7 @@ void		print_flags(void)
 				else if ((av[i].exist_char >> j) & 01)
 					ft_printf("[ character  :  %c ]\n", av[i].schar[j]);
 				else if ((av[i].exist_int >> j) & 01)
-					ft_printf("[ Number  %d ]\n", av[i].number[j]);
+					ft_printf("[ Number   :  %d ]\n", av[i].number[j]);
 			}
 			ft_printf("\t\t}\n\t}\n");
 		}

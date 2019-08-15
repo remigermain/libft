@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-int	ft_isblank(int i)
+t_bool	ft_isblank(int i)
 {
 	if (i == 9 || i == 32)
-		return (1);
-	return (0);
+		return (TRUE);
+	return (FALSE);
 }

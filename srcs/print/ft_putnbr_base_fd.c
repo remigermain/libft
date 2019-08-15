@@ -1,23 +1,41 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strchr.c                                      .::    .:/ .      .::   */
+/*   ft_putnbr_fd.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 18:06:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 20:05:29 by alepercq    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 13:38:11 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/03/23 20:39:51 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int c)
+void	ft_putnbr_base_fd(int n, int base, int fd)
 {
-	while ((*str) && (*str) != c)
-		str++;
-	if ((*str) == c)
-		return ((char*)str);
-	return (NULL);
+	char	str[12];
+	int		i;
+	t_mint	max;
+
+	ft_bzero(str, 12);
+	i = ft_intlen_base(n, base);
+	max = 0;
+	if (n < 0 && base == 10)
+	{
+		str[0] = '-';
+		max = 1;
+	}
+	if (n < 0)
+		n = -n;
+	else
+		i -= 1;
+	while (i >= max)
+	{
+		str[i] = (n % base) + 48;
+		i--;
+		n /= base;
+	}
+	ft_putstr_fd(str, fd);
 }

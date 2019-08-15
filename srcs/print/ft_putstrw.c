@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_lstdel.c                                      .::    .:/ .      .::   */
+/*   ft_putstr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/10 12:05:29 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 15:26:52 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 16:24:32 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 18:52:01 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t))
+int	ft_putstrw(wchar_t const *str)
 {
-	if (!*alst)
-		return ;
-	while (*alst)
-	{
-		del((*alst)->content, (*alst)->content_size);
-		free(*alst);
-		*alst = (*alst)->next;
-	}
-	*alst = NULL;
+	return (ft_putstrw_fd(str, 1));
 }

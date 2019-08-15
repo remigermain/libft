@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-int	ft_isgraph(int c)
+t_bool	ft_isgraph(int c)
 {
 	if (ft_iscntrl(c) || c == 32)
-		return (0);
-	return (1);
+		return (FALSE);
+	return (TRUE);
 }

@@ -17,12 +17,9 @@ char	*ft_strcpy(char *dst, const char *src)
 {
 	int count;
 
-	count = 0;
-	while (src[count] != '\0')
-	{
+	count = -1;
+	while (src[++count] != '\0')
 		dst[count] = (char)src[count];
-		count++;
-	}
 	dst[count] = '\0';
 	return (dst);
 }

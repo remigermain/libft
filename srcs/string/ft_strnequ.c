@@ -22,13 +22,11 @@ int	ft_strnequ(char const *s1, char const *s2, size_t n)
 		return (0);
 	while (s1[count] != '\0' && s2[count] != '\0' && count < ((int)n - 1))
 	{
-		if (s1[count] == s2[count])
-			count++;
-		else
+		if (s1[count] != s2[count])
 			return (0);
+		count++;
 	}
 	if (s1[count] == s2[count] || n == 0)
 		return (1);
-	else
-		return (0);
+	return (0);
 }

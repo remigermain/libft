@@ -13,17 +13,13 @@
 
 #include "libft.h"
 
-int	ft_str_is_uppercase(char *str)
+t_bool	ft_str_is_uppercase(char *str)
 {
-	int a;
+	int i;
 
-	a = 0;
-	while (str[a] != '\0')
-	{
-		if (str[a] >= 'A' && str[a] <= 'Z')
-			a++;
-		else
-			return (0);
-	}
-	return (1);
+	i = -1;
+	while (str[++i] != '\0')
+		if (!ft_uppercase(str[i]))
+			return (FALSE);
+	return (TRUE);
 }

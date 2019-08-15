@@ -35,7 +35,7 @@
 
 
 
-
+#include <string.h>
 
 
 
@@ -46,10 +46,12 @@
 
 int main(int ac, char **av)
 { 
+  /*
     ft_printf("argc = %d\n", ac);
     init_usage("a;pour le visu|p;test pour le p fdvovdfvfd|u;fonvfd vfdv dvfd vfd vfdvvffdvfd|");
-    int i = init_flags(av, "juitpb|a{ char* , int, int, int};;|r{ char* {5,9, *.cor|bonjourfdcdcdc}, char {,, a|b|r|*|4}, int {55,99}, int {99, 554}};;|", "anima;a|", 0);
+    int i = init_flags(av, "juitpb|a { char* { 5, 8, *.cor}, int {5 , 88888} , int, char {8888,8888,r|f|p|*}} ;;|o;;|", "anima;a|", 0);
     print_flags();
+    ft_printf("fdfddfdf");
 
     i = 0;
     ft_printf("\n\n[ici]\n");
@@ -59,6 +61,19 @@ int main(int ac, char **av)
       //  ft_printf("ptr = %s\n", ptr);
         ft_printf("ptr = %d\n", F_INT(ptr));
     }
+  */
+
+
+    ft_printf("%s\n", strnequ(av[1], av[2][0], 100));
+    ft_printf("%s\n", ft_strnequ(av[1], av[2][0], 100));
+
+
+
+
+
+
+
+
     return (0);
 }
 

@@ -44,7 +44,7 @@ size_t	len_pstrn(t_uchar *str, size_t len, size_t index)
 	i = 0;
 	a = 0;
 	if (index == 1)
-		len = ft_ustrlen(str) + 1;
+		len = ft_strlen((char*)(str) + 1;
 	while (i < len && str[i] != '\0')
 	{
 		if (ft_isprint(str[i] && str[i] != '\n') || str[i] == '\t')

@@ -15,26 +15,5 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	char	str[12];
-	int		i;
-	t_mint	max;
-
-	ft_bzero(str, 12);
-	i = ft_intlen(n);
-	max = 0;
-	if (n < 0)
-	{
-		str[0] = '-';
-		n = -n;
-		max = 1;
-	}
-	else
-		i -= 1;
-	while (i >= max)
-	{
-		str[i] = (n % 10) + 48;
-		i--;
-		n /= 10;
-	}
-	ft_putstr_fd(str, fd);
+	ft_putnbr_base_fd(n, 10, fd);
 }

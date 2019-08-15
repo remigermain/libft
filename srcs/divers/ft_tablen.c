@@ -1,23 +1,37 @@
+
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strchr.c                                      .::    .:/ .      .::   */
+/*   ft_atoi.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/02 18:06:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 20:05:29 by alepercq    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/02 11:14:09 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 21:55:19 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *str, int c)
+int		ft_maxlen_tab(char **tab, int index)
 {
-	while ((*str) && (*str) != c)
-		str++;
-	if ((*str) == c)
-		return ((char*)str);
-	return (NULL);
+	int a;
+	int b;
+	int len;
+
+	a = 0;
+	len = 0;
+	while (tab[a] != NULL)
+	{
+		b = 0;
+		while (tab[a][b] != '\0')
+			b++;
+		if (b > len)
+			len = b;
+		a++;
+	}
+	if (index == 1)
+		return (len);
+	return (a);
 }

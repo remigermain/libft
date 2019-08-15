@@ -13,31 +13,13 @@
 
 #include "libft.h"
 
-int	ft_islowercase(int c)
-{
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	return (0);
-}
-
-int	ft_isuppercase(int c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (1);
-	return (0);
-}
-
 int	ft_str_is_lowercase(char *str)
 {
-	int a;
+	int i;
 
-	a = 0;
-	while (str[a] != '\0')
-	{
-		if (str[a] >= 'a' && str[a] <= 'z')
-			a++;
-		else
-			return (0);
-	}
-	return (1);
+	i = -1;
+	while (str[++i] != '\0')
+		if (!ft_islowercase(str[i]))
+			return (FALSE);
+	return (TRUE);
 }

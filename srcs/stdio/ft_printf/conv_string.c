@@ -62,7 +62,7 @@ void			pf_string(t_pf *lst, t_uchar *str, wchar_t *wstr, int index)
 	if (index == 0)
 		max = (POINT == 0 ? len_pstrn(str, 0, 1) : len_pstrn(str, PRECI, 0));
 	else if (index == 1)
-		max = (POINT == 0 ? ft_ustrlen(str) : ft_ustrnlen(str, PRECI));
+		max = (POINT == 0 ? ft_strlen((char*)str) : ft_ustrnlen(str, PRECI));
 	else if (index == 2)
 		max = (POINT == 0 ? len_wchar(wstr) : nlen_wchar(wstr, PRECI));
 	put_prefix(lst, max, FIELD, ZERO);
@@ -84,7 +84,7 @@ void			conv_string(t_pf *lst)
 	{
 		wstr = va_arg(lst->va_copy, wchar_t*);
 		if (wstr == NULL)
-			pf_string(lst, ft_strudup("(null)"), NULL, 1);
+			pf_string(lst, (t_uchar*)ft_strdup("(null)"), NULL, 1);
 		else
 			pf_string(lst, NULL, wstr, 2);
 	}

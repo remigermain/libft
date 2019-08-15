@@ -30,7 +30,7 @@ static void		pf_putchar(t_pf *lst, t_uchar c, t_uchar *wc, int index)
 	size_t max;
 
 	if (index == 1)
-		max = len_wuchart(wc);
+		max = ft_strlen((char*)wc);
 	else
 		max = 1;
 	put_prefix(lst, max, FIELD, ZERO);

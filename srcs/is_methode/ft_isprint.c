@@ -13,10 +13,9 @@
 
 #include "libft.h"
 
-int	ft_isprint(int c)
+t_bool	ft_isprint(int c)
 {
 	if (c >= 32 && c < 127)
-		return (1);
-	else
-		return (0);
+		return (TRUE);
+	return (FALSE);
 }

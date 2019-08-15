@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_lstmap.c                                      .::    .:/ .      .::   */
+/*   ft_putstr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/10 12:20:07 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 17:08:08 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 16:24:32 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 18:52:01 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+int	ft_putpnstr_fd(char const *s, int len, int fd)
 {
-	t_list	*t_result;
-	t_list	*t_lst;
-	t_list	*new;
+	int count;
 
-	if (!lst || !f)
-		return (NULL);
-	t_lst = f(lst);
-	if (!(new = ft_lstnew(t_lst->content, t_lst->content_size)))
-		return (new);
-	t_result = new;
-	lst = lst->next;
-	while (lst)
-	{
-		t_lst = f(lst);
-		if (!(t_result->next = ft_lstnew(t_lst->content, t_lst->content_size)))
-			return (NULL);
-		lst = lst->next;
-		t_result = t_result->next;
-	}
-	return (new);
+	count = 0;
+	if (!s)
+		return (-1);
+	while (s[count] != '\0' && count < len)
+		ft_putpchar_fd(s[count++], fd);
+	return (count);
 }

@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_lstdelone.c                                   .::    .:/ .      .::   */
+/*   ft_putstr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/10 12:23:11 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 15:28:07 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 16:24:32 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 18:52:01 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
+int	ft_putwchar(wchar_t c)
 {
-	del((*alst)->content, (*alst)->content_size);
-	free(*alst);
-	*alst = NULL;
+	return (ft_putwchar_fd(c, 1));
 }

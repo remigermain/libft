@@ -17,8 +17,3 @@ int	ft_putchar(char c)
 {
 	return (ft_putchar_fd(c, 1));
 }
-
-int	ft_putwchar(wchar_t c)
-{
-	return (ft_putwchar_fd(c, 1));
-}

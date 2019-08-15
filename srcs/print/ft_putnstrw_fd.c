@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_lstnew.c                                      .::    .:/ .      .::   */
+/*   ft_atoi.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/10 12:27:05 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 15:09:41 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/02 11:14:09 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 21:55:19 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void const *content, size_t content_size)
+int	ft_putnstrw_fd(wchar_t const *s, int len, int fd)
 {
-	t_list	*new;
+	int count;
+	int	len2;
 
-	if (!(new = (t_list*)malloc(sizeof(t_list))))
-		return (NULL);
-	if (!content)
-	{
-		new->content = NULL;
-		new->content_size = 0;
-	}
-	else
-	{
-		if (!(new->content = (void *)malloc(content_size)))
-			return (NULL);
-		ft_memcpy(new->content, content, content_size);
-		new->content_size = content_size;
-	}
-	new->next = NULL;
-	return (new);
+	count = 0;
+	len2 = 0;
+	if (!s)
+		return (-1);
+	while (s[count] != '\0' && len2 < len)
+		len2 += ft_putwchar_fd(s[count++], fd);
+	return (len2);
 }

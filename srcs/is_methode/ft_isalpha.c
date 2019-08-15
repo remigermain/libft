@@ -13,10 +13,9 @@
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+t_bool	ft_isalpha(int c)
 {
 	if (c > 122 || c < 65 || (c > 90 && c < 97))
-		return (0);
-	else
-		return (1);
+		return (FALSE);
+	return (TRUE);
 }

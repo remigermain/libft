@@ -23,32 +23,3 @@ size_t	ft_strlen(const char *s)
 	return (count);
 }
 
-size_t	ft_strnlen(const char *s, size_t max)
-{
-	size_t count;
-
-	count = 0;
-	while (count < max && s[count] != '\0')
-		count++;
-	return (count);
-}
-
-size_t	ft_ustrlen(const unsigned char *s)
-{
-	size_t count;
-
-	count = 0;
-	while (s[count] != '\0')
-		count++;
-	return (count);
-}
-
-size_t	ft_ustrnlen(const unsigned char *s, size_t max)
-{
-	size_t count;
-
-	count = 0;
-	while (count < max && s[count] != '\0')
-		count++;
-	return (count);
-}

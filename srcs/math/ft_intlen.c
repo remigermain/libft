@@ -13,13 +13,6 @@
 
 #include "libft.h"
 
-int	ft_intlen_base(int nb, int base)
-{
-	if (nb < 0)
-		nb = -nb;
-	return (1 + (nb >= base ? ft_intlen_base(nb / base, base) : 0));
-}
-
 int	ft_intlen(int n)
 {
 	return (ft_intlen_base(n, 10));

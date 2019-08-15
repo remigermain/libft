@@ -28,7 +28,7 @@ int span_alloption(char *flag)
 {
 	int i;
 
-	i = 0;
+	i = ft_spantype(flag, ft_isspace);
 	if (flag[i] == '{' && (++i))
 	{
 		while (flag[i] && flag[i] != '}' && flag[i] != ';')
@@ -50,8 +50,8 @@ int parse_option(t_flag *st, char fl, char *flag)
 	int	nb;
 	int i;
 
-	i = 0;
 	nb = 0;
+	i = ft_spantype(flag, ft_isspace);
 	if (flag[i] == '{' && (++i))
 	{
 		while (flag[i] && flag[i] != '}' && flag[i] != ';')

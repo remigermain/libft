@@ -17,12 +17,9 @@ char	*ft_strupcase(char *str)
 {
 	int a;
 
-	a = 0;
-	while (str[a] != '\0')
-	{
-		if (str[a] >= 'a' && str[a] <= 'z')
-			str[a] = str[a] - 32;
-		a++;
-	}
+	a = -1;
+	while (str[++i] != '\0')
+		if (ft_isuppercase(str[i]))
+			str[i] -= 32;
 	return (str);
 }

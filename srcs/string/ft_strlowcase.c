@@ -15,14 +15,11 @@
 
 char	*ft_strlowcase(char *str)
 {
-	int a;
+	int i;
 
-	a = 0;
-	while (str[a] != '\0')
-	{
-		if (str[a] >= 'A' && str[a] <= 'Z')
-			str[a] = str[a] + 32;
-		a++;
-	}
+	i = -1;
+	while (str[++i] != '\0')
+		if (ft_isuppercase(str[i]))
+			str[i] += 32;
 	return (str);
 }
