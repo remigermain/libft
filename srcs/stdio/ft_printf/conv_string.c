@@ -13,91 +13,89 @@
 
 #include "ft_printf.h"
 
-static t_uchar	*comv_pstr(t_pf *lst, t_uchar *str, size_t len)
+static size_t	ft_strplen(unsigned char *str, int len)
 {
-	t_uchar	*new;
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	max;
 
-	i = 0;
-	j = 0;
-	if (!(new = (t_uchar*)malloc(sizeof(t_uchar) * len + 1)))
-		ERROR(lst, "pf_putpstr", 1);
-	while (str[i] != '\0' && i < len)
+	i = -1;
+	max = 0;
+	while (str[++i] && i < len)
+	{
+		if (!ft_isprint(str[i]))
+			max++;
+		max++;
+	}
+	return (i);
+}
+
+static void		conv_pstr(t_pf *st, unsigned char *str, int max)
+{
+	int	i;
+	int	c;
+
+	i = -1;
+	while (str[++i] != '\0' && i < max)
 	{
 		if (str[i] == '\n')
-			new[j++] = '$';
+			put_buff(st, "$", 1, NO_FREE);
 		if (ft_isprint(str[i]) || str[i] == '\n' || str[i] == '\t')
-			new[j++] = str[i++];
+			put_buff(st, str + i, 1, NO_FREE);
 		else
 		{
-			new[j++] = '^';
-			new[j++] = (str[i++] + 64);
+			put_buff(st, "^", 1, NO_FREE);
+			c = str[i] + 64;
+			put_buff(st, &c, 1, NO_FREE);
 		}
 	}
-	free(str);
-	return (new);
 }
 
-static t_uchar	*comv_wstr(t_pf *lst, wchar_t *wstr, size_t len)
+static void		comv_wstr(t_pf *st, wchar_t *wstr, int max)
 {
-	t_uchar	*str;
-	size_t	i;
-	size_t	count;
+	int i;
 
 	i = 0;
-	count = 0;
-	if (!(str = (t_uchar*)malloc(sizeof(t_uchar) * nlen_wchar(wstr, len))))
-		ERROR(lst, "comv_wstr", 1);
-	while (wstr[count] != '\0' && count < len && i < len)
-		convert_wchar(&str, wstr[count++], &i);
-	return (str);
+	while (((unsigned char*)wstr)[i] && i < max)
+		put_buff(st, &((unsigned char*)wstr)[i++], 1, NO_FREE);
 }
 
-void			pf_string(t_pf *lst, t_uchar *str, wchar_t *wstr, int index)
+void			pf_string(t_pf *st, unsigned char *str)
 {
 	size_t	max;
 
-	max = 0;
-	if (index == 0)
-		max = (POINT == 0 ? len_pstrn(str, 0, 1) : len_pstrn(str, PRECI, 0));
-	else if (index == 1)
-		max = (POINT == 0 ? ft_strlen((char*)str) : ft_strnlen((char*)str, PRECI));
-	else if (index == 2)
-		max = (POINT == 0 ? len_wchar(wstr) : nlen_wchar(wstr, PRECI));
-	put_prefix(lst, max, FIELD, ZERO);
-	if (index == 0)
-		str = comv_pstr(lst, str, max);
-	else if (index == 2)
-		str = comv_wstr(lst, wstr, max);
-	put_buff(lst, str, max, ((LENGHT >= 10 && LENGHT <= 20) ||
-				CONV == 'S') ? 1 : 0);
-	put_prefix(lst, max, -FIELD, 0);
+	max = ft_strlen((char*)str);
+	if ((LENGH_L(st->op.flag) || LENGH_LL(st->op.flag) || st->op.conv == 'S')
+									&& PF_POINT(st->op.flag))
+		max = nlen_wchar((wchar_t*)str, st->op.preci);
+	else if (LENGH_L(st->op.flag) || LENGH_LL(st->op.flag) || st->op.conv == 'S')
+		max = len_wchar((wchar_t*)str);
+	else if (st->op.conv == 'r' && PF_POINT(st->op.flag))
+		max = ft_strplen(str, st->op.preci);
+	else if (st->op.conv == 'r')
+		max = ft_strplen(str, max);
+	else if (PF_POINT(st->op.flag))
+		max = ft_strnlen((char*)str, st->op.preci);
+	put_prefix(st, max, st->op.field, PF_ZERO(st->op.flag));
+	if (LENGH_L(st->op.flag) || LENGH_LL(st->op.flag) || st->op.conv == 'S')
+		comv_wstr(st, (wchar_t*)str, max);
+	else if (st->op.conv == 'r')
+		conv_pstr(st, str, max);
+	else
+		put_buff(st, str, max, NO_FREE);
+	put_prefix(st, max, -st->op.field, 0);
 }
 
-void			conv_string(t_pf *lst)
+void			conv_string(t_pf *st)
 {
-	char	*str;
-	wchar_t	*wstr;
+	unsigned char	*str;
 
-	if ((LENGHT >= 10 && LENGHT <= 20) || CONV == 'S')
-	{
-		wstr = va_arg(lst->va_copy, wchar_t*);
-		if (wstr == NULL)
-			pf_string(lst, (t_uchar*)ft_strdup("(null)"), NULL, 1);
-		else
-			pf_string(lst, NULL, wstr, 2);
-	}
+	if (LENGH_L(st->op.flag) || LENGH_LL(st->op.flag) || st->op.conv == 'S')
+		str = (unsigned char *)va_arg(st->va_copy, wchar_t*);
+	else if (st->op.conv == 'm')
+		str = (unsigned char *)ft_strerror(errno);
 	else
-	{
-		if (CONV == 'm')
-			str = strerror(errno);
-		else
-		{
-			str = va_arg(lst->va_copy, char*);
-			if (str == NULL)
-				str = "(null)";
-		}
-		pf_string(lst, (t_uchar*)str, NULL, (CONV == 'r' ? 0 : 1));
-	}
+		str = (unsigned char *)va_arg(st->va_copy, char*);
+	if (!str)
+		str = (unsigned char *)("(null)");
+	pf_string(st, str);
 }

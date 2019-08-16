@@ -13,45 +13,25 @@
 
 #include "ft_printf.h"
 
-static int	find_conv(t_pf *lst, char *str, int ret)
+int			ft_stprintf(char ind, const char *format, ...)
 {
-	ret = lst_putoption(lst, str, 1);
-	if (CONV == 'n')
-		conv_nlen(lst);
-	else if (CONV == 'f' || CONV == 'F' || CONV == 'e' || CONV == 'E' ||
-			CONV == 'g' || CONV == 'G')
-		lst_putdouble(lst);
-	else if (CONV == 't' && str[ret] == 's')
-		ret += conv_tabstring(lst);
-	else if (CONV == 's' || CONV == 'S' || CONV == 'r' || CONV == 'm')
-		conv_string(lst);
-	else if (CONV == 'd' || CONV == 'i' || CONV == 'D' || CONV == 'x' ||
-			CONV == 'X' || CONV == 'o' || CONV == 'O' || CONV == 'u' ||
-			CONV == 'U' || CONV == 'p' || CONV == 'b' || CONV == 'B')
-		conv_int(lst);
-	else if (CONV == '@')
-		conv_other(lst);
-	else if (CONV != 0)
-		conv_char(lst);
-	return (ret);
-}
+	static t_pf	st;
+	int			i;
 
-static int	ftprintf_base(char *str, t_pf *lst, size_t i, size_t j)
-{
-	va_copy(lst->va_copy, lst->va_lst);
-	while (str[i] != '\0')
+	va_start(st.va_lst, format);
+	i = ftprintf_base((char*)format, &st, 0, 0);
+	if (ind == OUT_PF && st.str_count > 0)
 	{
-		j = 0;
-		while (str[i + j] != '\0' && str[i + j] != '%')
-			j++;
-		put_buff(lst, str + i, j, 0);
-		if (str[i + j] == '%')
-			i += find_conv(lst, (str + i + j), 0);
-		i += j;
+		i += write(1, st.str, st.str_count);
+		ft_memdel((void**)&(st.str));
+		st.str_count = 0;
 	}
-	va_end(lst->va_lst);
-	va_end(lst->va_copy);
-	return (lst->count + lst->buff_count);
+	if (ind == OUT_PF && st.buff_count > 0)
+	{
+		i += write(1, st.buff, st.buff_count);
+		st.buff_count = 0;
+	}
+	return (i);
 }
 
 int			ft_sprintf(t_uchar **dest, const char *format, ...)
@@ -59,47 +39,36 @@ int			ft_sprintf(t_uchar **dest, const char *format, ...)
 	t_pf	lst;
 	int		i;
 
-	ft_bzero(&lst, sizeof(t_pf));
-	lst.buff_size = BUFF_PRINTF;
-	va_start(lst.va_lst, format);
-	i = ftprintf_base((char*)format, &lst, 0, 0);
+	t_pf	st;
+	ft_bzero(&st, sizeof(t_pf));
+	va_start(st.va_lst, format);
+	st.is_print = TRUE;
+	st.fd = 1;
 	convert_buff(&lst, NULL, 0);
+	i = ftprintf_base((char*)format, &st, 0, 0);
 	*dest = lst.str;
 	return (i);
 }
 
 int			ft_dprintf(int fd, const char *format, ...)
 {
-	t_pf	lst;
-	int		i;
+	t_pf	st;
 
-	ft_bzero(&lst, sizeof(t_pf));
-	lst.buff_size = BUFF_PRINTF;
-	va_start(lst.va_lst, format);
-	i = ftprintf_base((char*)format, &lst, 0, 0);
-	if (lst.count != 0)
-		write(fd, lst.str, lst.count);
-	if (lst.buff_count != 0)
-		write(fd, lst.buff, lst.buff_count);
-	if (lst.str != NULL)
-		ft_memdel((void**)&(lst.str));
-	return (i);
+	ft_bzero(&st, sizeof(t_pf));
+	va_start(st.va_lst, format);
+	st.is_print = TRUE;
+	st.fd = fd;
+	return (ftprintf_base((char*)format, &st, 0, 0));
 }
+
 
 int			ft_printf(const char *format, ...)
 {
-	t_pf	lst;
-	int		i;
+	t_pf	st;
 
-	ft_bzero(&lst, sizeof(t_pf));
-	lst.buff_size = BUFF_PRINTF;
-	va_start(lst.va_lst, format);
-	i = ftprintf_base((char*)format, &lst, 0, 0);
-	if (lst.count != 0)
-		write(1, lst.str, lst.count);
-	if (lst.buff_count != 0)
-		write(1, lst.buff, lst.buff_count);
-	if (lst.str != NULL)
-		ft_memdel((void**)&(lst.str));
-	return (i);
+	ft_bzero(&st, sizeof(t_pf));
+	va_start(st.va_lst, format);
+	st.is_print = TRUE;
+	st.fd = 1;
+	return (ftprintf_base((char*)format, &st, 0, 0));
 }

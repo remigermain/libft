@@ -14,7 +14,7 @@
 #ifndef DIVERS_H
 # define DIVERS_H
 
-void	convert_wchar(unsigned char **new, wchar_t wc, size_t *i);
+size_t	convert_wchar(unsigned char *new, wchar_t wc);
 char	**ft_createtab(int len, char c);
 void	ft_inttab_del(int **ap, int size);
 int		ft_match(char *s1, char *s2);

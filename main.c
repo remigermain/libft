@@ -22,12 +22,12 @@ int main(int ac, char **av)
         ft_printf("ptr = %d\n", F_INT(ptr));
     }
   */
-  double nb = 500.5;
-  ft_printf("%f\n", ((double)10) / 100);
-  
-  ft_printf("%f\n", ft_atof(av[1]));
-  printf("%f\n", atof(av[1]));
+  unsigned char *str = (unsigned char *)("null");
+    int i = ft_printf("coucou %f ca va ?\n", 45645464.1565);
+    printf("i = %d\n", i);
 
+    i = printf("coucou %f ca va ?\n", 45645464.1565);
+    printf("i = %d\n", i);
     return (0);
 }
 

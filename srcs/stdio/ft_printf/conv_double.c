@@ -13,118 +13,106 @@
 
 #include "ft_printf.h"
 
-static void	remove_zero(t_pf *lst, t_ulong *nb, int i, size_t index)
+static void	remove_zero(t_pf *st, t_ulong *nb, int i, size_t index)
 {
-	if ((CONV == 'g' || CONV == 'G') && (index == 1 || index == 3))
+	if ((st->op.conv == 'g' || st->op.conv == 'G') && (index == 1 || index == 3))
 	{
-		while (i < PRECI)
-		{
-			if (nb[i] == 0)
-				PRECI++;
-			else
-				break ;
-			i++;
-		}
+		while (i < st->op.preci && !nb[i++])
+			st->op.preci++;
 	}
-	if ((CONV == 'g' || CONV == 'G') && (index == 2 || index == 3))
+	if ((st->op.conv == 'g' || st->op.conv == 'G') && (index == 2 || index == 3))
 	{
-		i = PRECI;
-		while (i > 1)
-		{
-			if (nb[i] == 0)
-				PRECI--;
-			else
-				break ;
-			i--;
-		}
+		i = st->op.preci;
+		while (i > 1 && nb[i--])
+			st->op.preci--;
 	}
 }
 
-static void	roundup_double(t_pf *lst, t_ulong *nb, int i, int max)
+static void	roundup_double(t_pf *st, t_ulong *nb, int i, int max)
 {
-	remove_zero(lst, nb, 1, 3);
-	i = PRECI + 1;
-	max = PRECI + 1;
+	remove_zero(st, nb, 1, 3);
+	i = st->op.preci + 1;
+	max = st->op.preci + 1;
 	while (i > 0)
 	{
-		if ((nb[i] >= (BASE / 2) && i == max) ||
-			(nb[i] >= BASE && i > 0))
+		if ((nb[i] >= (t_ulong)(st->op.base / 2) && i == max) ||
+			(nb[i] >= (t_ulong)st->op.base && i > 0))
 		{
 			nb[i - 1] += 1;
-			nb[i] = nb[i] % BASE;
+			nb[i] = nb[i] % st->op.base;
 		}
 		i--;
 	}
-	remove_zero(lst, nb, 1, 2);
+	remove_zero(st, nb, 1, 2);
 }
 
-static void	assign_double(t_pf *lst, t_ulong *nb, size_t i, int j)
+static void	assign_double(t_pf *st, t_ulong *nb, size_t i, int j)
 {
 	int		preci;
 
-	preci = PRECI + 1;
-	nb[i++] = lst->flag.ul_nb;
-	j = (lst->flag.ful_nb != 0 ? ulen_base(lst->flag.ful_nb, BASE) : 0);
+	preci = st->op.preci + 1;
+	nb[i++] = st->op.ul_nb;
+	j = (st->op.ful_nb != 0 ? ulen_base(st->op.ful_nb, st->op.base) : 0);
 	i += j;
 	while (j > 0)
 	{
-		nb[j--] = lst->flag.ful_nb % BASE;
-		lst->flag.ful_nb /= BASE;
+		nb[j--] = st->op.ful_nb % st->op.base;
+		st->op.ful_nb /= st->op.base;
 	}
 	while (preci > 0)
 	{
-		lst->flag.fl_nb *= BASE;
-		nb[i++] = (int)lst->flag.fl_nb;
-		lst->flag.fl_nb -= (int)lst->flag.fl_nb;
+		st->op.fl_nb *= st->op.base;
+		nb[i++] = (int)st->op.fl_nb;
+		st->op.fl_nb -= (int)st->op.fl_nb;
 		preci--;
 	}
-	roundup_double(lst, nb, 0, 0);
+	roundup_double(st, nb, 0, 0);
 }
 
-static int	max_calc(t_pf *lst, int max)
+static int	max_calc(t_pf *st, int max)
 {
-	if (SPACE == 1 && SIGN != '+' && ft_strlen(PSIGN) == 0)
+	if (PF_SPACE(st->op.flag) == 1 && st->op.sign[0] != '+' && ft_strlen(st->op.sign) == 0)
 	{
-		put_prefix(lst, 0, 1, 0);
-		if (FIELD > 0)
-			FIELD--;
-		else if (FIELD < 0)
-			FIELD++;
+		put_prefix(st, 0, 1, 0);
+		if (st->op.field > 0)
+			st->op.field--;
+		else if (st->op.field < 0)
+			st->op.field++;
 	}
-	max = ulen_base(lst->flag.ul_nb, BASE) + PRECI;
-	max += ft_strlen(PSIGN);
-	if (!((CONV == 'g' || CONV == 'G') && PRECI == 0))
-		max += ((POINT == 0 || PRECI > 0) ? 1 : 0);
-	if (CONV == 'e' || CONV == 'E' || ((CONV == 'g' || CONV == 'G') &&
-				PRECI != 0 && (EXPONENT < -4 || EXPONENT >= PRECI)))
-		max += 2 + MAX(ulen_base(ABS(EXPONENT), BASE), 2);
+	max = ulen_base(st->op.ul_nb, st->op.base) + st->op.preci;
+	max += ft_strlen(st->op.sign);
+	if (!((st->op.conv == 'g' || st->op.conv == 'G') && st->op.preci == 0))
+		max += ((PF_POINT(st->op.flag) == 0 || st->op.preci > 0) ? 1 : 0);
+	if (st->op.conv == 'e' || st->op.conv == 'E' || ((st->op.conv == 'g' || st->op.conv == 'G') &&
+				st->op.preci != 0 && (st->op.exponent < -4 || st->op.exponent >= st->op.preci)))
+		max += 2 + MAX(ulen_base(ABS(st->op.exponent), st->op.base), 2);
 	return (max);
 }
 
-void		conv_double(t_pf *lst, t_ulong *nb, int i)
+void		conv_double(t_pf *st, t_ulong *nb, int i)
 {
 	unsigned char	*new;
 	int				max;
 
 	max = 0;
-	if ((CONV == 'g' || CONV == 'G') && POINT == 0)
-		lst->flag.preci -= ulen_base(lst->flag.ul_nb, BASE);
-	assign_double(lst, nb, 0, 0);
-	max = max_calc(lst, 0);
-	if (ZERO == 1)
-		put_buff(lst, PSIGN, ft_strlen(PSIGN), 0);
-	put_prefix(lst, max, FIELD, ZERO);
-	if (ZERO == 0)
-		put_buff(lst, PSIGN, ft_strlen(PSIGN), 0);
-	put_itoa(lst, nb[i++]);
-	if (PRECI > 0)
-		put_buff(lst, ".", 1, 0);
-	while ((i - 1) < PRECI)
-		put_itoa(lst, nb[i++]);
-	if (CONV == 'e' || CONV == 'E' || ((CONV == 'g' || CONV == 'G') &&
-				PRECI != 0 && (EXPONENT < -4 || EXPONENT >= PRECI)))
+	if ((st->op.conv == 'g' || st->op.conv == 'G') && PF_POINT(st->op.flag) == 0)
+		st->op.preci -= ulen_base(st->op.ul_nb, st->op.base);
+	assign_double(st, nb, 0, 0);
+	max = max_calc(st, 0);
+	if (PF_ZERO(st->op.flag) == 1)
+		put_buff(st, st->op.sign, ft_strlen(st->op.sign), 0);
+	put_prefix(st, max, st->op.field, PF_ZERO(st->op.flag));
+	if (!PF_ZERO(st->op.flag) == 0)
+		put_buff(st, st->op.sign, ft_strlen(st->op.sign), 0);
+	put_itoa(st, nb[i++]);
+	if (st->op.preci > 0)
+		put_buff(st, ".", 1, 0);
+	while ((i - 1) < st->op.preci)
+		put_itoa(st, nb[i++]);
+	if (st->op.conv == 'e' || st->op.conv == 'E' || ((st->op.conv == 'g' || st->op.conv == 'G') &&
+				st->op.preci != 0 && (st->op.exponent < -4 || st->op.exponent >= st->op.preci)))
 	{
-		i = ft_sprintf(&new, "%c%+.2d", (MAJ == 1 ? 'E' : 'e'), EXPONENT);
-		put_buff(lst, new, i, 1);
+		i = ft_sprintf(&new, "%c%+.2d", (MAJ == 1 ? 'E' : 'e'), st->op.exponent);
+		put_buff(st, new, i, 1);
 	}
 }

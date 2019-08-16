@@ -14,7 +14,7 @@
 NAME = libft.a
 TYPE = " de la library"
 
-CFLAGS =  -Wall -Wextra -Werror -g3
+CFLAGS =  -Wall -Wextra -g3
 
 INCLUDE = -Iincludes
 
@@ -88,10 +88,9 @@ SRC_STDIO = $(CSRC_PRINTF)
 
 CSRC_PRINTF = $(addprefix $(D_FT_PRINTF),$(SRC_PRINTF))
 D_FT_PRINTF = ft_printf/
-SRC_PRINTF =		conv_char.c conv_int.c conv_string.c ft_printf.c ft_stprintf.c lst_putdouble.c lst_putoption.c \
-					put_string.c conv_double.c conv_other.c conv_tabstring.c utils.c
-
-
+SRC_PRINTF =		ft_printf.c ft_printf_base.c get_options.c put_string.c utils.c\
+					conv_string.c conv_tabstring.c conv_other.c conv_char.c conv_int.c \
+					st_putdouble.c conv_double.c
 
 CSRC_STRING = $(addprefix $(D_STRING),$(SRC_STRINGS))
 D_STRING = string/

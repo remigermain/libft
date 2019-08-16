@@ -13,14 +13,18 @@
 
 #include "libft.h"
 
-void	convert_wchar(unsigned char **new, wchar_t wc, size_t *i)
+size_t	convert_wchar(unsigned char *new, wchar_t wc)
 {
-	(*new)[(*i)++] = ((unsigned char*)&wc)[0];
+	size_t j;
+
+	j = 0;
+	new[j++] = ((unsigned char*)&wc)[0];
 	if (wc > 0x7FF)
-		(*new)[(*i)++] = ((unsigned char*)&wc)[1];
+		new[j++] = ((unsigned char*)&wc)[1];
 	if (wc > 0xFFFF)
-		(*new)[(*i)++] = ((unsigned char*)&wc)[2];
+		new[j++] = ((unsigned char*)&wc)[2];
 	if (wc > 0x10FFFF)
-		(*new)[(*i)++] = ((unsigned char*)&wc)[3];
-	(*new)[(*i)] = '\0';
+		new[j++] = ((unsigned char*)&wc)[3];
+	new[j] = '\0';
+	return (j);
 }

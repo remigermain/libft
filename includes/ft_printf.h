@@ -13,9 +13,10 @@
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+# include <stdarg.h>
+# include <stdio.h>
 # include "libft.h"
 # include "color.h"
-# include <stdarg.h>
 # define BUFF_PRINTF 10000
 # define KEEP_PF	1
 # define OUT_PF	0
@@ -25,24 +26,61 @@
 # define INTMAX_T long long
 #endif
 
-/*
-** raccourcie list
-*/
-# define ERROR	ftprintf_error
-# define EXPONENT lst->flag.exponent
-# define HASH lst->flag.hash
-# define SPACE	lst->flag.space
-# define ZERO lst->flag.zero
-# define SIGN lst->flag.sign
-# define LOCAL lst->flag.local
-# define FIELD lst->flag.field
-# define POINT lst->flag.point
-# define PRECI lst->flag.preci
-# define MAJ lst->flag.maj
-# define PSIGN lst->flag.psign
-# define BASE lst->flag.base
-# define LENGHT lst->flag.lenght
-# define CONV lst->flag.conv
+enum	e_cast_pf
+{
+	HASH = 1,
+	SPACE,
+	ZERO,
+	SIGN_NEG,
+	SIGN_POS,
+	LOCAL,
+	POINT,
+	MAJ,
+	P_SIGN_NEG,
+	P_SIGN_POS,
+	P_SIGN_HEX,
+	CAST_L,
+	CAST_L_MAJ,
+	CAST_LL,
+	CAST_H,
+	CAST_HH,
+	CAST_Z,
+	CAST_J,
+};
+
+enum	e_pf
+{
+	PF_FREE,
+	NO_FREE,
+};
+
+# define PF_HASH(fl) (fl & (1 << HASH) ? TRUE : FALSE)
+# define PF_SPACE(fl) (fl & (1 << SPACE) ? TRUE : FALSE)
+# define PF_ZERO(fl) (fl & (1 << ZERO) ? TRUE : FALSE)
+# define PF_SIGN_NEG(fl) (fl & (1 << SIGN_NEG) ? TRUE : FALSE)
+# define PF_SIGN_POS(fl) (fl & (1 << SIGN_POS) ? TRUE : FALSE)
+# define PF_LOCAL(fl) (fl & (1 << LOCAL) ? TRUE : FALSE)
+# define PF_POINT(fl) (fl & (1 << POINT) ? TRUE : FALSE)
+# define PF_MAJ(fl) (fl & (1 << MAJ) ? TRUE : FALSE)
+# define PRINT_PF(fl)	(fl & (1 << PRINT) ? TRUE : FALSE)
+# define POINT_PF(fl)	(fl & (1 << POINT) ? TRUE : FALSE)
+# define PF_STRING(conv) (conv == 's' || conv == 'S' || conv == 'r' || \
+											conv == 'm' ? TRUE : FALSE)
+# define LEN_PSIGN(sign) (sign == P_SIGN_HEX ? 2 : PF_NO_SIGN(sign) ? 1 : 0)
+# define BASE_16(conv) (conv == 'x' || conv == 'X' || conv == 'p' || \
+							conv == 'a' || conv == 'A' ? TRUE : FALSE)
+# define BASE_8(conv) (conv == 'o' || conv == 'O' ? TRUE : FALSE)
+# define BASE_2(conv) (conv == 'b' || conv == 'B' || conv == 'r' || \
+											conv == 'm' ? TRUE : FALSE)
+# define LENGH_L(fl)	(fl & (1 << CAST_L) ? TRUE : FALSE)
+# define LENGH_L_MAJ(fl)	(fl & (1 << CAST_L_MAJ) ? TRUE : FALSE)
+# define LENGH_LL(fl)	(fl & (1 << CAST_LL) ? TRUE : FALSE)
+# define LENGH_H(fl)	(fl & (1 << CAST_H) ? TRUE : FALSE)
+# define LENGH_HH(fl)	(fl & (1 << CAST_HH) ? TRUE : FALSE)
+# define LENGH_Z(fl)	(fl & (1 << CAST_Z) ? TRUE : FALSE)
+# define LENGH_J(fl)	(fl & (1 << CAST_J) ? TRUE : FALSE)
+# define LENGH_NO(fl)	(LENGH_J(fl) || LENGH_Z(fl) || LENGH_HH(fl) || \
+LENGH_H(fl) || LENGH_L_MAJ(fl) || LENGH_L(fl) || LENGH_LL(fl) ? TRUE : FALSE)
 
 typedef struct	s_pf_flag
 {
@@ -50,32 +88,26 @@ typedef struct	s_pf_flag
 	t_ulong			ful_nb;
 	long double		fl_nb;
 	int				exponent;
-	t_mint			hash;
-	t_mint			space;
-	t_mint			zero;
-	t_mint			sign;
-	t_mint			local;
 	int				field;
-	t_mint			point;
 	int				preci;
-	t_mint			maj;
-	char			*psign;
-	t_muint			base;
-	size_t			lenght;
+	int				flag;
+	int				base;
+	enum e_cast_pf	lenght;
+	char			*sign;
 	char			conv;
 }				t_pf_flag;
 
 typedef struct	s_printf
 {
-	va_list			va_lst;
-	va_list			va_copy;
-	t_ulong			buff_size;
-	int				buff_count;
-	char			st_pf;
-	t_uchar			buff[BUFF_PRINTF];
-	int				count;
-	t_uchar			*str;
-	t_pf_flag		flag;
+	va_list		va_lst;
+	va_list		va_copy;
+	int			buff_count;
+	int			str_count;
+	int			fd;
+	t_uchar		buff[BUFF_PRINTF];
+	t_uchar		*str;
+	t_bool		is_print;
+	t_pf_flag	op;
 }				t_pf;
 
 /*
@@ -86,53 +118,20 @@ int				ft_printf(const char *str, ...);
 int				ft_stprintf(char ind, const char *str, ...);
 int				ft_dprintf(int fd, const char *str, ...);
 int				ft_sprintf(t_uchar **dest, const char *format, ...);
-
-/*
-** fonctions des differentes convertion
-** conv_*.c
-*/
-void			conv_char(t_pf *lst);
-void			conv_int(t_pf *lst);
-void			conv_string(t_pf *lst);
-void			conv_double(t_pf *lst, t_ulong *nb, int i);
-void			conv_other(t_pf *lst);
-int				conv_tabstring(t_pf *lst);
-int				conv_color(t_pf *lst, char *str);
-void			conv_nlen(t_pf *lst);
-
-/*
-** initialisation lst && fonction pour ajouter les differentes options
-** lst_init.c && lst_base.c && lst_initnb.c
-*/
-int				lst_putoption(t_pf *lst, char *str, int index);
-void			lst_putdollar(t_pf *lst, int len);
-void			lst_putint(t_pf *lst);
-void			lst_putdouble(t_pf *lst);
-
-/*
-** fonctions len_nbr , len no_print char && convert in print, put color
-**	utils.c
-*/
+int				ftprintf_base(char *str, t_pf *st, size_t i, size_t j);
+int				get_option(t_pf *lst, char *str, int count);
+void			convert_buff(t_pf *st, void *tmp, size_t len);
+void			put_buff(t_pf *st, void *tmp, size_t len, enum e_pf mod);
+void			put_prefix(t_pf *st, int len, int nb, t_bool point);
 void			ftprintf_error(t_pf *lst, char *str, size_t index);
 int				ulen_base(t_ulong nb, size_t base);
-size_t			len_pstrn(t_uchar *str, size_t len, size_t index);
-
-/*
-**	fonctions qui put les signes( - , + , 0x )
-**			 ajoute les esapces et zero des precisions/field
-**				join le str entre eux && t_ulong itoa avec local
-**	utils_put.c
-*/
-void			convert_buff(t_pf *lst, void *tmp, size_t len);
-void			put_buff(t_pf *lst, void *tmp, size_t len, size_t index);
 void			put_itoa(t_pf *lst, t_ulong n);
-void			put_prefix(t_pf *lst, int len, int nb, int point);
-void			put_sign(t_pf *lst);
-
-/*
-** fonction de debug de la list
-**	debug.c
-*/
-void			debug(t_pf *lst);
+void			st_putdouble(t_pf *st);
+void			conv_int(t_pf *st);
+void			conv_other(t_pf *st);
+void			conv_char(t_pf *st);
+void			conv_string(t_pf *st);
+int				conv_tabstring(t_pf *st);
+void			conv_double(t_pf *lst, t_ulong *nb, int i);
 
 #endif

@@ -13,117 +13,118 @@
 
 #include "ft_printf.h"
 
-static void	lst_putnb_unb(t_pf *lst)
+static void	st_putnb_unb(t_pf *st)
 {
-	if (LENGHT == 1 && CONV != 'O' && CONV != 'U'
-			&& CONV != 'D')
-		lst->flag.ul_nb = (unsigned short)va_arg(lst->va_copy, t_ulong);
-	else if (LENGHT == 2 && CONV != 'O' && CONV != 'U'
-			&& CONV != 'D')
-		lst->flag.ul_nb = (unsigned char)va_arg(lst->va_copy, t_ulong);
-	else if (LENGHT == 10)
-		lst->flag.ul_nb = va_arg(lst->va_copy, long);
-	else if (LENGHT == 20)
-		lst->flag.ul_nb = va_arg(lst->va_copy, t_ulong);
-	else if (LENGHT == 100)
-		lst->flag.ul_nb = va_arg(lst->va_copy, INTMAX_T);
-	else if (LENGHT == 1000)
-		lst->flag.ul_nb = va_arg(lst->va_copy, size_t);
-	else if (CONV == 'o' || CONV == 'x' || CONV == 'X' ||
-			CONV == 'u' || CONV == 'X')
-		lst->flag.ul_nb = va_arg(lst->va_copy, unsigned int);
+	if (LENGH_H(st->op.flag) && st->op.conv != 'O' && st->op.conv != 'U'
+			&& st->op.conv != 'D')
+		st->op.ul_nb = (unsigned short)va_arg(st->va_copy, t_ulong);
+	else if (LENGH_HH(st->op.flag) && st->op.conv != 'O' && st->op.conv != 'U'
+			&& st->op.conv != 'D')
+		st->op.ul_nb = (unsigned char)va_arg(st->va_copy, t_ulong);
+	else if (LENGH_L(st->op.flag))
+		st->op.ul_nb = va_arg(st->va_copy, long);
+	else if (LENGH_LL(st->op.flag))
+		st->op.ul_nb = va_arg(st->va_copy, t_ulong);
+	else if (LENGH_J(st->op.flag))
+		st->op.ul_nb = va_arg(st->va_copy, INTMAX_T);
+	else if (LENGH_Z(st->op.flag))
+		st->op.ul_nb = va_arg(st->va_copy, size_t);
+	else if (st->op.conv == 'o' || st->op.conv == 'x' || st->op.conv == 'X' ||
+			st->op.conv == 'u' || st->op.conv == 'X')
+		st->op.ul_nb = va_arg(st->va_copy, unsigned int);
 	else
-		lst->flag.ul_nb = va_arg(lst->va_copy, t_ulong);
-	if (SIGN == '+' && (CONV == 'd' || CONV == 'D' ||
-				CONV == 'I' || CONV == 'i'))
-		PSIGN = "+";
+		st->op.ul_nb = va_arg(st->va_copy, t_ulong);
+	if (PF_SIGN_POS(st->op.flag) && (st->op.conv == 'd' || st->op.conv == 'D' ||
+				st->op.conv == 'I' || st->op.conv == 'i'))
+		st->op.sign = "+";
 }
 
-static void	lst_putnb_snb(t_pf *lst)
+static void	st_putnb_snb(t_pf *st)
 {
 	long nb_tmp;
 
-	if (LENGHT == 1)
-		nb_tmp = (short)va_arg(lst->va_copy, int);
-	else if (LENGHT == 2)
-		nb_tmp = (char)va_arg(lst->va_copy, int);
-	else if (LENGHT == 10)
-		nb_tmp = va_arg(lst->va_copy, long);
-	else if (LENGHT == 20)
-		nb_tmp = va_arg(lst->va_copy, long);
-	else if (LENGHT == 100)
-		nb_tmp = va_arg(lst->va_copy, INTMAX_T);
-	else if (LENGHT == 1000)
-		nb_tmp = va_arg(lst->va_copy, size_t);
-	else if (CONV == 'D' || CONV == 'I' || LENGHT != 0)
-		nb_tmp = va_arg(lst->va_copy, long);
+	if (LENGH_H(st->op.flag))
+		nb_tmp = (short)va_arg(st->va_copy, int);
+	else if (LENGH_HH(st->op.flag))
+		nb_tmp = (char)va_arg(st->va_copy, int);
+	else if (LENGH_L(st->op.flag))
+		nb_tmp = va_arg(st->va_copy, long);
+	else if (LENGH_LL(st->op.flag))
+		nb_tmp = va_arg(st->va_copy, long);
+	else if (LENGH_J(st->op.flag))
+		nb_tmp = va_arg(st->va_copy, INTMAX_T);
+	else if (LENGH_Z(st->op.flag))
+		nb_tmp = va_arg(st->va_copy, size_t);
+	else if (st->op.conv == 'D' || st->op.conv == 'I' || LENGH_NO(st->op.flag))
+		nb_tmp = va_arg(st->va_copy, long);
 	else
-		nb_tmp = va_arg(lst->va_copy, int);
-	PSIGN = (nb_tmp < 0 ? "-" : "");
-	if (SIGN == '+' && nb_tmp >= 0 && (CONV == 'd' ||
-				CONV == 'D' || CONV == 'I' || CONV == 'i'))
-		PSIGN = "+";
-	lst->flag.ul_nb = (nb_tmp < 0 ? -nb_tmp : nb_tmp);
+		nb_tmp = va_arg(st->va_copy, int);
+	if (PF_SIGN_POS(st->op.flag) && nb_tmp >= 0 && (st->op.conv == 'd' ||
+				st->op.conv == 'D' || st->op.conv == 'I' || st->op.conv == 'i'))
+		st->op.sign = "+";
+	else if (nb_tmp < 0)
+		st->op.sign = "-";
+	st->op.ul_nb = (nb_tmp < 0 ? -nb_tmp : nb_tmp);
 }
 
-void		lst_putint(t_pf *lst)
+void		st_putint(t_pf *st)
 {
-	if (CONV == 'd' || (CONV == 'i') ||
-			(CONV == 'D' && LENGHT == 0))
-		lst_putnb_snb(lst);
+	if (st->op.conv == 'd' || (st->op.conv == 'i') ||
+			(st->op.conv == 'D' && !LENGH_NO(st->op.flag)))
+		st_putnb_snb(st);
 	else
-		lst_putnb_unb(lst);
-	if (CONV == 'p' || ((CONV == 'x' || CONV == 'X')
-				&& HASH == 1 && lst->flag.ul_nb != 0))
-		PSIGN = (MAJ == 1 ? "0X" : "0x");
+		st_putnb_unb(st);
+	if (st->op.conv == 'p' || ((st->op.conv == 'x' || st->op.conv == 'X')
+			&& PF_HASH(st->op.flag) && st->op.ul_nb != 0))
+		st->op.sign = (PF_MAJ(st->op.flag) ? "0X" : "0x");
 }
 
-static void	ft_spacecalc(t_pf *lst, int len)
+static void	ft_spacecalc(t_pf *st, int len)
 {
-	if ((HASH == 1 && (CONV == 'o' || CONV == 'O')) &&
-		!((lst->flag.ul_nb == 0 && POINT == 1 && PRECI > 0) ||
-			(POINT == 0 && lst->flag.ul_nb == 0)))
+	if ((PF_HASH(st->op.flag) && (st->op.conv == 'o' || st->op.conv == 'O')) &&
+		!((st->op.ul_nb == 0 && PF_HASH(st->op.flag) == 1 && st->op.preci > 0) ||
+			(PF_POINT(st->op.flag) && st->op.ul_nb == 0)))
 	{
-		HASH = 1;
-		if ((POINT == 1 && PRECI > len))
-			PRECI = (PRECI != 0 ? PRECI - 1 : PRECI);
-		if (FIELD < 0)
-			FIELD++;
+		st->op.flag |= (1 << HASH);
+		if ((PF_POINT(st->op.flag) == 1 && st->op.preci > len))
+			st->op.preci = (st->op.preci != 0 ? st->op.preci - 1 : st->op.preci);
+		if (st->op.field < 0)
+			st->op.field++;
 	}
-	else
-		HASH = 0;
-	if (POINT == 1 && PRECI >= 0)
-		ZERO = 0;
-	if (SPACE == 1 && SIGN != '+' && ft_strlen(PSIGN) == 0
-			&& CONV != 'u' && CONV != 'U')
+	else if (PF_HASH(st->op.flag))
+		st->op.flag ^= (1 << HASH);
+	if (PF_POINT(st->op.flag) && st->op.preci >= 0)
+		st->op.flag ^= (1 << ZERO);
+	if (PF_SPACE(st->op.flag) && !PF_SIGN_POS(st->op.flag) && !ft_strlen(st->op.sign)
+			&& st->op.conv != 'u' && st->op.conv != 'U')
 	{
-		put_prefix(lst, 0, 1, 0);
-		if (FIELD > 0)
-			FIELD--;
-		else if (FIELD < 0)
-			FIELD++;
+		put_prefix(st, 0, 1, 0);
+		if (st->op.field > 0)
+			st->op.field--;
+		else if (st->op.field < 0)
+			st->op.field++;
 	}
 }
 
-void		conv_int(t_pf *lst)
+void		conv_int(t_pf *st)
 {
 	int len;
 	int max;
 
-	lst_putint(lst);
-	len = ulen_base(lst->flag.ul_nb, BASE);
-	if (lst->flag.ul_nb == 0 && POINT == 1 && PRECI == 0)
+	st_putint(st);
+	len = ulen_base(st->op.ul_nb, st->op.base);
+	if (st->op.ul_nb == 0 && PF_POINT(st->op.flag) && st->op.preci == 0)
 		len = 0;
-	ft_spacecalc(lst, len);
-	max = MAX(len, PRECI) + ft_strlen(PSIGN);
-	if (ZERO == 1)
-		put_buff(lst, PSIGN, ft_strlen(PSIGN), 0);
-	put_prefix(lst, max + HASH, FIELD, ZERO);
-	if (ZERO == 0)
-		put_buff(lst, PSIGN, ft_strlen(PSIGN), 0);
-	put_prefix(lst, 0, HASH, 1);
-	put_prefix(lst, len, PRECI, 1);
-	if (!(POINT == 1 && PRECI == 0 && lst->flag.ul_nb == 0))
-		put_itoa(lst, lst->flag.ul_nb);
-	put_prefix(lst, max, -FIELD, 0);
+	ft_spacecalc(st, len);
+	max = MAX(len, st->op.preci) + ft_strlen(st->op.sign);
+	if (PF_ZERO(st->op.flag))
+		put_buff(st, st->op.sign, ft_strlen(st->op.sign), 0);
+	put_prefix(st, max + PF_HASH(st->op.flag), st->op.field, ZERO);
+	if (!PF_ZERO(st->op.flag))
+		put_buff(st, st->op.sign, ft_strlen(st->op.sign), 0);
+	put_prefix(st, 0, PF_HASH(st->op.flag), 1);
+	put_prefix(st, len, st->op.preci, 1);
+	if (!(PF_POINT(st->op.flag) && st->op.preci == 0 && st->op.ul_nb == 0))
+		put_itoa(st, st->op.ul_nb);
+	put_prefix(st, max, -st->op.field, 0);
 }
