@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_memdel.c                                      .::    .:/ .      .::   */
+/*   ft_atoi.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/04 14:34:30 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 13:04:26 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/02 11:14:09 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 21:55:19 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft.h" 
 
-void	ft_tabdel(char ***ap)
+long	ft_atol_base(const char *str, int base)
 {
-	size_t count;
+	long	nb;
+	int		neg;
 
-	count = 0;
-	while (*ap && (*ap)[count])
-		ft_memdel((void**)&((*ap)[count++]));
-    if (ap)
-	    ft_memdel((void**)ap);
+	nb = 0;
+	neg = 1;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			neg = -1;
+		str++;
+	}
+	while (*str && ft_base_string(*str, base))
+	{
+		if (ft_isdigit(*str))
+			nb = ((nb * base) + (*str++ - '0'));
+		else
+			nb = ((nb * base) + (*str++ - 'a' + 10));
+	}
+	return (nb * neg);
 }

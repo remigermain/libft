@@ -62,7 +62,7 @@ void			pf_string(t_pf *lst, t_uchar *str, wchar_t *wstr, int index)
 	if (index == 0)
 		max = (POINT == 0 ? len_pstrn(str, 0, 1) : len_pstrn(str, PRECI, 0));
 	else if (index == 1)
-		max = (POINT == 0 ? ft_strlen((char*)str) : ft_ustrnlen(str, PRECI));
+		max = (POINT == 0 ? ft_strlen((char*)str) : ft_strnlen((char*)str, PRECI));
 	else if (index == 2)
 		max = (POINT == 0 ? len_wchar(wstr) : nlen_wchar(wstr, PRECI));
 	put_prefix(lst, max, FIELD, ZERO);

@@ -17,20 +17,14 @@ char			*ft_strcapitalize(char *str)
 {
 	int i;
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] >= 'A' && str[i] <= 'Z')
+	i = -1;
+	while (str[++i] != '\0')
+		if (ft_isuppercase(str[i]))
 			str[i] = str[i] + 32;
-		i++;
-	}
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (i > 0 && !ft_isalphi([i - 1]) && 
+	i = -1;
+	while (str[++i] != '\0')
+		if (i > 0 && ft_isspace(str[i - 1]) && 
 				ft_isalpha(str[i]))
 			str[i] = str[i] - 32;
-		i++;
-	}
 	return (str);
 }

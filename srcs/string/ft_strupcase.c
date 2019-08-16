@@ -15,9 +15,9 @@
 
 char	*ft_strupcase(char *str)
 {
-	int a;
+	int i;
 
-	a = -1;
+	i = -1;
 	while (str[++i] != '\0')
 		if (ft_isuppercase(str[i]))
 			str[i] -= 32;

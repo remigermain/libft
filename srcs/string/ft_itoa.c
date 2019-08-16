@@ -17,24 +17,3 @@ char	*ft_itoa(int n)
 {
 	return (ft_itoa_base(n, 10));
 }
-
-void	ft_itoabasebuffer(char *buff, int nb2, int base)
-{
-	long	nb;
-	int		len;
-
-	nb = (long)nb2;
-	len = ft_intlen_base(nb, base);
-	buff[len] = 0;
-	while (len)
-	{ 
-		buff[--len] = nb % base + '0';
-		nb /= 10;
-	}
-}
-
-void	ft_itoabuffer(char *buff, int nb)
-{
-	ft_itoabasebuffer(buff, nb, 10);
-}
-

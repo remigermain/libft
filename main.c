@@ -1,51 +1,11 @@
-#include "includes/libft.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//#include "includes/libft.h"
 
 #include <string.h>
-
-
-
-
-#define F_INT(ptr) ((int)*((int*)ptr))
-#define F_CHAR(ptr) ((int)*((int*)ptr))
-#define F_CHARS(ptr) ((char*)ptr)
+#include <stdio.h>
+#include "includes/libft.h"
 
 int main(int ac, char **av)
-{ 
+{
   /*
     ft_printf("argc = %d\n", ac);
     init_usage("a;pour le visu|p;test pour le p fdvovdfvfd|u;fonvfd vfdv dvfd vfd vfdvvffdvfd|");
@@ -62,17 +22,11 @@ int main(int ac, char **av)
         ft_printf("ptr = %d\n", F_INT(ptr));
     }
   */
-
-
-    ft_printf("%s\n", strnequ(av[1], av[2][0], 100));
-    ft_printf("%s\n", ft_strnequ(av[1], av[2][0], 100));
-
-
-
-
-
-
-
+  double nb = 500.5;
+  ft_printf("%f\n", ((double)10) / 100);
+  
+  ft_printf("%f\n", ft_atof(av[1]));
+  printf("%f\n", atof(av[1]));
 
     return (0);
 }

@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_memdel.c                                      .::    .:/ .      .::   */
+/*   ft_parse_argv.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/04 14:34:30 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 13:04:26 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/07/20 16:19:09 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/07/20 16:26:06 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_tabdel(char ***ap)
+int			ft_spancharspace(char *flag, char *str)
 {
-	size_t count;
+	int i;
 
-	count = 0;
-	while (*ap && (*ap)[count])
-		ft_memdel((void**)&((*ap)[count++]));
-    if (ap)
-	    ft_memdel((void**)ap);
+	i = 0;
+	while (flag[i] && (!ft_strchr(str, flag[i]) || ft_isspace(flag[i])))
+		i++;
+	return (i);
 }

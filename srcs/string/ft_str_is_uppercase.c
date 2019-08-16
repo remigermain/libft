@@ -19,7 +19,7 @@ t_bool	ft_str_is_uppercase(char *str)
 
 	i = -1;
 	while (str[++i] != '\0')
-		if (!ft_uppercase(str[i]))
+		if (!ft_isuppercase(str[i]))
 			return (FALSE);
 	return (TRUE);
 }

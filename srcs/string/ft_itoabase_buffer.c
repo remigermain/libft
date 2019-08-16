@@ -17,15 +17,24 @@ void	ft_itoabase_buffer(char *buff, int nb2, int base)
 {
 	long	nb;
 	int		len;
+	int		min;
 
 	nb = (long)nb2;
+	min = 0;
 	len = ft_intlen_base(nb, base);
 	buff[len] = 0;
-    if (nb2 < 0 && (++len))
-        buff[0] = '-';
+    if (nb2 < 0)
+	{
+		nb2 = -nb2;
+		if (base == 10)
+		{
+			min = 1;
+        	buff[0] = '-';
+		}
+	}
 	while (len)
 	{ 
-		buff[--len] = nb % base + '0';
-		nb /= 10;
+		buff[min + --len] = nb % base + '0';
+		nb /= base;
 	}
 }

@@ -26,7 +26,7 @@
 # include "memory.h"
 # include "divers.h"
 # include "is_methode.h"
-# include "lib_lst.h"
+# include "ft_errno.h"
 # include "math.h"
 # include "print.h"
 # include "strings.h"

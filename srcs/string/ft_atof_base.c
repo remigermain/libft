@@ -13,7 +13,47 @@
 
 #include "libft.h" 
 
-int	ft_atoi(const char *str)
+static double   ft_atof_base2(const char *str, double nb, int base)
 {
-	return (ft_atoi_base(str, 10));
+    double val;
+    double f;
+
+    f = 1.0;
+    val = 0.0;
+    if (*str == '.')
+        str++;
+    while (*str && ft_base_string(*str, base))
+	{
+        f *= (double)((double)base / 100);
+		if (ft_isdigit(*str))
+			val += (f * (*str++ - '0'));
+		else
+			val += (f * (*str++ - 'a' + 10));
+	}
+    return(val + nb);
+}
+
+double          ft_atof_base(const char *str, int base)
+{
+    double  nb;
+	int     neg;
+
+	nb = 0;
+	neg = 1;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			neg = -1;
+		str++;
+	}
+	while (*str && ft_base_string(*str, base))
+	{
+		if (ft_isdigit(*str))
+			nb = ((nb * base) + (*str++ - '0'));
+		else
+			nb = ((nb * base) + (*str++ - 'a' + 10));
+	}
+	return (ft_atof_base2(str, nb, base) * neg);
 }

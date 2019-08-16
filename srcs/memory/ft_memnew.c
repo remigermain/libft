@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_memdel.c                                      .::    .:/ .      .::   */
+/*   ft_memcpy.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/04 14:34:30 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 13:04:26 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/01 19:19:53 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/04/26 11:02:34 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_tabdel(char ***ap)
+void    *ft_memnew(void *ptr, size_t len)
 {
-	size_t count;
+    void    *new;
 
-	count = 0;
-	while (*ap && (*ap)[count])
-		ft_memdel((void**)&((*ap)[count++]));
-    if (ap)
-	    ft_memdel((void**)ap);
+    if ((new = ft_memalloc(len)))
+        ft_memcpy(new, ptr, len);
+    return (new);
 }

@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_memdel.c                                      .::    .:/ .      .::   */
+/*   ft_putstr.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/04 14:34:30 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/19 13:04:26 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/04 16:24:32 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/12/19 18:52:01 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_tabdel(char ***ap)
+void    *ft_realloc(void *ptr, size_t len)
 {
-	size_t count;
+    void    *new;
+    int     i;
 
-	count = 0;
-	while (*ap && (*ap)[count])
-		ft_memdel((void**)&((*ap)[count++]));
-    if (ap)
-	    ft_memdel((void**)ap);
+    if ((new = ft_memalloc(len)))
+    {
+        i = -1;
+        while (((unsigned char*)ptr)[++i])
+            ((unsigned char*)new)[i] = ((unsigned char*)ptr)[i];
+    }
+    ft_memdel(&ptr);
+    return (new);
 }

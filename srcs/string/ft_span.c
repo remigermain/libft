@@ -22,23 +22,3 @@ int		ft_spantype(char *str, t_bool (*func)(int))
 		i++;
 	return (i);
 }
-
-int			ft_spancharspace(char *flag, char *str)
-{
-	int i;
-
-	i = 0;
-	while (flag[i] && (!ft_strchr(str, flag[i]) || ft_isspace(flag[i])))
-		i++;
-	return (i);
-}
-
-int			ft_spanchar(char *flag, char *str)
-{
-	int i;
-
-	i = 0;
-	while (flag[i] && !ft_strchr(str, flag[i]) && !ft_isspace(flag[i]))
-		i++;
-	return (i);
-}

@@ -15,12 +15,12 @@
 
 void	convert_wchar(unsigned char **new, wchar_t wc, size_t *i)
 {
-	(*new)[(*i)++] = ((unsigned char*)wc)[0];
+	(*new)[(*i)++] = ((unsigned char*)&wc)[0];
 	if (wc > 0x7FF)
-		(*new)[(*i)++] = ((unsigned char*)wc)[1];
+		(*new)[(*i)++] = ((unsigned char*)&wc)[1];
 	if (wc > 0xFFFF)
-		(*new)[(*i)++] = ((unsigned char*)wc)[2];
+		(*new)[(*i)++] = ((unsigned char*)&wc)[2];
 	if (wc > 0x10FFFF)
-		(*new)[(*i)++] = ((unsigned char*)wc)[3];
+		(*new)[(*i)++] = ((unsigned char*)&wc)[3];
 	(*new)[(*i)] = '\0';
 }

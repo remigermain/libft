@@ -16,6 +16,13 @@
 # define BUFF_SIZE 32
 # include "libft.h"
 
+typedef struct  s_list
+{
+    void    *ptr;
+    size_t  content_size;
+
+}               t_list;
+
 int	get_next_line(const int fd, char **line);
 
 #endif

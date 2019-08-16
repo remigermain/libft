@@ -15,5 +15,5 @@
 
 void	ft_itoa_buffer(char *buff, int nb)
 {
-	ft_itoabasebuffer(buff, nb, 10);
+	ft_itoabase_buffer(buff, nb, 10);
 }

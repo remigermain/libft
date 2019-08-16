@@ -25,7 +25,7 @@ char	**ft_createtab(int len, char c)
 	{
 		if (!(tab[i] = (char*)ft_memalloc(len + 1)))
 		{
-			ft_memdeltab_char(&tab);
+			ft_tabdel(&tab);
 			return (NULL);
 		}
 		ft_memset(tab[i++], c, len);

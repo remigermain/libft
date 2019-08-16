@@ -60,7 +60,7 @@ char			**ft_strsplit(const char *str, char c)
 		len = ft_passchar(str, c, &ib);
 		if (!(tab[i++] = ft_strsub(str, ib, len)))
 		{
-			ft_memdeltab_char(&tab);
+			ft_tabdel(&tab);
 			return (NULL);
 		}
 		ib += len;
