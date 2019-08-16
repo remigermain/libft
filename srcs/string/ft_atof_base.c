@@ -48,7 +48,7 @@ double          ft_atof_base(const char *str, int base)
 			neg = -1;
 		str++;
 	}
-	while (*str && ft_base_string(*str, base))
+	while (*str && ft_base_string(*str, base) && *str != '.')
 	{
 		if (ft_isdigit(*str))
 			nb = ((nb * base) + (*str++ - '0'));
