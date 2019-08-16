@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   get_next_line.h                                  .::    .:/ .      .::   */
+/*   ft_lstadd.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/12 12:52:49 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 19:38:48 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/09 19:45:50 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/07 13:35:43 by alepercq    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
+#include "libft.h"
 
-int	get_next_line(const int fd, char **line);
-
-#endif
+void	ft_lstadd(t_list **alst, t_list *t_new)
+{
+	t_new->next = *alst;
+	*alst = t_new;
+}

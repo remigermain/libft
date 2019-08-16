@@ -18,11 +18,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <errno.h>
-# include <string.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <fcntl.h>
 # include "limit.h"
+# include "lib_lst.h"
 # include "memory.h"
 # include "divers.h"
 # include "is_methode.h"

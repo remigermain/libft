@@ -14,24 +14,23 @@
 NAME = libft.a
 TYPE = " de la library"
 
-CFLAGS =  -Wall -Wextra -g3
+CFLAGS =  -Wall -Wextra -Werror -g3
 
 INCLUDE = -Iincludes
 
 HEADER =	libft.h limit.h color.h  divers.h  flags.h  ft_errno.h  ft_printf.h  get_next_line.h  \
-			is_methode.h math.h  memory.h  print.h  strings.h
-
+			is_methode.h math.h  memory.h  print.h  lib_lst.h strings.h
 
 OBJ = $(SRC:.c=.o)
 
 DSRC = srcs/
 DOBJ = obj/
-ALL_D = $(D_DIVERS) $(D_IS_METHODE) $(D_MATH) $(D_MEMORY) $(D_FLAGS) \
+ALL_D = $(D_DIVERS) $(D_IS_METHODE) $(D_MATH) $(D_LST) $(D_MEMORY) $(D_FLAGS) \
 		$(D_PUT) $(D_STDIO) $(D_STRING) $(addprefix $(D_STDIO),$(D_FT_PRINTF))
 
 DHEADER = includes/
 
-SRC =  $(CSRC_DIVERS) $(CSRC_ISMETHODE) $(CSRC_MATH) \
+SRC =  $(CSRC_DIVERS) $(CSRC_ISMETHODE) $(CSRC_MATH) $(CSRC_LST) \
 	  $(CSRC_MEMORY) $(CSRC_PUT) $(CSRC_STRING) $(CSRC_STDIO) $(CSRC_FLAGS)
 
 CSRC = $(addprefix $(DSRC),$(SRC))
@@ -46,8 +45,7 @@ CSRC_DIVERS = $(addprefix $(D_DIVERS),$(SRC_divers))
 D_DIVERS = divers/
 SRC_divers = 		ft_countwchar.c  ft_createtab.c  ft_inttab_del.c  ft_match.c  ft_sort_integer_table.c  \
 					ft_swap.c  ft_tablen.c  len_wchar.c  len_wchar_single.c  nlen_wchar.c  timestamp.c \
-					ft_getchar.c 
-					# get_next_line.c  
+					ft_getchar.c get_next_line.c  
 
 
 CSRC_FLAGS = $(addprefix $(D_FLAGS),$(SRC_flags))
@@ -61,6 +59,10 @@ CSRC_ISMETHODE = $(addprefix $(D_IS_METHODE),$(SRC_ISMETHODE))
 D_IS_METHODE = is_methode/
 SRC_ISMETHODE =		ft_isalnum.c  ft_isalpha.c  ft_isascii.c  ft_isblank.c  ft_iscntrl.c  ft_isdigit.c  ft_isgraph.c  \
 					ft_islowercase.c  ft_isprint.c  ft_isspace.c  ft_isuppercase.c  ft_isxdigit.c  ft_tolower.c  ft_toupper.c
+
+CSRC_LST = $(addprefix $(D_LST),$(SRC_LST))
+D_LST = libft_list/
+SRC_LST	=			ft_lstadd.c    ft_lstdel.c    ft_lstdelone.c ft_lstiter.c   ft_lstmap.c    ft_lstnew.c
 
 
 CSRC_MATH = $(addprefix $(D_MATH),$(SRC_MATH))
@@ -109,53 +111,95 @@ SPACE = "                  "
 .DEFAULT_GOAL := all
 ESC = $(shell printf '\033')
 
-print_name : 
-	@printf "\n----------------------------------------------------------------------\n\n\033[37m"
-	@printf " \033[47m  \033[0m\033[37m                      [    LIBFT     ]               "
-	@printf "         \033[0m  \033[47m  \033[0m\n"
-	@printf "\n----------------------------------------------------------------------\n\n"
+print_base : 
+	@printf "\n  		██▓     ██▓ ▄▄▄▄     █████▒▄▄▄█████▓ \n"
+	@printf "		▓██▒    ▓██▒▓█████▄ ▓██   ▒ ▓  ██▒ ▓▒ \n"
+	@printf "		▒██░    ▒██▒▒██▒ ▄██▒████ ░ ▒ ▓██░ ▒░\n"
+	@printf "		▒██░    ░██░▒██░█▀  ░▓█▒  ░ ░ ▓██▓ ░ \n"
+	@printf "		░██████▒░██░░▓█  ▀█▓░▒█░      ▒██▒ ░ \n"
+	@printf "		░ ▒░▓  ░░▓  ░▒▓███▀▒ ▒ ░      ▒ ░░   \n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒   ░  ░          ░    \n"
+	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "		    ░  ░ ░   ░                       \n"
+	@printf "		                  ░                  \n\n\n"
+	@printf "		https://framagit.org/rgermain/libft\n"
+	@printf "				by\n"
+	@printf "			      rgermain\n\n"
+
+print_finish :
+	@printf "\n		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
+	@printf "			  Finish\n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
+	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "\n"
+
+print_remove :
+	@printf "\n		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
+	@printf "			  Remove\n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
+	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "\n"
+
+
+print_compile :
+	@printf "\n		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
+	@printf "			  Compilation\n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
+	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "\n"
+
 
 print_norme : 
-	@printf "\n----------------------------------------------------------------------\n\n\033[37m"
-	@printf " \033[47m  \033[0m\033[37m                   [    NORME LIBFT     ]            "
-	@printf "         \033[0m  \033[47m  \033[0m\n"
-	@printf "\n----------------------------------------------------------------------\n\n"
+	@printf "\n		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
+	@printf "			  Norminette\n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
+	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "\n"
 
 
-all: print_name $(NAME)
+all: print_base $(NAME)
 	@if [ $(COUNT) = "1" ]; then \
-		echo $(SPACE)"\033[1;34m    Nothing are changed !\033[0m"; \
+		echo $(SPACE)"${ESC}[1;34m    Nothing are changed !${ESC}[0m"; \
 	fi
+	@$(MAKE) -s print_finish
 
 $(NAME): $(COBJ)
-	@echo $(SPACE)"\033[JCompilation des Objects \033[38;5;326mterminer\033[0m"
-	@echo $(SPACE)"Compilation "$(TYPE)" \033[34m" $(NAME) "\033[0m"
+	@echo $(SPACE)"${ESC}[JCompilation des Objects ${ESC}[1;32mterminer${ESC}[0m"
+	@echo $(SPACE)"Compilation "$(TYPE)" ${ESC}[34m" $(NAME) "${ESC}[0m"
 	@ar ru $(NAME) $?
 	@echo $(SPACE)"Optimisation des index avec ranlib"
 	@ranlib $(NAME)
 
-$(DOBJ)%.o : $(DSRC)%.c $(CHEADER)
+$(DOBJ)%.o : $(DSRC)%.c $(CHEADER) print_compile
 	@$(eval COUNT = "0")
 	@mkdir -p $(DOBJ)
 	@mkdir -p $(addprefix $(DOBJ), $(ALL_D))
 	@gcc $(CFLAGS) $(INCLUDE) -c $< -o $@
-	@echo $(SPACE)"compilation de la fonction \033[38;5;326m"$< "\033[0m\033[K\033[1A"
+	@echo $(SPACE)"compilation de la fonction ${ESC}[1;32m"$< "${ESC}[0m${ESC}[K${ESC}[1A"
 
-clean: print_name
+clean: print_base print_remove
 	@rm -rf $(DOBJ)
-	@echo $(SPACE)"Suppresion des \033[38;5;265mobjects\033[0m"
+	@echo $(SPACE)"Suppresion des ${ESC}[1;31mobjects${ESC}[0m"
+	@$(MAKE) -s print_finish
 
-fclean: clean
+fclean: print_base print_remove
+	@rm -rf $(DOBJ)
+	@echo $(SPACE)"Suppresion des ${ESC}[1;31mobjects${ESC}[0m"
 	@rm -f $(NAME)
-	@echo $(SPACE)"Suppresion "$(TYPE)" \033[38;5;265m"$(NAME) "\033[0m"
+	@echo $(SPACE)"Suppresion "$(TYPE)" ${ESC}[1;31m"$(NAME) "${ESC}[0m"
+	@$(MAKE) -s print_finish
 
 re: fclean all
 
 prototype:
 	@cat $(PATH)/* | grep -E "^(size_t|int|void|char|unsigned|t_bool|t_time|long|double|float)" | grep ")$" | grep -v "static" | sed "s/$/;/g"
 
-
-norme : print_norme
+norme : print_base print_norme
 	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&${ESC}[0m," | sed "s/Error/  Error/g" | sed "s,Error,${ESC}[31m&${ESC}[0m,"
+	@$(MAKE) -s print_finish
 
 .PHONY: default all clean fclean re norme print_libft print_norme

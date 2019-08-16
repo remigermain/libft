@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   get_next_line.h                                  .::    .:/ .      .::   */
+/*   libft.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/12 12:52:49 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 19:38:48 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/19 14:24:00 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
+#ifndef LIB_LST_H
+# define LIB_LST_H
 
-int	get_next_line(const int fd, char **line);
+typedef struct	s_list
+{
+	void			*content;
+	size_t			content_size;
+	struct s_list	*next;
+}				t_list;
 
+t_list			*ft_lstmap(t_list *lst, t_list*(*f)(t_list *elem));
+void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
+void			ft_lstadd(t_list **alst, t_list *new);
+void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
+void			ft_lstdelone(t_list **alst, void (*del)(void*, size_t));
+t_list			*ft_lstnew(void const *content, size_t content_size);
 #endif

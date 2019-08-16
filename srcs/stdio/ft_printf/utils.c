@@ -18,7 +18,7 @@ void	ftprintf_error(t_pf *st, char *str, size_t index)
 	ft_putstr_fd("\n  / \\    WARNING\n / | \\  FT_PRINT ERROR", 2);
 	ft_putstr_fd("\n/  o  \\\n-------\n     	[", 2);
 	if (index == 1)
-		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd(ft_strerror(errno), 2);
 	ft_putstr_fd("\"", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("]     \n\n", 2);

@@ -14,7 +14,6 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include <stdarg.h>
-# include <stdio.h>
 # include "libft.h"
 # include "color.h"
 # define BUFF_PRINTF 10000

@@ -66,7 +66,7 @@ static int	parse_mflag(t_flag *st)
 
 	min = 0;
 	len = 0;
-	if (!strcmp(ft_strlowcase(st->argv[st->i] + 2), "help"))
+	if (!ft_strcmp(ft_strlowcase(st->argv[st->i] + 2), "help"))
 		print_usage(st);
 	if (st->mflag)
 		len = ft_strlen(st->mflag);
