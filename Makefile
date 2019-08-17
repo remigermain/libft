@@ -14,18 +14,19 @@
 NAME = libft.a
 TYPE = " de la library"
 
-CFLAGS =  -Wall -Wextra -Werror -g3
+CFLAGS =  -Wall -Wextra -Werror #-g3
 
 INCLUDE = -Iincludes
 
 HEADER =	libft.h limit.h color.h  divers.h  flags.h  ft_errno.h  ft_printf.h  get_next_line.h  \
 			is_methode.h math.h  memory.h  print.h  lib_lst.h strings.h
 
+
 OBJ = $(SRC:.c=.o)
 
 DSRC = srcs/
 DOBJ = obj/
-ALL_D = $(D_DIVERS) $(D_IS_METHODE) $(D_MATH) $(D_LST) $(D_MEMORY) $(D_FLAGS) \
+ALL_D = $(D_DIVERS) $(D_IS_METHODE) $(D_MATH) $(D_MEMORY) $(D_FLAGS) $(D_LST)\
 		$(D_PUT) $(D_STDIO) $(D_STRING) $(addprefix $(D_STDIO),$(D_FT_PRINTF))
 
 DHEADER = includes/
@@ -45,7 +46,8 @@ CSRC_DIVERS = $(addprefix $(D_DIVERS),$(SRC_divers))
 D_DIVERS = divers/
 SRC_divers = 		ft_countwchar.c  ft_createtab.c  ft_inttab_del.c  ft_match.c  ft_sort_integer_table.c  \
 					ft_swap.c  ft_tablen.c  len_wchar.c  len_wchar_single.c  nlen_wchar.c  timestamp.c \
-					ft_getchar.c get_next_line.c  
+					ft_getchar.c 
+					# get_next_line.c  
 
 
 CSRC_FLAGS = $(addprefix $(D_FLAGS),$(SRC_flags))
@@ -111,7 +113,7 @@ SPACE = "                  "
 .DEFAULT_GOAL := all
 ESC = $(shell printf '\033')
 
-print_base : 
+print_name : 
 	@printf "\n  		██▓     ██▓ ▄▄▄▄     █████▒▄▄▄█████▓ \n"
 	@printf "		▓██▒    ▓██▒▓█████▄ ▓██   ▒ ▓  ██▒ ▓▒ \n"
 	@printf "		▒██░    ▒██▒▒██▒ ▄██▒████ ░ ▒ ▓██░ ▒░\n"
@@ -125,81 +127,52 @@ print_base :
 	@printf "		https://framagit.org/rgermain/libft\n"
 	@printf "				by\n"
 	@printf "			      rgermain\n\n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n\n"
 
-print_finish :
-	@printf "\n		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
-	@printf "			  Finish\n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
-	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
-	@printf "\n"
-
-print_remove :
-	@printf "\n		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
-	@printf "			  Remove\n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
-	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
-	@printf "\n"
+print_norme : print_name
+	@printf "			    Norminette    \n\n"
+	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n\n"
 
 
-print_compile :
-	@printf "\n		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
-	@printf "			  Compilation\n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
-	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
-	@printf "\n"
 
-
-print_norme : 
-	@printf "\n		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
-	@printf "			  Norminette\n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n"
-	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
-	@printf "\n"
-
-
-all: print_base $(NAME)
+all: print_name $(NAME)
 	@if [ $(COUNT) = "1" ]; then \
 		echo $(SPACE)"${ESC}[1;34m    Nothing are changed !${ESC}[0m"; \
 	fi
-	@$(MAKE) -s print_finish
 
 $(NAME): $(COBJ)
 	@echo $(SPACE)"${ESC}[JCompilation des Objects ${ESC}[1;32mterminer${ESC}[0m"
 	@echo $(SPACE)"Compilation "$(TYPE)" ${ESC}[34m" $(NAME) "${ESC}[0m"
-	@ar ru $(NAME) $?
+	@ar ru $(NAME) $? > /dev/null 2>&1
 	@echo $(SPACE)"Optimisation des index avec ranlib"
 	@ranlib $(NAME)
 
-$(DOBJ)%.o : $(DSRC)%.c $(CHEADER) print_compile
+$(DOBJ)%.o : $(DSRC)%.c $(CHEADER)
 	@$(eval COUNT = "0")
 	@mkdir -p $(DOBJ)
 	@mkdir -p $(addprefix $(DOBJ), $(ALL_D))
 	@gcc $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo $(SPACE)"compilation de la fonction ${ESC}[1;32m"$< "${ESC}[0m${ESC}[K${ESC}[1A"
 
-clean: print_base print_remove
+clean: print_name
 	@rm -rf $(DOBJ)
 	@echo $(SPACE)"Suppresion des ${ESC}[1;31mobjects${ESC}[0m"
-	@$(MAKE) -s print_finish
 
-fclean: print_base print_remove
-	@rm -rf $(DOBJ)
-	@echo $(SPACE)"Suppresion des ${ESC}[1;31mobjects${ESC}[0m"
+fclean: clean
 	@rm -f $(NAME)
 	@echo $(SPACE)"Suppresion "$(TYPE)" ${ESC}[1;31m"$(NAME) "${ESC}[0m"
-	@$(MAKE) -s print_finish
 
 re: fclean all
 
 prototype:
 	@cat $(PATH)/* | grep -E "^(size_t|int|void|char|unsigned|t_bool|t_time|long|double|float)" | grep ")$" | grep -v "static" | sed "s/$/;/g"
 
-norme : print_base print_norme
-	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&${ESC}[0m," | sed "s/Error/  Error/g" | sed "s,Error,${ESC}[31m&${ESC}[0m,"
-	@$(MAKE) -s print_finish
+info: print_name
+	@printf $(SPACE)"total fonction ${ESC}[1;34m"
+	@ls -1 $(CSRC) | wc -l
+	@printf "${ESC}[0m\n";
 
-.PHONY: default all clean fclean re norme print_libft print_norme
+norme : print_norme
+	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&${ESC}[0m," | sed "s/Error/  Error/g" | sed "s,Error,${ESC}[31m&${ESC}[0m,"
+
+.PHONY: default all clean fclean re norme print_libft print_norme info
