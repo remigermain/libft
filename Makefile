@@ -168,8 +168,17 @@ prototype:
 	@cat $(PATH)/* | grep -E "^(size_t|int|void|char|unsigned|t_bool|t_time|long|double|float)" | grep ")$" | grep -v "static" | sed "s/$/;/g"
 
 info: print_name
-	@printf $(SPACE)"total fonction ${ESC}[1;34m"
+	@printf $(SPACE)"total functions : ${ESC}[1;34m"
 	@ls -1 $(CSRC) | wc -l
+	@printf "${ESC}[0m\n";
+	@printf $(SPACE)"total lines : ${ESC}[1;34m"
+	@echo "$(shell cat $(CSRC) | wc -l) - (16 * $(shell ls -1 $(CSRC) | wc -l))" | bc
+	@printf "${ESC}[0m\n";
+	@printf $(SPACE)"total commit : ${ESC}[1;34m"	
+	@git rev-list --all --count
+	@printf "${ESC}[0m\n";
+	@printf $(SPACE)"last modifications : ${ESC}[1;34m"	
+	@git log| head -n5 | grep Date | cut -c 9-
 	@printf "${ESC}[0m\n";
 
 norme : print_norme
