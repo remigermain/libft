@@ -27,7 +27,7 @@ void	ftprintf_error(t_pf *st, char *str, size_t index)
 	exit(0);
 }
 
-int		ulen_base(t_ulong nb, size_t base)
+int		ulen_base(uintmax_t nb, size_t base)
 {
 	return (nb >= base ? ulen_base(nb / base, base) + 1 : 1);
 }

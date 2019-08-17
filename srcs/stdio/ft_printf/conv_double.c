@@ -13,106 +13,67 @@
 
 #include "ft_printf.h"
 
-static void	remove_zero(t_pf *st, t_ulong *nb, int i, size_t index)
+static void	print_exponent(t_pf *st)
 {
-	if ((st->op.conv == 'g' || st->op.conv == 'G') && (index == 1 || index == 3))
+	if (st->op.exponent)
 	{
-		while (i < st->op.preci && !nb[i++])
-			st->op.preci++;
-	}
-	if ((st->op.conv == 'g' || st->op.conv == 'G') && (index == 2 || index == 3))
-	{
-		i = st->op.preci;
-		while (i > 1 && nb[i--])
-			st->op.preci--;
+		put_buff(st, (st->op.flag & PF_MAJ ? "E" : "e"), 1, 0);
+		put_buff(st, (st->op.exponent > 0 ? "+" : "-"), 1, 0);
+		st->op.exponent = ABS(st->op.exponent);
+		if (st->op.exponent < 10)
+			put_buff(st, "0", 1, 0);
+		put_itoa(st, st->op.exponent);
 	}
 }
 
-static void	roundup_double(t_pf *st, t_ulong *nb, int i, int max)
+void		asign_double(t_pf *st)
 {
-	remove_zero(st, nb, 1, 3);
-	i = st->op.preci + 1;
-	max = st->op.preci + 1;
-	while (i > 0)
-	{
-		if ((nb[i] >= (t_ulong)(st->op.base / 2) && i == max) ||
-			(nb[i] >= (t_ulong)st->op.base && i > 0))
-		{
-			nb[i - 1] += 1;
-			nb[i] = nb[i] % st->op.base;
-		}
-		i--;
-	}
-	remove_zero(st, nb, 1, 2);
-}
+	int max;
 
-static void	assign_double(t_pf *st, t_ulong *nb, size_t i, int j)
-{
-	int		preci;
-
-	preci = st->op.preci + 1;
-	nb[i++] = st->op.ul_nb;
-	j = (st->op.ful_nb != 0 ? ulen_base(st->op.ful_nb, st->op.base) : 0);
-	i += j;
-	while (j > 0)
-	{
-		nb[j--] = st->op.ful_nb % st->op.base;
-		st->op.ful_nb /= st->op.base;
-	}
-	while (preci > 0)
-	{
-		st->op.fl_nb *= st->op.base;
-		nb[i++] = (int)st->op.fl_nb;
-		st->op.fl_nb -= (int)st->op.fl_nb;
-		preci--;
-	}
-	roundup_double(st, nb, 0, 0);
-}
-
-static int	max_calc(t_pf *st, int max)
-{
-	if (PF_SPACE(st->op.flag) == 1 && st->op.sign[0] != '+' && ft_strlen(st->op.sign) == 0)
-	{
-		put_prefix(st, 0, 1, 0);
-		if (st->op.field > 0)
-			st->op.field--;
-		else if (st->op.field < 0)
-			st->op.field++;
-	}
+	mod_double(st);
 	max = ulen_base(st->op.ul_nb, st->op.base) + st->op.preci;
 	max += ft_strlen(st->op.sign);
-	if (!((st->op.conv == 'g' || st->op.conv == 'G') && st->op.preci == 0))
-		max += ((PF_POINT(st->op.flag) == 0 || st->op.preci > 0) ? 1 : 0);
-	if (st->op.conv == 'e' || st->op.conv == 'E' || ((st->op.conv == 'g' || st->op.conv == 'G') &&
-				st->op.preci != 0 && (st->op.exponent < -4 || st->op.exponent >= st->op.preci)))
-		max += 2 + MAX(ulen_base(ABS(st->op.exponent), st->op.base), 2);
-	return (max);
-}
-
-void		conv_double(t_pf *st, t_ulong *nb, int i)
-{
-	unsigned char	*new;
-	int				max;
-
-	max = 0;
-	if ((st->op.conv == 'g' || st->op.conv == 'G') && PF_POINT(st->op.flag) == 0)
-		st->op.preci -= ulen_base(st->op.ul_nb, st->op.base);
-	assign_double(st, nb, 0, 0);
-	max = max_calc(st, 0);
-	if (PF_ZERO(st->op.flag) == 1)
+	if (st->op.exponent)
+		max += 2 + MAX(ulen_base(st->op.exponent, 10), 2);
+	if (st->op.flag & PF_ZERO)
 		put_buff(st, st->op.sign, ft_strlen(st->op.sign), 0);
-	put_prefix(st, max, st->op.field, PF_ZERO(st->op.flag));
-	if (!PF_ZERO(st->op.flag) == 0)
+	put_prefix(st, max, st->op.field, st->op.flag & PF_ZERO);
+	if (!(st->op.flag & PF_ZERO))
 		put_buff(st, st->op.sign, ft_strlen(st->op.sign), 0);
-	put_itoa(st, nb[i++]);
+	put_itoa(st, (uintmax_t)st->op.fl_nb);
 	if (st->op.preci > 0)
 		put_buff(st, ".", 1, 0);
-	while ((i - 1) < st->op.preci)
-		put_itoa(st, nb[i++]);
-	if (st->op.conv == 'e' || st->op.conv == 'E' || ((st->op.conv == 'g' || st->op.conv == 'G') &&
-				st->op.preci != 0 && (st->op.exponent < -4 || st->op.exponent >= st->op.preci)))
+	while (st->op.preci-- > 0)
 	{
-		i = ft_sprintf(&new, "%c%+.2d", (MAJ == 1 ? 'E' : 'e'), st->op.exponent);
-		put_buff(st, new, i, 1);
+		st->op.fl_nb = ((st->op.fl_nb - (long)st->op.fl_nb) * 10.0);
+		put_itoa(st, (uintmax_t)st->op.fl_nb);
+	}
+	print_exponent(st);
+}
+
+void		conv_double(t_pf *st)
+{
+	if (st->op.flag & LENGH_L_MAJ)
+		st->op.fl_nb = va_arg(st->va_copy, long double);
+	else
+		st->op.fl_nb = (long double)va_arg(st->va_copy, double);
+	if ((1.0 / 0.0) == st->op.fl_nb || (-1.0 / 0.0) == st->op.fl_nb)
+		put_buff(st, (st->op.flag & PF_MAJ ? "INF" : "inf"), 3, 0);
+	else if (st->op.fl_nb != st->op.fl_nb)
+		put_buff(st, (st->op.flag & PF_MAJ ? "NAN" : "nan"), 3, 0);
+	else
+	{
+		if (st->op.fl_nb < 0)
+		{
+			st->op.fl_nb = ABS(st->op.fl_nb);
+			st->op.sign = "-";
+		}
+		else if (st->op.flag & PF_SIGN_POS)
+			st->op.sign = "+";
+		if (!(st->op.flag & PF_POINT))
+			st->op.preci = 6;
+		if (ft_strchr("gG", st->op.conv) && !st->op.preci)
+			st->op.preci = 1;
+		asign_double(st);
 	}
 }

@@ -27,16 +27,13 @@ static int	find_conv(t_pf *st, char *str, int ret)
 	ret = get_option(st, str, 1);
  	if (st->op.conv == 'n')
 		conv_nlen(st);
-	else if (st->op.conv == 'f' || st->op.conv == 'F' || st->op.conv == 'e' || st->op.conv == 'E' ||
-			st->op.conv == 'g' || st->op.conv == 'G')
-		st_putdouble(st);
+	else if (ft_strchr("fFeEgGaA", st->op.conv))
+		conv_double(st);
 	else if (st->op.conv == 't' && str[ret] == 's')
 		ret += conv_tabstring(st);
-	else if (PF_STRING(st->op.conv))
+	else if (ft_strchr("sSrm", st->op.conv))
 		conv_string(st);
-	else if (st->op.conv == 'd' || st->op.conv == 'i' || st->op.conv == 'D' || st->op.conv == 'x' ||
-			st->op.conv == 'X' || st->op.conv == 'o' || st->op.conv == 'O' || st->op.conv == 'u' ||
-			st->op.conv == 'U' || st->op.conv == 'p' || st->op.conv == 'b' || st->op.conv == 'B')
+	else if (ft_strchr("diDxXoOuUpbB", st->op.conv))
 		conv_int(st);
 	else if (st->op.conv == '@')
 		conv_other(st);

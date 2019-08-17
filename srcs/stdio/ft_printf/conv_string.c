@@ -64,19 +64,19 @@ void			pf_string(t_pf *st, unsigned char *str)
 	size_t	max;
 
 	max = ft_strlen((char*)str);
-	if ((LENGH_L(st->op.flag) || LENGH_LL(st->op.flag) || st->op.conv == 'S')
-									&& PF_POINT(st->op.flag))
+	if ((st->op.flag & LENGH_L|| st->op.flag & LENGH_LL || st->op.conv == 'S')
+									&& st->op.flag & PF_POINT)
 		max = nlen_wchar((wchar_t*)str, st->op.preci);
-	else if (LENGH_L(st->op.flag) || LENGH_LL(st->op.flag) || st->op.conv == 'S')
+	else if (st->op.flag & LENGH_L|| st->op.flag & LENGH_LL || st->op.conv == 'S')
 		max = len_wchar((wchar_t*)str);
-	else if (st->op.conv == 'r' && PF_POINT(st->op.flag))
+	else if (st->op.conv == 'r' && st->op.flag & PF_POINT)
 		max = ft_strplen(str, st->op.preci);
 	else if (st->op.conv == 'r')
 		max = ft_strplen(str, max);
-	else if (PF_POINT(st->op.flag))
+	else if (st->op.flag & PF_POINT)
 		max = ft_strnlen((char*)str, st->op.preci);
-	put_prefix(st, max, st->op.field, PF_ZERO(st->op.flag));
-	if (LENGH_L(st->op.flag) || LENGH_LL(st->op.flag) || st->op.conv == 'S')
+	put_prefix(st, max, st->op.field, st->op.flag & PF_ZERO);
+	if (st->op.flag & LENGH_L|| st->op.flag & LENGH_LL || st->op.conv == 'S')
 		comv_wstr(st, (wchar_t*)str, max);
 	else if (st->op.conv == 'r')
 		conv_pstr(st, str, max);
@@ -89,7 +89,7 @@ void			conv_string(t_pf *st)
 {
 	unsigned char	*str;
 
-	if (LENGH_L(st->op.flag) || LENGH_LL(st->op.flag) || st->op.conv == 'S')
+	if (LENGH_L & st->op.flag || LENGH_LL & st->op.flag || st->op.conv == 'S')
 		str = (unsigned char *)va_arg(st->va_copy, wchar_t*);
 	else if (st->op.conv == 'm')
 		str = (unsigned char *)ft_strerror(errno);

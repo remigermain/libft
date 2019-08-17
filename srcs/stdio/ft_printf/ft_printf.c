@@ -42,8 +42,6 @@ int			ft_sprintf(t_uchar **dest, const char *format, ...)
 	t_pf	st;
 	ft_bzero(&st, sizeof(t_pf));
 	va_start(st.va_lst, format);
-	st.is_print = TRUE;
-	st.fd = 1;
 	convert_buff(&lst, NULL, 0);
 	i = ftprintf_base((char*)format, &st, 0, 0);
 	*dest = lst.str;

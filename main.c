@@ -22,12 +22,37 @@ int main(int ac, char **av)
         ft_printf("ptr = %d\n", F_INT(ptr));
     }
   */
+
   unsigned char *str = (unsigned char *)("null");
-    int i = ft_printf("coucou %f ca va ?\n", 45645464.1565);
+    int i;
+        i = ft_printf("coucou %.0f ca va ?\n", -9999999999.99999999999999);
+    i = printf("coucou %.0f ca va ?\n", -9999999999.99999999999999);
+
+        i = ft_printf("coucou %.10f ca va ?\n", -9999999999.0025425425499999);
+    i = printf("coucou %.10f ca va ?\n", -9999999999.0025425425499999);
+
+
+        i = ft_printf("coucou %.1g ca va ?\n", 000000.99999999999999);
+    i = printf("coucou %.1g ca va ?\n", 000000.99999999999999);
+
+    i = ft_printf("coucou %.1g ca va ?\n", -9999999999.99999999999999);
+    i = printf("coucou %.1g ca va ?\n", -9999999999.99999999999999);
+
+
+
+
+        i = ft_printf("coucou %.10g ca va ?\n", -9999999999.0025425425499999);
+    i = printf("coucou %.10g ca va ?\n", -9999999999.0025425425499999);
+
+
+        i = ft_printf("coucou %.10e ca va ?\n", 000000.0025425425499999);
+    i = printf("coucou %.10e ca va ?\n",000000.0025425425499999);
+    //printf("i = %d\n", i);
+
     printf("i = %d\n", i);
 
-    i = printf("coucou %f ca va ?\n", 45645464.1565);
-    printf("i = %d\n", i);
+
+
     return (0);
 }
 

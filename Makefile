@@ -14,7 +14,7 @@
 NAME = libft.a
 TYPE = " de la library"
 
-CFLAGS =  -Wall -Wextra -Werror #-g3
+CFLAGS =  -Wall -Wextra -g3 #-Werror
 
 INCLUDE = -Iincludes
 
@@ -70,7 +70,7 @@ SRC_LST	=			ft_lstadd.c    ft_lstdel.c    ft_lstdelone.c ft_lstiter.c   ft_lstma
 CSRC_MATH = $(addprefix $(D_MATH),$(SRC_MATH))
 D_MATH = math/
 SRC_MATH = 			ft_find_next_prime.c  ft_intlen_base.c  ft_intlen.c  ft_is_prime.c  ft_iterative_factorial.c  \
-					ft_iterative_power.c  ft_recursive_factorial.c  ft_recursive_power.c  ft_sqrt.c
+					ft_iterative_power.c  ft_recursive_factorial.c  ft_recursive_power.c  ft_sqrt.c ft_pow.c
 
 
 CSRC_MEMORY = $(addprefix $(D_MEMORY),$(SRC_MEMORY))

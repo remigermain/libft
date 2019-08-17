@@ -18,10 +18,10 @@
 t_bool  ft_base_string(char letter, int base);
 double  ft_atof_base(const char *str, int base);
 double  ft_atof(const char *str);
-int	    ft_atoi_base(const char *str, int base);
-int	    ft_atoi(const char *str);
 long	ft_atol_base(const char *str, int base);
 long    ft_atol(const char *str);
+int	    ft_atoi_base(const char *str, int base);
+int	    ft_atoi(const char *str);
 void	ft_itoabase_buffer(char *buff, int nb2, int base);
 char	*ft_itoa_base(int nb, int base);
 void	ft_itoa_buffer(char *buff, int nb);

@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   conv_char.c                                      .::    .:/ .      .::   */
+/*   ft_recursive_power.c                             .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/04 16:37:51 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 19:31:56 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/03 16:21:54 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/10 17:59:14 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void			conv_char(t_pf *st)
+double  ft_pow(double x, int y)
 {
-	size_t	max;
-	int		c;
+    double temp;
 
-	if (st->op.conv != 'c' && st->op.conv != 'C')
-		c = st->op.conv;
-	else
-		c = va_arg(st->va_copy, int);
-	if (st->op.flag & LENGH_L || st->op.conv == 'S')
-		max = len_wchar_single((wchar_t)c);
-	else
-		max = 1;
-	put_prefix(st, max, st->op.field, st->op.flag & PF_ZERO);
-	put_buff(st, &c, max, NO_FREE);
-	put_prefix(st, max, -st->op.field, 0);
+    if (y == 0)  
+        return 1;  
+    temp = ft_pow(x, y / 2);  
+    if (y % 2 == 0)  
+        return (temp * temp);
+    else
+    {  
+        if (y > 0)  
+            return (x * temp * temp);
+        else
+            return ((temp * temp) / x);
+    }  
 }

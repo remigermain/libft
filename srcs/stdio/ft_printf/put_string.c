@@ -62,24 +62,25 @@ void	put_buff(t_pf *st, void *tmp, size_t len, enum e_pf mod)
 		ft_memdel((void**)&tmp);
 }
 
-void	put_itoa(t_pf *st, t_ulong n)
+void	put_itoa(t_pf *st, intmax_t n)
 {
-	t_uchar		tmp[27];
-	int			len;
-	int			mlen;
+	unsigned char	tmp[27];
+	int				len;
+	int				mlen;
 
 	len = ulen_base(n, st->op.base);
-	if (PF_LOCAL(st->op.flag) && len > 3)
+	if (st->op.flag & PF_LOCAL && len > 3)
 		len += ((len / 3) - (len % 3 == 0 ? 1 : 0));
 	mlen = len--;
 	while (len >= 0)
 	{
-		if (PF_LOCAL(st->op.flag) && ((mlen - len) % 4 == 0))
+		if (st->op.flag & PF_LOCAL && ((mlen - len) % 4 == 0))
 			tmp[len--] = ',';
 		if ((n % st->op.base) < 10)
 			tmp[len--] = (n % st->op.base) + 48;
 		else
-			tmp[len--] = (n % st->op.base) + (MAJ == 1 ? 55 : 87);
+			tmp[len--] = (n % st->op.base) +
+				(st->op.flag & PF_MAJ ? 55 : 87);
 		n = n / st->op.base;
 	}
 	put_buff(st, tmp, mlen, 0);

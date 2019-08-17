@@ -19,11 +19,26 @@
 # define BUFF_PRINTF 10000
 # define KEEP_PF	1
 # define OUT_PF	0
-#if defined(__APPLE__)
-# define INTMAX_T intmax_t
-#else
-# define INTMAX_T long long
-#endif
+# define PF_HASH 		(1 << HASH)
+# define PF_SPACE		(1 << SPACE)
+# define PF_ZERO		(1 << ZERO)
+# define PF_SIGN_NEG	(1 << SIGN_NEG)
+# define PF_SIGN_POS	(1 << SIGN_POS)
+# define PF_LOCAL 		(1 << LOCAL)
+# define PF_POINT 		(1 << POINT)
+# define PF_MAJ 		(1 << MAJ)
+# define PRINT_PF		(1 << PRINT)
+# define POINT_PF		(1 << POINT)
+# define LENGH_L		(1 << CAST_L)
+# define LENGH_L_MAJ	(1 << CAST_L_MAJ)
+# define LENGH_LL		(1 << CAST_LL)
+# define LENGH_H		(1 << CAST_H)
+# define LENGH_HH		(1 << CAST_HH)
+# define LENGH_Z		(1 << CAST_Z)
+# define LENGH_J		(1 << CAST_J)
+# define LEN_PSIGN(sign) (sign == P_SIGN_HEX ? 2 : PF_NO_SIGN(sign) ? 1 : 0)
+# define LENGH_NO(fl)	(LENGH_J(fl) || LENGH_Z(fl) || LENGH_HH(fl) || \
+LENGH_H(fl) || LENGH_L_MAJ(fl) || LENGH_L(fl) || LENGH_LL(fl) ? TRUE : FALSE)
 
 enum	e_cast_pf
 {
@@ -47,43 +62,23 @@ enum	e_cast_pf
 	CAST_J,
 };
 
+enum	e_pf_float
+{
+	FLOAT_START,
+	FLOAT_END,
+	F_POS,
+	F_NEG,
+};
+
 enum	e_pf
 {
 	PF_FREE,
 	NO_FREE,
 };
 
-# define PF_HASH(fl) (fl & (1 << HASH) ? TRUE : FALSE)
-# define PF_SPACE(fl) (fl & (1 << SPACE) ? TRUE : FALSE)
-# define PF_ZERO(fl) (fl & (1 << ZERO) ? TRUE : FALSE)
-# define PF_SIGN_NEG(fl) (fl & (1 << SIGN_NEG) ? TRUE : FALSE)
-# define PF_SIGN_POS(fl) (fl & (1 << SIGN_POS) ? TRUE : FALSE)
-# define PF_LOCAL(fl) (fl & (1 << LOCAL) ? TRUE : FALSE)
-# define PF_POINT(fl) (fl & (1 << POINT) ? TRUE : FALSE)
-# define PF_MAJ(fl) (fl & (1 << MAJ) ? TRUE : FALSE)
-# define PRINT_PF(fl)	(fl & (1 << PRINT) ? TRUE : FALSE)
-# define POINT_PF(fl)	(fl & (1 << POINT) ? TRUE : FALSE)
-# define PF_STRING(conv) (conv == 's' || conv == 'S' || conv == 'r' || \
-											conv == 'm' ? TRUE : FALSE)
-# define LEN_PSIGN(sign) (sign == P_SIGN_HEX ? 2 : PF_NO_SIGN(sign) ? 1 : 0)
-# define BASE_16(conv) (conv == 'x' || conv == 'X' || conv == 'p' || \
-							conv == 'a' || conv == 'A' ? TRUE : FALSE)
-# define BASE_8(conv) (conv == 'o' || conv == 'O' ? TRUE : FALSE)
-# define BASE_2(conv) (conv == 'b' || conv == 'B' || conv == 'r' || \
-											conv == 'm' ? TRUE : FALSE)
-# define LENGH_L(fl)	(fl & (1 << CAST_L) ? TRUE : FALSE)
-# define LENGH_L_MAJ(fl)	(fl & (1 << CAST_L_MAJ) ? TRUE : FALSE)
-# define LENGH_LL(fl)	(fl & (1 << CAST_LL) ? TRUE : FALSE)
-# define LENGH_H(fl)	(fl & (1 << CAST_H) ? TRUE : FALSE)
-# define LENGH_HH(fl)	(fl & (1 << CAST_HH) ? TRUE : FALSE)
-# define LENGH_Z(fl)	(fl & (1 << CAST_Z) ? TRUE : FALSE)
-# define LENGH_J(fl)	(fl & (1 << CAST_J) ? TRUE : FALSE)
-# define LENGH_NO(fl)	(LENGH_J(fl) || LENGH_Z(fl) || LENGH_HH(fl) || \
-LENGH_H(fl) || LENGH_L_MAJ(fl) || LENGH_L(fl) || LENGH_LL(fl) ? TRUE : FALSE)
-
 typedef struct	s_pf_flag
 {
-	t_ulong			ul_nb;
+	uintmax_t		ul_nb;
 	t_ulong			ful_nb;
 	long double		fl_nb;
 	int				exponent;
@@ -123,14 +118,15 @@ void			convert_buff(t_pf *st, void *tmp, size_t len);
 void			put_buff(t_pf *st, void *tmp, size_t len, enum e_pf mod);
 void			put_prefix(t_pf *st, int len, int nb, t_bool point);
 void			ftprintf_error(t_pf *lst, char *str, size_t index);
-int				ulen_base(t_ulong nb, size_t base);
-void			put_itoa(t_pf *lst, t_ulong n);
+int				ulen_base(uintmax_t nb, size_t base);
+void			put_itoa(t_pf *st, intmax_t n);
 void			st_putdouble(t_pf *st);
 void			conv_int(t_pf *st);
 void			conv_other(t_pf *st);
 void			conv_char(t_pf *st);
 void			conv_string(t_pf *st);
 int				conv_tabstring(t_pf *st);
-void			conv_double(t_pf *lst, t_ulong *nb, int i);
+void			conv_double(t_pf *st);
+void			mod_double(t_pf *st);
 
 #endif

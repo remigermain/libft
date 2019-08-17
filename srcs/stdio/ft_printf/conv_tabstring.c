@@ -106,7 +106,7 @@ int			conv_tabstring(t_pf *st)
 		put_buff(st, "(tab null)", 10, 0);
 	else
 	{
-		if (PF_POINT(st->op.flag))
+		if (st->op.flag & PF_POINT)
 			pf_doublestring(st, tab, 0, 0);
 		else
 		{
