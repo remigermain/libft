@@ -19,7 +19,7 @@ CFLAGS =  -Wall -Wextra -g3 #-Werror
 INCLUDE = -Iincludes
 
 HEADER =	libft.h limit.h color.h  divers.h  flags.h  ft_errno.h  ft_printf.h  get_next_line.h  \
-			is_methode.h math.h  memory.h  print.h  lib_lst.h strings.h
+			is_methode.h math.h  memory.h  print.h  lib_lst.h strings.h bytes_tools.h
 
 
 OBJ = $(SRC:.c=.o)
@@ -27,12 +27,13 @@ OBJ = $(SRC:.c=.o)
 DSRC = srcs/
 DOBJ = obj/
 ALL_D = $(D_DIVERS) $(D_IS_METHODE) $(D_MATH) $(D_MEMORY) $(D_FLAGS) $(D_LST)\
-		$(D_PUT) $(D_STDIO) $(D_STRING) $(addprefix $(D_STDIO),$(D_FT_PRINTF))
+		$(D_PUT) $(D_STDIO) $(D_STRING) $(addprefix $(D_STDIO),$(D_FT_PRINTF)) \
+		$(D_BYTES)
 
 DHEADER = includes/
 
 SRC =  $(CSRC_DIVERS) $(CSRC_ISMETHODE) $(CSRC_MATH) $(CSRC_LST) \
-	  $(CSRC_MEMORY) $(CSRC_PUT) $(CSRC_STRING) $(CSRC_STDIO) $(CSRC_FLAGS)
+	  $(CSRC_MEMORY) $(CSRC_PUT) $(CSRC_STRING) $(CSRC_STDIO) $(CSRC_FLAGS) $(CSRC_BYTES)
 
 CSRC = $(addprefix $(DSRC),$(SRC))
 COBJ = $(addprefix $(DOBJ),$(OBJ))
@@ -42,12 +43,15 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 # 								ALL  SCRS									   #
 # *****************************************************************************#
 
+CSRC_BYTES = $(addprefix $(D_BYTES), $(SRC_BYTES))
+D_BYTES = bytes_tools/
+SRC_BYTES = ft_print_memory.c reverse_bytes.c ft_option.c ft_create_bytes_tab.c \
+
 CSRC_DIVERS = $(addprefix $(D_DIVERS),$(SRC_divers))
 D_DIVERS = divers/
 SRC_divers = 		ft_countwchar.c  ft_createtab.c  ft_inttab_del.c  ft_match.c  ft_sort_integer_table.c  \
 					ft_swap.c  ft_tablen.c  len_wchar.c  len_wchar_single.c  nlen_wchar.c  timestamp.c \
-					ft_getchar.c 
-					# get_next_line.c  
+					ft_getchar.c get_next_line.c  
 
 
 CSRC_FLAGS = $(addprefix $(D_FLAGS),$(SRC_flags))
@@ -84,7 +88,7 @@ D_PUT = print/
 SRC_PUT = 			ft_printtab.c     ft_putchar.c     ft_putendl.c     ft_putnbr_base.c     ft_putnbr.c    \
 					ft_putnstr.c     ft_putnstrw.c     ft_putpchar_fd.c  ft_putpstr_fd.c  ft_putstr_fd.c  ft_putstrw_fd.c  \
 					ft_putwchar_fd.c ft_printtab_fd.c  ft_putchar_fd.c  ft_putendl_fd.c  ft_putnbr_base_fd.c  \
-					ft_putnbr_fd.c  ft_putnstr_fd.c  ft_putnstrw_fd.c  ft_putpnstr_fd.c  ft_putstr.c      ft_putstrw.c    ft_putwchar.c
+					ft_putnbr_fd.c  ft_putnstr_fd.c  ft_putnstrw_fd.c  ft_putpnstr_fd.c  ft_putstr.c      ft_putstrw.c    ft_putwchar.c \
 
 CSRC_STDIO = $(addprefix $(D_STDIO),$(SRC_STDIO))
 D_STDIO = stdio/

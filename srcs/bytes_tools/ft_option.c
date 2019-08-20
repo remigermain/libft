@@ -6,29 +6,43 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/21 03:13:03 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/01/31 18:26:18 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
-# define TRUE 1
-# define FALSE 0
-# include <unistd.h>
-# include <stdlib.h>
-# include <errno.h>
-# include "limit.h"
-# include "lib_lst.h"
-# include "bytes_tools.h"
-# include "memory.h"
-# include "divers.h"
-# include "is_methode.h"
-# include "ft_errno.h"
-# include "math.h"
-# include "print.h"
-# include "strings.h"
-# include "ft_printf.h"
-# include "get_next_line.h"
-# include "flags.h"
-#endif
+# include "libft.h"
+
+static int  *get_interne_option(void)
+{
+    static int option = 0;
+
+    return (&option);
+}
+
+void        add_option(int fl)
+{
+    int *option;
+
+    option = get_interne_option();
+    *option |= 1 << fl;
+}
+
+t_bool      exist_option(int fl)
+{
+    int *option;
+
+    option = get_interne_option();
+    if (*option & 1 << fl)
+        return (TRUE);
+    return (FALSE);
+}
+
+void        remove_option(int fl)
+{
+    int *option;
+
+    option = get_interne_option();
+    if (exist_option(fl))
+        *option ^= 1 << fl;
+}
