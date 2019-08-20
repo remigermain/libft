@@ -15,14 +15,14 @@
 # define BYTES_TOOLS_H
 # define MEM_SEPARATOR 16
 
-enum e_memory
+enum e_print_memory
 {
     MEM_ASCII = 0b1,
     MEM_ADD = 0b10,
     MEM_SP = 0b100,
 };
 
-void            ft_print_memory(void *type, size_t size, enum e_memory flag);
+void            ft_print_memory(void *type, size_t s, enum e_print_memory f);
 void            reverse_bytes(void *bytes, size_t size);
 unsigned char **ft_create_bytes_tab(size_t size);
 

@@ -32,7 +32,7 @@ static void print_ascci_mem(unsigned char *mem, int i)
     ft_printf("|");
 }
 
-static void memory_space(unsigned char *mem, int i, enum e_memory flag)
+static void memory_space(unsigned char *mem, int i, enum e_print_memory flag)
 {
     if (i && i % MEM_SEPARATOR == 0)
     {
@@ -50,7 +50,7 @@ static void memory_space(unsigned char *mem, int i, enum e_memory flag)
         ft_printf("0x%.6x  ", i);
 }
 
-void        ft_print_memory(void *mem, size_t size, enum e_memory flag)
+void        ft_print_memory(void *mem, size_t size, enum e_print_memory flag)
 {
     size_t i;
 
