@@ -60,27 +60,27 @@ static int	find_flags(t_flag *st, char c)
 
 static int	parse_mflag(t_flag *st)
 {
-	int		min;
-	int		max;
 	int		len;
+	int		i;
+	int		j;
 
-	min = 0;
-	len = 0;
 	if (!ft_strcmp(ft_strlowcase(st->argv[st->i] + 2), "help"))
 		print_usage(st);
-	if (st->mflag)
-		len = ft_strlen(st->mflag);
-	while (min < len)
+	j = 0;
+	i = 0;
+	len = ft_strlen(st->mflag);
+	while (i + j < len)
 	{
-		max = len - ft_strlen(ft_strchr(st->mflag + min, '|')) - min;
-		if (!ft_strncmp(st->argv[st->i] + 2, st->mflag + min, max - 3) &&
-			(int)ft_strlen(st->argv[st->i] + 2) == (max - 2))
+		i = ft_spanchar(st->mflag + j, ";");
+		if (!ft_strncmp(st->argv[st->i] + 2, st->mflag + j, i))
 		{
-			add_flags(st->mflag[max - 1]);
-			find_flags(st, st->mflag[max - 1]);
+			if (!st->mflag[i + j + 1])
+				ft_printf("%1@", "error", "wrong parsing", "mflag");
+			add_flags(st->mflag[i + j + 1]);
+			find_flags(st, st->mflag[i + j + 1]);
 			return (1);
 		}
-		min += max + 1;
+		j += i + ft_spanchar(st->mflag + i + j, "|") + 1;
 	}
 	error_argv(st, "unknow flags", st->i, 0);
 	return (1);
