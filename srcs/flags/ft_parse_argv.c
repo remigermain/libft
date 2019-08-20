@@ -89,7 +89,7 @@ static int	parse_mflag(t_flag *st)
 static int	call_flags(t_flag *st)
 {
 	st->j = 0;
-	while (st->argv[st->i][++st->j] && cout_error_argv(ERROR_GET) < MAX_ERROR)
+	while (st->argv[st->i][++st->j] && cout_error_argv(ERROR_GET) <= MAX_ERROR)
 	{
 		if (st->argv[st->i][1] != '-')
 		{
@@ -118,6 +118,7 @@ static int	call_flags(t_flag *st)
 **		if in name as * , is match for all character like : *.cor match with  explosivekitty.cor or bazou.cor
 **
 **		mflag ; set_flag | ... ect
+**		animation;a|  --animation is same as -a
 */
 
 int			init_flags(char **argv, char *flag, char *mflag, enum e_flags mod)
@@ -130,7 +131,7 @@ int			init_flags(char **argv, char *flag, char *mflag, enum e_flags mod)
 	st.argv = argv;
 	st.mflag = mflag;
 	st.argc = ft_maxlen_tab(argv, TAB_LENGHT);
-	while (st.argv[st.i] && cout_error_argv(ERROR_GET) < MAX_ERROR)
+	while (st.argv[st.i] && cout_error_argv(ERROR_GET) <= MAX_ERROR)
 	{
 		if ((st.argv[st.i][0] != '-' && st.mod == F_STOP) ||
 				!ft_strcmp("--", st.argv[st.i]))
