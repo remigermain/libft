@@ -21,4 +21,3 @@ void	ft_memdel(void **ap)
 		*ap = NULL;
 	}
 }
-

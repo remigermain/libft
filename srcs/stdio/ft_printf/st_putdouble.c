@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   st_putdouble.c                                  .::    .:/ .      .::   */
+/*   malloc_string.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/01/04 16:38:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 19:33:18 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/01/04 16:39:10 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/06/10 14:29:21 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,7 @@ static void	remove_zero(t_pf *st)
 	st->op.preci -= rm;
 }
 
-static void round_double(t_pf *st)
+static void	round_double(t_pf *st)
 {
 	long double round;
 	int			preci;
@@ -58,13 +58,14 @@ static void	atapt_preci(t_pf *st)
 		remove_zero(st);
 }
 
-void mod_double(t_pf *st)
+void		mod_double(t_pf *st)
 {
 	long double nb;
-	
+
 	nb = (intmax_t)st->op.fl_nb;
-	if ((ft_strchr("gG", st->op.conv) && st->op.fl_nb >= ft_pow(st->op.base, st->op.preci)) ||
-		(ft_strchr("eE", st->op.conv) && nb >= st->op.base))
+	if ((ft_strchr("gG", st->op.conv) && st->op.fl_nb >=
+		ft_pow(st->op.base, st->op.preci)) || (ft_strchr("eE", st->op.conv) &&
+									nb >= st->op.base))
 	{
 		while (nb > ft_pow(st->op.base, st->op.exponent))
 		{
@@ -85,4 +86,3 @@ void mod_double(t_pf *st)
 		st->op.preci = MAX(6, ABS(st->op.exponent));
 	atapt_preci(st);
 }
-

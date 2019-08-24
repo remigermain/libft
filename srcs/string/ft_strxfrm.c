@@ -13,12 +13,12 @@
 
 #include "libft.h"
 
-size_t  ft_strxfrm(char *dest, const char *src, size_t n)
+size_t	ft_strxfrm(char *dest, const char *src, size_t n)
 {
-    size_t  i;
+	size_t	i;
 
-    i = 0;
-    while (*src && i++ < n)
-        *dest = *src++;
-    return (i);
+	i = 0;
+	while (*src && i++ < n)
+		*dest = *src++;
+	return (i);
 }

@@ -15,7 +15,7 @@
 
 int	ft_putpnstr_fd(char const *s, int len, int fd)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (!s)

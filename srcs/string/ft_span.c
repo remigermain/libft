@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-int		ft_spantype(char *str, t_bool (*func)(int))
+int	ft_spantype(char *str, t_bool (*func)(int))
 {
 	int i;
 

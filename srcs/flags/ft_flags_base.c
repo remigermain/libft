@@ -15,8 +15,8 @@
 
 t_flagav	*flags_av_struct(void)
 {
-	static t_flagav av[MAX_FLAGS];
-	
+	static t_flagav	av[MAX_FLAGS];
+
 	return (av);
 }
 
@@ -41,12 +41,12 @@ t_bool		flag_add(t_flagav *av, int fl, void *value, enum e_type type)
 	{
 		if (type == STRING)
 		{
-			av[fl].exist_string |=  (1 << av[fl].nb_arg);
+			av[fl].exist_string |= (1 << av[fl].nb_arg);
 			av[fl].string[av[fl].nb_arg++] = (char*)value;
 		}
 		else if (type == CHAR)
 		{
-			av[fl].exist_char |=  (1 << av[fl].nb_arg);			
+			av[fl].exist_char |= (1 << av[fl].nb_arg);
 			av[fl].schar[av[fl].nb_arg++] = *((char*)value);
 		}
 		else if (type == INT)
@@ -72,10 +72,7 @@ void		print_flags(void)
 	while (++i < MAX_FLAGS)
 		if ((av[i].fl || av[i].nb_arg) && (j = -1))
 		{
-			if (i == FLAG_ARGV)
-				ft_printf("\t[ NO FLAG ]\n\t{\n");
-			else
-				ft_printf("\t[ FLAG  \"%c\" ]\n\t{\n", av[i].fl);
+			ft_printf("\t[ FLAG  \"%c\" ]\n\t{\n", av[i].fl);
 			ft_printf("\t\t[ NB ARG  %d ]\n\t\t{\n", av[i].nb_arg);
 			while (++j < av[i].nb_arg)
 			{

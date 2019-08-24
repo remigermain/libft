@@ -15,15 +15,15 @@
 # define STRINGS_H
 # include "limit.h"
 
-t_bool  ft_base_string(char letter, int base);
-double  ft_atof_base(const char *str, int base);
-double  ft_atof(const char *str);
+t_bool	ft_base_string(char letter, int base);
+double	ft_atof_base(const char *str, int base);
+double	ft_atof(const char *str);
 long	ft_atol_base(const char *str, int base);
-long    ft_atol(const char *str);
-int	    ft_atoi_base(const char *str, int base);
-int	    ft_atoi(const char *str);
+long	ft_atol(const char *str);
+int		ft_atoi_base(const char *str, int base);
+int		ft_atoi(const char *str);
 void	ft_itoabase_buffer(char *buff, int nb2, int base);
-char	*ft_itoa_base(int nb, int base);
+char	ft_itoa_base(int nb, int base);
 void	ft_itoa_buffer(char *buff, int nb);
 void	ft_itoabuffer(char *buff, int nb);
 char	*ft_itoa(int n);
@@ -34,14 +34,14 @@ char	*ft_strcapitalize(char *str);
 char	*ft_strcat(char *s1, const char *s2);
 char	*ft_strchr(const char *str, int c);
 void	ft_strclr(char *str);
-int	    ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strcpy(char *dst, const char *src);
 char	*ft_strcpychr(const char *s, int c);
 void	ft_strdel(char **as);
 char	*ft_strdup(const char *s1);
 int		ft_strequ(char const *s1, char const *s2);
-int	    ft_str_is_alpha(char *str);
-int	    ft_str_is_lowercase(char *str);
+int		ft_str_is_alpha(char *str);
+int		ft_str_is_lowercase(char *str);
 t_bool	ft_str_is_numeric(char *str);
 t_bool	ft_str_is_printable(char *str);
 t_bool	ft_str_is_uppercase(char *str);
@@ -58,19 +58,19 @@ char	*ft_strncat(char *restrict s1, const char *restrict s2, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strncpy(char *dst, const char *src, size_t len);
 char	*ft_strncpychr(const char *s, int c);
-int	    ft_strnequ(char const *s1, char const *s2, size_t n);
+int		ft_strnequ(char const *s1, char const *s2, size_t n);
 char	*ft_strnew(size_t size);
 size_t	ft_strnlen(const char *s, size_t max);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-char    *ft_strpbrk(const char *s1, const char *s2);
+char	*ft_strpbrk(const char *s1, const char *s2);
 char	*ft_strrev(char *str);
 char	**ft_strsplit(const char *str, char c);
 char	*ft_strstr(const char *haystack, const char *needle);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
-char    *ft_strtok(char *s1, const char *delim);
+char	*ft_strtok(char *s1, const char *delim);
 char	*ft_strtrim(char const *s);
 char	*ft_strupcase(char *str);
-size_t  ft_strxfrm(char *dest, const char *src, size_t n);
+size_t	ft_strxfrm(char *dest, const char *src, size_t n);
 void	ft_tabdel(char ***ap);
 
 #endif

@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-int			ft_spanchar(char *flag, char *str)
+int	ft_spanchar(char *flag, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (flag[i] && !ft_strchr(str, flag[i]) && !ft_isspace(flag[i]))

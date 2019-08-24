@@ -64,7 +64,7 @@ static void		get_number(t_pf *st)
 	st->op.ul_nb = (uintmax_t)n;
 }
 
-static void	space_calc(t_pf *st, int len)
+static void		space_calc(t_pf *st, int len)
 {
 	if (st->op.flag & PF_HASH && ft_strchr("oO", st->op.conv) &&
 		!((!st->op.ul_nb && st->op.flag & PF_HASH && st->op.preci > 0) ||
@@ -72,7 +72,7 @@ static void	space_calc(t_pf *st, int len)
 	{
 		st->op.flag |= PF_HASH;
 		if (st->op.flag & PF_POINT && st->op.preci > len)
-			st->op.preci = (st->op.preci != 0 ? st->op.preci - 1 : st->op.preci);
+			(st->op.preci != 0 ? st->op.preci-- : st->op.preci);
 		if (st->op.field < 0)
 			st->op.field++;
 	}
@@ -90,9 +90,9 @@ static void	space_calc(t_pf *st, int len)
 			st->op.field++;
 	}
 }
-void		conv_int(t_pf *st)
+
+void			conv_int(t_pf *st)
 {
-	(void)st;
 	int len;
 	int max;
 
@@ -108,7 +108,8 @@ void		conv_int(t_pf *st)
 	max = MAX(len, st->op.preci) + ft_strlen(st->op.sign);
 	if (st->op.flag & PF_ZERO)
 		put_buff(st, st->op.sign, ft_strlen(st->op.sign), NO_FREE);
-	put_prefix(st, max + (st->op.flag & PF_HASH), st->op.field, st->op.flag & PF_ZERO);
+	put_prefix(st, max + (st->op.flag & PF_HASH),
+							st->op.field, st->op.flag & PF_ZERO);
 	if (!(st->op.flag & PF_ZERO))
 		put_buff(st, st->op.sign, ft_strlen(st->op.sign), NO_FREE);
 	put_prefix(st, 0, st->op.flag & PF_HASH, 1);

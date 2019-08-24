@@ -24,4 +24,3 @@ int	ft_putpstr_fd(char const *s, int fd)
 		ft_putpchar_fd(s[count++], fd);
 	return (count);
 }
-

@@ -15,11 +15,11 @@
 
 void	ft_inttab_del(int **ap, int size)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (ap && count < size)
 		ft_memdel((void**)&(ap[count++]));
-    if (ap)
-	    ft_memdel((void**)&ap);
+	if (ap)
+		ft_memdel((void**)&ap);
 }

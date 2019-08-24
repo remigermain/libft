@@ -15,10 +15,10 @@
 
 static void	print_pattern(char *str)
 {
-	char mem[127];
-	int	pass;
-	int i;
-	int j;
+	char	mem[127];
+	int		pass;
+	int		i;
+	int		j;
 
 	i = 0;
 	pass = 0;
@@ -52,7 +52,7 @@ void		func_obj_match(t_flag *st, t_finfo *it, char *str)
 	while (it->str[i])
 	{
 		i += (it->str[i] == '|' ? 1 : 0);
-		i += ft_spantype(it->str + i, ft_isspace);		
+		i += ft_spantype(it->str + i, ft_isspace);
 		j = ft_spanchar(it->str + i, "|");
 		ft_strncpy(mem, it->str + i, j);
 		if (ft_match(str, mem))
@@ -60,19 +60,19 @@ void		func_obj_match(t_flag *st, t_finfo *it, char *str)
 		i += ft_spantype(it->str + i + j, ft_isspace) + j;
 	}
 	ft_dprintf(2, T_RED"error: "T_LGREY"String not match \"%s\""\
-		 ".\n"T_WHITE, str);
+		".\n"T_WHITE, str);
 	print_pattern(it->str);
 	ft_error_argv(st->argv, st->i + st->add, 0);
 	it->error = cout_error_argv(ERROR_SET);
 }
 
-
-void    func_obj_minmax(t_flag *st, t_finfo *it, char *type, enum e_type mod)
+void		func_obj_minmax(t_flag *st, t_finfo *it, char *type, \
+												enum e_type mod)
 {
 	unsigned char	*msg;
 
-	ft_sprintf(&msg, "%s c'ant be %s than \"%d\"", type, 
-    (mod == MAX ? "more" : "less"), (mod == MAX ? it->max : it->min));
+	ft_sprintf(&msg, "%s c'ant be %s than \"%d\"", type,
+		(mod == MAX ? "more" : "less"), (mod == MAX ? it->max : it->min));
 	it->error = error_argv(st, (char*)msg, st->i + st->add, 0);
 	ft_strdel((char**)&msg);
 }

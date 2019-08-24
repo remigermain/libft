@@ -13,7 +13,7 @@
 
 #include "ft_printf.h"
 
-static void st_base(t_pf *st)
+static void	st_base(t_pf *st)
 {
 	if (ft_strchr("xXpaA", st->op.conv))
 		st->op.base = 16;
@@ -53,7 +53,6 @@ static int	st_putdigit(t_pf *st, char *str, int count)
 {
 	int nb_tmp;
 
-	nb_tmp = 0;
 	if (str[count] == '+' && (++count))
 		st->op.flag |= PF_SIGN_POS;
 	else if (str[count] == '-' && (++count))

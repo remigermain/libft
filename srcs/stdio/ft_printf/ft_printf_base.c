@@ -25,7 +25,7 @@ static void	conv_nlen(t_pf *st)
 static int	find_conv(t_pf *st, char *str, int ret)
 {
 	ret = get_option(st, str, 1);
- 	if (st->op.conv == 'n')
+	if (st->op.conv == 'n')
 		conv_nlen(st);
 	else if (ft_strchr("fFeEgGaA", st->op.conv))
 		conv_double(st);
@@ -42,7 +42,7 @@ static int	find_conv(t_pf *st, char *str, int ret)
 	return (ret);
 }
 
-int	    ftprintf_base(char *str, t_pf *st, size_t i, size_t j)
+int			ftprintf_base(char *str, t_pf *st, size_t i, size_t j)
 {
 	va_copy(st->va_copy, st->va_lst);
 	while (str[i] != '\0')

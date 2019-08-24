@@ -13,20 +13,20 @@
 
 #include "libft.h"
 
-double  ft_pow(double x, int y)
+double	ft_pow(double x, int y)
 {
-    double temp;
+	double temp;
 
-    if (y == 0)  
-        return 1;  
-    temp = ft_pow(x, y / 2);  
-    if (y % 2 == 0)  
-        return (temp * temp);
-    else
-    {  
-        if (y > 0)  
-            return (x * temp * temp);
-        else
-            return ((temp * temp) / x);
-    }  
+	if (y == 0)
+		return (1);
+	temp = ft_pow(x, y / 2);
+	if (y % 2 == 0)
+		return (temp * temp);
+	else
+	{
+		if (y > 0)
+			return (x * temp * temp);
+		else
+			return ((temp * temp) / x);
+	}
 }

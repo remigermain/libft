@@ -39,8 +39,8 @@ t_bool	exist_flags(int fl)
 
 void	remove_flags(int fl)
 {
-	t_flagav *av;
-	int i;
+	t_flagav	*av;
+	int			i;
 
 	av = flags_av_struct();
 	i = flag_getindice(av, fl);
@@ -58,11 +58,11 @@ void	*get_flags_av(int fl, int nb)
 	if (av[fl].fl == fl && av[fl].nb_arg > nb)
 	{
 		if (av[fl].exist_string & (1 << nb))
-			return((void**)(av[fl].string[nb]));
+			return ((void**)(av[fl].string[nb]));
 		if (av[fl].exist_char & (1 << nb))
-			return((void**)&(av[fl].schar[nb]));
+			return ((void**)&(av[fl].schar[nb]));
 		if (av[fl].exist_int & (1 << nb))
-			return((void**)&(av[fl].number[nb]));
+			return ((void**)&(av[fl].number[nb]));
 	}
 	return (NULL);
 }

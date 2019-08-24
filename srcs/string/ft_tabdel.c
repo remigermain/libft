@@ -20,6 +20,6 @@ void	ft_tabdel(char ***ap)
 	count = 0;
 	while (*ap && (*ap)[count])
 		ft_memdel((void**)&((*ap)[count++]));
-    if (ap)
-	    ft_memdel((void**)ap);
+	if (ap)
+		ft_memdel((void**)ap);
 }

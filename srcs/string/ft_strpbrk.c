@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-char    *ft_strpbrk(const char *s1, const char *s2)
+char	*ft_strpbrk(const char *s1, const char *s2)
 {
-    while (*s1 && ft_strchr(s2, *s1))
-        s1++;
-    return ((char*)s1);
+	while (*s1 && ft_strchr(s2, *s1))
+		s1++;
+	return ((char*)s1);
 }

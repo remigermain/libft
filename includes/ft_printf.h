@@ -37,8 +37,6 @@
 # define LENGH_Z		(1 << CAST_Z)
 # define LENGH_J		(1 << CAST_J)
 # define LEN_PSIGN(sign) (sign == P_SIGN_HEX ? 2 : PF_NO_SIGN(sign) ? 1 : 0)
-# define LENGH_NO(fl)	(LENGH_J(fl) || LENGH_Z(fl) || LENGH_HH(fl) || \
-LENGH_H(fl) || LENGH_L_MAJ(fl) || LENGH_L(fl) || LENGH_LL(fl) ? TRUE : FALSE)
 
 enum	e_cast_pf
 {

@@ -11,32 +11,32 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h" 
+#include "libft.h"
 
-static double   ft_atof_base2(const char *str, double nb, int base)
+static double	ft_atof_base2(const char *str, double nb, int base)
 {
-    double val;
-    double f;
+	double	val;
+	double	f;
 
-    f = 1.0;
-    val = 0.0;
-    if (*str == '.')
-        str++;
-    while (*str && ft_base_string(*str, base))
+	f = 1.0;
+	val = 0.0;
+	if (*str == '.')
+		str++;
+	while (*str && ft_base_string(*str, base))
 	{
-        f *= (double)((double)base / 100);
+		f *= (double)((double)base / 100);
 		if (ft_isdigit(*str))
 			val += (f * (*str++ - '0'));
 		else
 			val += (f * (*str++ - 'a' + 10));
 	}
-    return(val + nb);
+	return (val + nb);
 }
 
-double          ft_atof_base(const char *str, int base)
+double			ft_atof_base(const char *str, int base)
 {
-    double  nb;
-	int     neg;
+	double	nb;
+	int		neg;
 
 	nb = 0;
 	neg = 1;

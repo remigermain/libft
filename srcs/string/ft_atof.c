@@ -11,9 +11,9 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h" 
+#include "libft.h"
 
-double  ft_atof(const char *str)
+double	ft_atof(const char *str)
 {
 	return (ft_atof_base(str, 10));
 }

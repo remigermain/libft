@@ -13,19 +13,19 @@
 
 #include "libft.h"
 
-char    *ft_strtok(char *s1, const char *delim)
+char	*ft_strtok(char *s1, const char *delim)
 {
-    static char *str = NULL;
+	static char *str = NULL;
 
-    if (s1)
-        str = s1;
-    if (!str)
-        return (NULL);
-    while (*str && ft_strchr(delim, *str))
-        str++;
-    while (str && !ft_strchr(delim, *str))
-        str++;
-    if (!*str)
-        return (NULL);
-    return (str);
+	if (s1)
+		str = s1;
+	if (!str)
+		return (NULL);
+	while (*str && ft_strchr(delim, *str))
+		str++;
+	while (str && !ft_strchr(delim, *str))
+		str++;
+	if (!*str)
+		return (NULL);
+	return (str);
 }

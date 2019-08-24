@@ -11,13 +11,13 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h" 
+#include "libft.h"
 
-int     ft_getchar(void)
+int	ft_getchar(void)
 {
-    int c;
+	int	c;
 
-    c = 0;
-    read(1, &c, 1);
-    return (c);
+	c = 0;
+	read(1, &c, 1);
+	return (c);
 }

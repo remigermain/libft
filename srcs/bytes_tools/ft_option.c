@@ -11,38 +11,38 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-# include "libft.h"
+#include "libft.h"
 
-static int  *get_interne_option(void)
+static int	*get_interne_option(void)
 {
-    static int option = 0;
+	static int	option = 0;
 
-    return (&option);
+	return (&option);
 }
 
-void        add_option(int fl)
+void		add_option(int fl)
 {
-    int *option;
+	int	*option;
 
-    option = get_interne_option();
-    *option |= 1 << fl;
+	option = get_interne_option();
+	*option |= 1 << fl;
 }
 
-t_bool      exist_option(int fl)
+t_bool		exist_option(int fl)
 {
-    int *option;
+	int	*option;
 
-    option = get_interne_option();
-    if (*option & 1 << fl)
-        return (TRUE);
-    return (FALSE);
+	option = get_interne_option();
+	if (*option & 1 << fl)
+		return (TRUE);
+	return (FALSE);
 }
 
-void        remove_option(int fl)
+void		remove_option(int fl)
 {
-    int *option;
+	int *option;
 
-    option = get_interne_option();
-    if (exist_option(fl))
-        *option ^= 1 << fl;
+	option = get_interne_option();
+	if (exist_option(fl))
+		*option ^= 1 << fl;
 }

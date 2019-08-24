@@ -25,7 +25,7 @@
 # define CHAR_MAX 127
 # define CHAR_MIN -128
 # define UCHAR_MAX 255
-#if defined(__linux__)
+#ifdef __linux__
 # include <inttypes.h>
 #endif
 

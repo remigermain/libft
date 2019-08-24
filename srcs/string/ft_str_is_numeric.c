@@ -15,7 +15,7 @@
 
 t_bool	ft_str_is_numeric(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[++i] != '\0')

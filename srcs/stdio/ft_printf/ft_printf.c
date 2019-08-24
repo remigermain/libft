@@ -36,15 +36,14 @@ int			ft_stprintf(char ind, const char *format, ...)
 
 int			ft_sprintf(t_uchar **dest, const char *format, ...)
 {
-	t_pf	lst;
+	t_pf	st;
 	int		i;
 
-	t_pf	st;
 	ft_bzero(&st, sizeof(t_pf));
 	va_start(st.va_lst, format);
-	convert_buff(&lst, NULL, 0);
+	convert_buff(&st, NULL, 0);
 	i = ftprintf_base((char*)format, &st, 0, 0);
-	*dest = lst.str;
+	*dest = st.str;
 	return (i);
 }
 
@@ -58,7 +57,6 @@ int			ft_dprintf(int fd, const char *format, ...)
 	st.fd = fd;
 	return (ftprintf_base((char*)format, &st, 0, 0));
 }
-
 
 int			ft_printf(const char *format, ...)
 {

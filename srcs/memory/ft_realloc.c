@@ -13,17 +13,17 @@
 
 #include "libft.h"
 
-void    *ft_realloc(void *ptr, size_t len)
+void	*ft_realloc(void *ptr, size_t len)
 {
-    void    *new;
-    int     i;
+	void	*new;
+	int		i;
 
-    if ((new = ft_memalloc(len)))
-    {
-        i = -1;
-        while (((unsigned char*)ptr)[++i])
-            ((unsigned char*)new)[i] = ((unsigned char*)ptr)[i];
-    }
-    ft_memdel(&ptr);
-    return (new);
+	if ((new = ft_memalloc(len)))
+	{
+		i = -1;
+		while (((unsigned char*)ptr)[++i])
+			((unsigned char*)new)[i] = ((unsigned char*)ptr)[i];
+	}
+	ft_memdel(&ptr);
+	return (new);
 }

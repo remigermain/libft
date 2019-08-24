@@ -13,9 +13,9 @@
 
 #include "libft.h"
 
-char			*ft_strcapitalize(char *str)
+char	*ft_strcapitalize(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[++i] != '\0')
@@ -23,7 +23,7 @@ char			*ft_strcapitalize(char *str)
 			str[i] = str[i] + 32;
 	i = -1;
 	while (str[++i] != '\0')
-		if (i > 0 && ft_isspace(str[i - 1]) && 
+		if (i > 0 && ft_isspace(str[i - 1]) &&
 				ft_isalpha(str[i]))
 			str[i] = str[i] - 32;
 	return (str);

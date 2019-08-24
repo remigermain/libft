@@ -14,6 +14,6 @@
 #ifndef FT_ERRNO_H
 # define FT_ERRNO_H
 
-char    *ft_strerror(int error);
+char	*ft_strerror(int error);
 
 #endif

@@ -13,11 +13,11 @@
 
 #include "libft.h"
 
-void    *ft_memnew(void *ptr, size_t len)
+void	*ft_memnew(void *ptr, size_t len)
 {
-    void    *new;
+	void	*new;
 
-    if ((new = ft_memalloc(len)))
-        ft_memcpy(new, ptr, len);
-    return (new);
+	if ((new = ft_memalloc(len)))
+		ft_memcpy(new, ptr, len);
+	return (new);
 }

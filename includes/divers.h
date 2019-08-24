@@ -24,7 +24,7 @@ int		ft_maxlen_tab(char **tab, int index);
 int		len_wchar(wchar_t *str);
 int		len_wchar_single(wchar_t c);
 int		nlen_wchar(wchar_t *str, size_t len);
-t_time  timestamp(time_t time);
-int     ft_getchar(void);
+t_time	timestamp(time_t time);
+int		ft_getchar(void);
 
 #endif

@@ -72,7 +72,7 @@ enum	e_error_flag
 **-----------------------------------------------------------
 */
 
-typedef struct s_flagav
+typedef struct	s_flagav
 {
 	char	*string[MAX_ARG];
 	char	schar[MAX_ARG];
@@ -95,7 +95,7 @@ typedef struct	s_finfo
 	int		min;
 	int		max;
 	char	str[127];
-	int 	isset;
+	int		isset;
 	t_bool	error;
 	char	fl;
 	char	*flag;
@@ -118,7 +118,7 @@ typedef struct	s_flag
 	int				i;
 	int				j;
 	int				add;
-	enum e_flags 	mod;
+	enum e_flags	mod;
 }				t_flag;
 
 /*
@@ -147,7 +147,7 @@ t_bool			add_flags_av(int fl, void *value, enum e_type type);
 **          ft_parse_argv.c
 **-----------------------------------------------------------
 */
-int				init_flags(char **argv, char *flag, char *mflag, enum e_flags mod);
+int				init_flags(char **argv, char *flag, char *m, enum e_flags mod);
 
 /*
 **-----------------------------------------------------------
@@ -161,7 +161,7 @@ void			ft_error_argv(char **argv, int error, int error_2);
 **          ft_error_line.c
 **-----------------------------------------------------------
 */
-void    		error_line(char *str);
+void			error_line(char *str);
 
 /*
 **-----------------------------------------------------------
@@ -180,9 +180,8 @@ int				error_argv(t_flag *st, char *str, int i, int j);
 */
 t_bool			check_int(t_flag *st, t_finfo *it, char *str, enum e_type mod);
 t_bool			check_uint(t_flag *st, t_finfo *it, char *str, enum e_type mod);
-t_bool			check_string(t_flag *st, t_finfo *it, char *str, enum e_type mod);
+t_bool			check_string(t_flag *st, t_finfo *i, char *s, enum e_type mod);
 t_bool			check_char(t_flag *st, t_finfo *it, char *str, enum e_type mod);
-
 
 /*
 **-----------------------------------------------------------
@@ -190,7 +189,7 @@ t_bool			check_char(t_flag *st, t_finfo *it, char *str, enum e_type mod);
 **-----------------------------------------------------------
 */
 void			func_obj_match(t_flag *st, t_finfo *it, char *str);
-void    		func_obj_minmax(t_flag *st, t_finfo *it, char *type, enum e_type mod);
+void			func_obj_minmax(t_flag *s, t_finfo *i, char *ty, enum e_type m);
 
 /*
 **-----------------------------------------------------------
@@ -216,7 +215,7 @@ int				is_type(t_flag *st, char *flag, int nb, char fl);
 **          ft_option_flag.c
 **-----------------------------------------------------------
 */
-int 			parse_option(t_flag *st, char fl, char *flag);
+int				parse_option(t_flag *st, char fl, char *flag);
 int				span_alloption(char *flag);
 
 /*
@@ -224,7 +223,7 @@ int				span_alloption(char *flag);
 **          ft_usage_flag.c
 **-----------------------------------------------------------
 */
-char   			*init_usage(char *str);
-void        	print_usage(t_flag *st);
+char			*init_usage(char *str);
+void			print_usage(t_flag *st);
 
 #endif

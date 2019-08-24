@@ -11,9 +11,9 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h" 
+#include "libft.h"
 
-long    ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	return (ft_atol_base(str, 10));
 }

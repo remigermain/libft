@@ -15,7 +15,7 @@
 
 void	ft_printtab_fd(char **tab, int fd)
 {
-	int count1;
+	int	count1;
 
 	count1 = 0;
 	while (tab[count1] != NULL)
