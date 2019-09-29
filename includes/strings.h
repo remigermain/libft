@@ -6,7 +6,7 @@
 /*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/03/23 19:31:28 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/29 16:55:53 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@ long	ft_atol(const char *str);
 int		ft_atoi_base(const char *str, int base);
 int		ft_atoi(const char *str);
 void	ft_itoabase_buffer(char *buff, int nb2, int base);
-char	ft_itoa_base(int nb, int base);
+char*	ft_itoa_base(int nb, int base);
 void	ft_itoa_buffer(char *buff, int nb);
 void	ft_itoabuffer(char *buff, int nb);
 char	*ft_itoa(int n);

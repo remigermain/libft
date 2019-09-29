@@ -6,24 +6,28 @@
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/02 11:14:09 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/22 17:34:14 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/09/29 17:01:09 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                                            */
 /* ************************************************************************** */
 
-<<<<<<< HEAD
-
 #include "libft.h" 
-=======
-#include "libft.h"
->>>>>>> master
 
 t_bool	ft_base_string(char letter, int base)
 {
 	char	*base_string;
+	int		i;
+	int		isset;
 
-	base_string = "00123456789abcdef";
+	i = -1;
+	isset = 0;
+	base_string = "0123456789abcdef";
 	letter = ft_tolower(letter);
-	if (ft_strchr(base_string, letter))
+	while (++i < base)
+	{
+		if (base_string[i] == letter)
+			isset = 1;		
+	}
+	if (isset)
 		return (TRUE);
 	return (FALSE);
 }
