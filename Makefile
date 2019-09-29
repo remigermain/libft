@@ -1,15 +1,15 @@
 # **************************************************************************** #
-#                                                           LE - /             #
-#                                                               /              #
-#    Makefile                                         .::    .:/ .      .::    #
-#                                                  +:+:+   +:    +:  +:+:+     #
-#    By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+      #
-#                                                  #+#   #+    #+    #+#       #
-#    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
-#    Updated: 2019/08/09 14:24:34 by rgermain    ###    #+. /#+    ###.fr      #
-#                                                          /                   #
-#                                                         /                    #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/10/01 15:39:03 by rgermain          #+#    #+#              #
+#    Updated: 2019/09/27 21:04:30 by rgermain         ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
+
 
 NAME = libft.a
 TYPE = " de la library"
@@ -64,7 +64,7 @@ SRC_flags = 	ft_call_types_func.c ft_erro_argv.c ft_error_flags.c ft_flags_base.
 CSRC_ISMETHODE = $(addprefix $(D_IS_METHODE),$(SRC_ISMETHODE))  
 D_IS_METHODE = is_methode/
 SRC_ISMETHODE =		ft_isalnum.c  ft_isalpha.c  ft_isascii.c  ft_isblank.c  ft_iscntrl.c  ft_isdigit.c  ft_isgraph.c  \
-					ft_islowercase.c  ft_isprint.c  ft_isspace.c  ft_isuppercase.c  ft_isxdigit.c  ft_tolower.c  ft_toupper.c
+					ft_islowercase.c  ft_isprint.c  ft_isspace.c  ft_isuppercase.c  ft_isxdigit.c  ft_tolower.c  ft_toupper.c ft_isword.c
 
 CSRC_LST = $(addprefix $(D_LST),$(SRC_LST))
 D_LST = libft_list/

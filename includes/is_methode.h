@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/31 18:26:18 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_methode.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/07 18:10:38 by rgermain          #+#    #+#             */
+/*   Updated: 2019/09/27 21:02:41 by rgermain         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef IS_METHODE_H
 # define IS_METHODE_H
@@ -26,6 +26,7 @@ t_bool	ft_isspace(int c);
 t_bool	ft_isxdigit(int c);
 t_bool	ft_islowercase(int c);
 t_bool	ft_isuppercase(int c);
+t_bool  ft_isword(int c);
 char	ft_tolower(int c);
 char	ft_toupper(int c);
 
