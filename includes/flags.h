@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   flags.h                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/07/20 16:16:41 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/20 16:18:58 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flags.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/20 16:16:41 by rgermain          #+#    #+#             */
+/*   Updated: 2019/10/03 19:21:41 by rgermain         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef FLAGS_H
 # define FLAGS_H
@@ -161,7 +161,10 @@ void			ft_error_argv(char **argv, int error, int error_2);
 **          ft_error_line.c
 **-----------------------------------------------------------
 */
-void			error_line(char *str);
+void			error_line(const char *str);
+void			error_line_pos(const char *error, int line, int pos);
+void			error_line_e(const char *str, int pos);
+
 
 /*
 **-----------------------------------------------------------

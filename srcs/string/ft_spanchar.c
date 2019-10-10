@@ -1,19 +1,19 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   ft_parse_argv.c                                  .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/07/20 16:19:09 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/20 16:26:06 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_spanchar.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/20 16:19:09 by rgermain          #+#    #+#             */
+/*   Updated: 2019/10/10 17:15:37 by rgermain         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #include "libft.h"
 
-int	ft_spanchar(char *flag, char *str)
+int	ft_spanchar(const char *flag, const char *str)
 {
 	int	i;
 

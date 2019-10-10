@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   libft.h                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/07 18:10:38 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/29 16:55:53 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   strings.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/07 18:10:38 by rgermain          #+#    #+#             */
+/*   Updated: 2019/10/10 17:15:16 by rgermain         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef STRINGS_H
 # define STRINGS_H
@@ -27,9 +27,9 @@ char*	ft_itoa_base(int nb, int base);
 void	ft_itoa_buffer(char *buff, int nb);
 void	ft_itoabuffer(char *buff, int nb);
 char	*ft_itoa(int n);
-int		ft_spantype(char *str, t_bool (*func)(int));
-int		ft_spanchar(char *flag, char *str);
-int		ft_spancharspace(char *flag, char *str);
+int		ft_spantype(const char *str, t_bool (*func)(int));
+int		ft_spanchar(const char *flag, const char *str);
+int		ft_spancharspace(const char *flag, const char *str);
 char	*ft_strcapitalize(char *str);
 char	*ft_strcat(char *s1, const char *s2);
 char	*ft_strchr(const char *str, int c);
