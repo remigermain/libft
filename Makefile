@@ -19,7 +19,7 @@ CFLAGS =  -Wall -Wextra -g3 #-Werror
 INCLUDE = -Iincludes
 
 HEADER =	libft.h limit.h color.h  divers.h  flags.h  ft_errno.h  ft_printf.h  get_next_line.h  \
-			is_methode.h math.h  memory.h  print.h  lib_lst.h strings.h bytes_tools.h
+			is_methode.h math.h  memory.h  print.h  lib_lst.h strings.h bytes_tools.h regex.h
 
 
 OBJ = $(SRC:.c=.o)
@@ -28,12 +28,13 @@ DSRC = srcs/
 DOBJ = obj/
 ALL_D = $(D_DIVERS) $(D_IS_METHODE) $(D_MATH) $(D_MEMORY) $(D_FLAGS) $(D_LST)\
 		$(D_PUT) $(D_STDIO) $(D_STRING) $(addprefix $(D_STDIO),$(D_FT_PRINTF)) \
-		$(D_BYTES)
+		$(D_BYTES) $(D_REGEX)
 
 DHEADER = includes/
 
 SRC =  $(CSRC_DIVERS) $(CSRC_ISMETHODE) $(CSRC_MATH) $(CSRC_LST) \
-	  $(CSRC_MEMORY) $(CSRC_PUT) $(CSRC_STRING) $(CSRC_STDIO) $(CSRC_FLAGS) $(CSRC_BYTES)
+	  $(CSRC_MEMORY) $(CSRC_PUT) $(CSRC_STRING) $(CSRC_STDIO) $(CSRC_FLAGS)\
+	  $(CSRC_BYTES) $(CSRC_REGEX)
 
 CSRC = $(addprefix $(DSRC),$(SRC))
 COBJ = $(addprefix $(DOBJ),$(OBJ))
@@ -93,6 +94,12 @@ SRC_PUT = 			ft_printtab.c     ft_putchar.c     ft_putendl.c     ft_putnbr_base.
 CSRC_STDIO = $(addprefix $(D_STDIO),$(SRC_STDIO))
 D_STDIO = stdio/
 SRC_STDIO = $(CSRC_PRINTF)
+
+CSRC_REGEX = $(addprefix $(D_REGEX), $(SRC_REGEX))
+D_REGEX = regex/
+SRC_REGEX =			regex_utils.c regex_exec.c regex_meta.c regex_meta_type.c \
+					regex_class.c regex_quantifier.c regex_quantifier_get.c regex_enclosed.c \
+					regex_enclosed_capt.c regex_span.c regex_replace.c
 
 CSRC_PRINTF = $(addprefix $(D_FT_PRINTF),$(SRC_PRINTF))
 D_FT_PRINTF = ft_printf/
