@@ -67,6 +67,65 @@ Disclaimer: Reinventing the wheel is bad, 42 makes us do this just so we can hav
 |ft_atof_base|||||||||||
 
 
+# Arguments parser
+
+## Prototype
+### init_flags
+> Parse arguments with pattern flag
+```
+int			init_flags(char **argv, char *flag, char *mflag, enum e_flags mod)
+```
+
+* argv si your argv programs
+* flag for regex simple flags
+* mflag for regex for multi-flags
+* enum e_flag for yout mod
+* return -1 for error in parsing
+
+| mod | Description |
+|-----|-------------|
+| F_STOP|  stop get flag when he have other than '-'|
+
+## Regex for argv parser
+```
+flag :
+    alone_flag, alone_flag,  |  flag  ( type {min, max, \"regex_pattern\"} , ...) ; set_flag, set_flag, ... ; unset_flag, unset_flag, ... ;|
+
+type :  
+        char*	{min, max, regex_pattern}
+        int     {min, max}
+        char	{min, max, regex_pattern}
+        file	{min, max, regex_pattern}
+
+
+mflag :
+    mflag ; set_flag | ... ect
+
+
+ex :
+
+l, r, f, u, | werror (int,); u, r,;;| Wextra_full (char*{5,9}, int(,9));;;|
+
+
+--Werror need a int in params
+
+./prog --Werror 55      --> OK
+./prog --Werror 557     --> KO
+./prog --Werror         --> KO
+
+--Wextra_full a string and int in params
+    the char* need to be lenght 5 to 9 character
+
+    the int need to be maximun to 9
+    
+./prog --Werror 55                  --> KO
+./prog --Werror yoyoy 557           --> KO
+./prog --Werror yoyoy  5            --> OK
+./prog --Werror yoyoy  -5           --> OK
+./prog --Werror yoyoyllllll  5      --> KO
+
+    
+```
 
 # Regular expression
 
