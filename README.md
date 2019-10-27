@@ -1,3 +1,73 @@
+# LIBFT 42
+## What is libft?
+
+Libft is an individual project at 42 that requires us to re-create some standard C library functions including some additional ones that can be used later to build a library of useful functions for the rest of the program.
+
+Disclaimer: Reinventing the wheel is bad, 42 makes us do this just so we can have a deeper understanding of data structures and basic algorithms. At 42 we're not allowed to use some standard libraries on our projects, so we have to keep growing this library with our own functions as we go farther in the program.
+
+## List function
+|string|print|memory|math|libft_list|is_methode|flags|divers|bytes_tools|stdio|regex|
+|------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+|ft_tabdel|ft_putwchar_fd|ft_realloc|ft_sqrt|ft_lstnew|ft_toupper|init_flags|timestamp|ft_print_memory|ft_printf|ft_regex_exec|
+|ft_strxfrm|ft_putwchar|ft_memset|ft_recursive_power|ft_lstmap|ft_tolower|print_usage|nlen_wchar|ft_option|ft_dprintf|ft_regex_free|
+|ft_strupcase|ft_putstrw_fd|ft_memnew|ft_recursive_factorial|ft_lstiter|ft_isxdigit|init_usage|len_wchar_single|ft_create_bytes_tab|ft_sprintf|ft_regex_print|
+|ft_strtrim|ft_putstrw|ft_memmove|ft_pow|ft_lstdelone|ft_isword|get_flags_av|len_wchar|reverse_bytes||ft_regex_replace|
+|ft_strtok|ft_putstr_fd|ft_memdel|ft_iterative_power|ft_lstdel|ft_isuppercase|remove_flags|get_next_line||||
+|ft_strsub|ft_putstr|ft_memcpy|ft_iterative_factorial|ft_lstadd|ft_isspace|exist_flags|ft_tablen||||
+|ft_strstr|ft_putpstr_fd|ft_memcmp|ft_is_prime||ft_isprint|add_flags|ft_swap||||
+|ft_strsplit|ft_putpnstr_fd|ft_memchr|ft_intlen||ft_islowercase|add_flags_av|ft_sort_integer_table||||
+|ft_strrev|ft_putpchar_fd|ft_memccpy|ft_intlen_base||ft_isgraph|error_line_e|ft_inttab_del||||
+|ft_strpbrk|ft_putnstrw_fd|ft_memalloc|ft_find_next_prime||ft_isdigit|error_line_pos|ft_getchar||||
+|ft_strnstr|ft_putnstrw|ft_bzero|||ft_iscntrl|error_line_e|ft_createtab||||
+|ft_strnlen|ft_putnstr_fd||||ft_isblank|ft_error_argv|ft_countwchar||||
+|ft_strnew|ft_putnstr||||ft_isascii|||||
+|ft_strnequ|ft_putnbr_fd||||ft_isalpha||||||
+|ft_strncpychr|ft_putnbr||||ft_isalnum||||||
+|ft_strncpy|ft_putnbr_base_fd||||||||||
+|ft_strncmp|ft_putnbr_base||||||||||
+|ft_strncat|ft_putendl_fd||||||||||
+|ft_strmapi|ft_putendl||||||||||
+|ft_strmap|ft_putchar_fd||||||||||
+|ft_strlowcase|ft_putchar||||||||||
+|ft_strlen|ft_printtab_fd||||||||||
+|ft_strlcpy|ft_printtab||||||||||
+|ft_strlcat|||||||||||
+|ft_strjoin|||||||||||
+|ft_striteri|||||||||||
+|ft_striter|||||||||||
+|ft_str_is_uppercase|||||||||||
+|ft_str_is_printable|||||||||||
+|ft_str_is_numeric|||||||||||
+|ft_str_is_lowercase|||||||||||
+|ft_str_is_alpha|||||||||||
+|ft_strerror|||||||||||
+|ft_strequ|||||||||||
+|ft_strdup|||||||||||
+|ft_strdel|||||||||||
+|ft_strcpychr|||||||||||
+|ft_strcpy|||||||||||
+|ft_strcmp|||||||||||
+|ft_strclr|||||||||||
+|ft_strchr|||||||||||
+|ft_strcat|||||||||||
+|ft_strcapitalize|||||||||||
+|ft_spancharspace|||||||||||
+|ft_spanchar|||||||||||
+|ft_span|||||||||||
+|ft_itoa|||||||||||
+|ft_itoa_buffer|||||||||||
+|ft_itoa_base|||||||||||
+|ft_itoabase_buffer|||||||||||
+|ft_base_string|||||||||||
+|ft_atol|||||||||||
+|ft_atol_base|||||||||||
+|ft_atoi|||||||||||
+|ft_atoi_base|||||||||||
+|ft_atof|||||||||||
+|ft_atof_base|||||||||||
+
+
+
 # Regular expression
 
 
