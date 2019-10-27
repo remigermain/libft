@@ -27,7 +27,7 @@ static void	conv_boucle_char(t_pf *st)
 		ftprintf_error(st, "comv_boucle_char", 1);
 	ft_memset(tmp, c, st->op.field);
 	tmp[st->op.field] = 0;
-	put_buff(st, tmp, st->op.field, NO_FREE);
+	put_buff(st, tmp, st->op.field, PF_FREE);
 }
 
 static void	conv_error(t_pf *st)
