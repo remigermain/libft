@@ -12,56 +12,76 @@
 
 #include "libft.h"
 
-t_bool		regex_enclose_do(t_regex *st, t_reg_encl *encl,\
-											const char *s1, const char *reg)
-{
-	t_bool ret_max;
-	t_bool ret;
+/*
+**-------------------------------------------------------
+**          calcule le nombre de character qui match
+**			si le encl->capture est a TRUE
+**			alors on le met de coter dans regex_put_arg
+**			et on return TRUE
+**-------------------------------------------------------
+*/
 
-	st->befor_do = s1;
-	encl->quan.match++;
-	ret = verif_quantifier(&(encl->quan), encl->quan.match);
-	ret_max = verif_quantifier_max(&(encl->quan), encl->quan.match);
-	if (ret && (encl->quan.isset & QUAN_LAZY) &&
-			regex_parse(st, s1, reg + encl->len))
-		return (TRUE);
-	else if (s1 != encl->mem && ret_max &&
-			regex_enclose_parse(st, encl, s1, reg))
-		return (TRUE);
-	else if (ret && !(encl->quan.isset & QUAN_LAZY) &&
-			regex_parse(st, s1, reg + encl->len))
-		return (TRUE);
-	encl->quan.match--;
-	return (FALSE);
+static t_bool	regex_enclose_capt(t_regex *st, t_reg_encl *encl,
+																const char *s1)
+{
+	int	len;
+
+	if (encl->capture)
+	{
+		len = ft_strlen(s1) - ft_strlen(encl->mem);
+		if (len)
+			regex_put_arg(st, s1, len, encl->name);
+		else if (encl->name)
+			ft_strdel(&(encl->name));
+	}
+	return (TRUE);
 }
+
+/*
+**-------------------------------------------------------
+**         	parse l'enclose   en beta
+**-------------------------------------------------------
+*/
 
 t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 											const char *s1, const char *reg)
 {
-	t_bool	ret;
-
-	encl->mem = s1;
-	encl->mem_last = st->last_s1;
-	while (*s1 && *(reg + encl->i) && !is_delimiter(st, reg + encl->i, ")"))
+	while (*(reg + encl->i) && !is_delimiter(st, reg + encl->i, ")"))
 	{
-		ret = regex_parse(st, s1, reg + encl->i);
-		if ((encl->is_not == TRUE && ret == FALSE) ||
-			(encl->is_not == FALSE && ret == TRUE))
+		if (encl->is_not != regex_parse(st, s1, reg + encl->i))
 		{
-				s1 = st->last_s1;
-				if (regex_enclose_do(st, encl, s1, reg))
-					return (TRUE);
-				s1 = encl->mem;
+			encl->mem = st->last_s1;
+			encl->quan.match++;
+			encl->ret = verif_quantifier(&(encl->quan), encl->quan.match);
+			encl->ret_max = verif_quantifier_max(&(encl->quan), encl->quan.match);
+			if (LAZY_QUAN(encl) && encl->ret &&
+				regex_parse(st, st->last_s1, reg + encl->len))
+				return (regex_enclose_capt(st, encl, s1));
+			if (s1 != st->last_s1 && encl->ret_max &&
+				regex_enclose_parse(st, encl, st->last_s1, reg))
+				return (regex_enclose_capt(st, encl, s1));
+			if (!LAZY_QUAN(encl) && encl->ret &&
+				regex_parse(st, st->last_s1, reg + encl->len))
+				return (regex_enclose_capt(st, encl, s1));
+			encl->quan.match--;
 		}
 		encl->i += regex_span_or(st, reg + encl->i);
 	}
-	s1 = encl->mem;
-	st->last_s1 = encl->mem_last;
-	if (st->befor_do == NULL)
-		st->befor_do = st->s1;
-	return (verif_quantifier(&(encl->quan), encl->quan.match) &&
-		regex_parse(st, s1, reg + encl->len));
+	encl->ret = verif_quantifier(&(encl->quan), encl->quan.match);
+	if (encl->ret && regex_parse(st, s1, reg + encl->len))
+		return (regex_enclose_capt(st, encl, s1));
+	return (FALSE);
 }
+
+/*
+**-------------------------------------------------------
+**          parse les flags de l'enclose
+**			le ?  signifie le garde en memoire
+**			le !  signifie que le paterrne de doit pas matcher
+**			le <name> pour capture avec un nomage
+**				le ? doit etre set pour que ca fonctionne
+**-------------------------------------------------------
+*/
 
 static int	regex_enclosed_flags(t_regex *st, t_reg_encl *encl, const char *reg)
 {
@@ -86,22 +106,38 @@ static int	regex_enclosed_flags(t_regex *st, t_reg_encl *encl, const char *reg)
 	return (i + j);
 }
 
+/*
+**-------------------------------------------------------
+**          parse les flags de enclose,
+**			puis on regarde si il y a un quantifier
+**			si on le capture on incremente le level
+**			cela va servire pour determiner le niveau
+**			de capturation de la regex
+**			on parse l'enclose
+**			si il na pas puis capture quelque chose
+**			et qu'il y avait un nomage <name>
+**			on le free
+**-------------------------------------------------------
+*/
+
 t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 {
-	t_reg_encl	encl;
-	const char	*mem;
+	t_reg_encl 	encl;
 	t_bool		ret;
 
-	mem = st->befor_do;
+	if (REGEX_DEBUG)
+		ft_dprintf(2, "[regex_enclosed]\n[s1][%s]\n[reg][%s]\n", s1, reg);
 	ft_bzero(&encl, sizeof(t_reg_encl));
 	reg += regex_enclosed_flags(st, &encl, reg);
 	encl.len += regex_span_enclose(st, reg);
 	if (is_delimiter(st, reg + encl.len, QUANTIFIER))
 		encl.len += regex_get_quantifier(&(encl.quan), reg + encl.len);
+	if (encl.capture)
+		st->level++;
 	ret = regex_enclose_parse(st, &encl, s1, reg);
-	if (ret == TRUE && encl.capture == TRUE)
-		regex_put_arg(st, s1, st->befor_do, encl.name);
-	st->befor_do = mem;
-	ft_strdel(&(encl.name));
+	if (ret == FALSE && encl.name)
+		ft_strdel(&(encl.name));
+	if (encl.capture)
+		st->level--;
 	return (ret);
 }

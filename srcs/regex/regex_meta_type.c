@@ -12,63 +12,91 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#define REG_SET 1
-#define REG_UNSET 0
+#define SET TRUE
+#define UNSET FALSE
+
+/*
+**-------------------------------------------------------
+**		met 1 si la function retourne le meme resulta que mode
+**		mod set = TRUE
+**		mod unset = FALSE
+**		cela sert pour les meta \d ou \D
+**		\d doit etre que des digits 0-9
+**		\D doit etre tout sauf des digits 0-9
+**		si ft_isdigit nous retourne TRUE et que le mod et SET
+**		alors on met 1
+**		si ft_isdigit nous retourne FALSE et que le mod et UNSET
+**		alors on met 1
+**-------------------------------------------------------
+*/
 
 static void	regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 {
-	t_bool	ret;
 	int		i;
 
 	i = -1;
 	while (++i <= 127)
 	{
-		ret = func(i);
-		if ((ret == TRUE && mod == REG_SET) ||
-			(ret == FALSE && mod == REG_UNSET))
+		if (mod == func(i))
 			alpha[i] = 1;
 	}
 }
 
-int			regex_is_metatype(char alpha[128], const char *reg)
+/*
+**-------------------------------------------------------
+**		perl type regex , qui pass en parametre de regex_is_type
+**		la fonction en rapoort avec la string
+**		ou set la possition ascci dans alpha
+**-------------------------------------------------------
+*/
+
+int			regex_is_metatype(t_regex *st, char alpha[128], const char *reg)
 {
-	if (*reg == 'w')
-		regex_is_type_made(alpha, ft_isword, REG_SET);
-	else if (*reg == 'W')
-		regex_is_type_made(alpha, ft_isword, REG_UNSET);
-	else if (*reg == 'd')
-		regex_is_type_made(alpha, ft_isdigit, REG_SET);
-	else if (*reg == 'D')
-		regex_is_type_made(alpha, ft_isdigit, REG_UNSET);
-	else if (*reg == 's')
-		regex_is_type_made(alpha, ft_isspace, REG_SET);
-	else if (*reg == 'S')
-		regex_is_type_made(alpha, ft_isspace, REG_UNSET);
-	else if (*reg == 'n')
-		alpha[(int)('\n')] = REG_SET;
-	else if (*reg == 'r')
-		alpha[(int)('\r')] = REG_SET;
-	else if (*reg == 'e')
-		alpha[(int)('\e')] = REG_SET;
+	t_bool	is_meta;
+
+	is_meta = is_metachar(st, reg) ? FALSE : TRUE;
+	if (is_meta && (*reg == 'w' || *reg == 'W'))
+		regex_is_type_made(alpha, ft_isword, UPPER(*reg) ? UNSET : SET);
+	else if (is_meta && (*reg == 'd' || *reg == 'D'))
+		regex_is_type_made(alpha, ft_isdigit, UPPER(*reg) ? UNSET : SET);
+	else if (is_meta && (*reg == 's' || *reg == 'S'))
+		regex_is_type_made(alpha, ft_isspace, UPPER(*reg) ? UNSET : SET);
+	else if (is_meta && (*reg == 'p' || *reg == 'P'))
+		regex_is_type_made(alpha, ft_isalnum, UPPER(*reg) ? UNSET : SET);
+	else if (is_meta && *reg == 'n')
+		alpha[(int)('\n')] = SET;
+	else if (is_meta && *reg == 'r')
+		alpha[(int)('\r')] = SET;
+	else if (is_meta && *reg == 'e')
+		alpha[(int)('\e')] = SET;
 	else
-		alpha[(int)(*reg)] = REG_SET;
+		alpha[(int)(*reg)] = SET;
 	return (1);
 }
 
 static int	regex_is_type2(char alpha[128], const char *reg, int i)
 {
 	if (!ft_strncmp(reg, ":print:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isprint, REG_SET);
+		regex_is_type_made(alpha, ft_isprint, SET);
 	else if (!ft_strncmp(reg, ":space:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isspace, REG_SET);
+		regex_is_type_made(alpha, ft_isspace, SET);
 	else if (!ft_strncmp(reg, ":upper:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isuppercase, REG_SET);
+		regex_is_type_made(alpha, ft_isuppercase, SET);
 	else if (!ft_strncmp(reg, ":xdigit:", 8) && (i = 8))
-		regex_is_type_made(alpha, ft_isxdigit, REG_SET);
+		regex_is_type_made(alpha, ft_isxdigit, SET);
 	else if (!ft_strncmp(reg, ":isword:", 8) && (i = 8))
-		regex_is_type_made(alpha, ft_isword, REG_SET);
+		regex_is_type_made(alpha, ft_isword, SET);
+	else
+		ft_dprintf(2, "REGEX error regex type %s\n", reg);
 	return (i);
 }
+
+/*
+**-------------------------------------------------------
+**		posix type regex , qui pass en parametre de regex_is_type
+**		la fonction en rapoort avec la string
+**-------------------------------------------------------
+*/
 
 int			regex_is_type(char alpha[128], const char *reg)
 {
@@ -76,21 +104,21 @@ int			regex_is_type(char alpha[128], const char *reg)
 
 	i = 0;
 	if (!ft_strncmp(reg, ":alnum:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isalnum, REG_SET);
+		regex_is_type_made(alpha, ft_isalnum, SET);
 	else if (!ft_strncmp(reg, ":alpha:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isalpha, REG_SET);
+		regex_is_type_made(alpha, ft_isalpha, SET);
 	else if (!ft_strncmp(reg, ":ascii:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isascii, REG_SET);
+		regex_is_type_made(alpha, ft_isascii, SET);
 	else if (!ft_strncmp(reg, ":blank:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isblank, REG_SET);
+		regex_is_type_made(alpha, ft_isblank, SET);
 	else if (!ft_strncmp(reg, ":cntrl:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_iscntrl, REG_SET);
+		regex_is_type_made(alpha, ft_iscntrl, SET);
 	else if (!ft_strncmp(reg, ":digit:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isdigit, REG_SET);
+		regex_is_type_made(alpha, ft_isdigit, SET);
 	else if (!ft_strncmp(reg, ":graph:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_isgraph, REG_SET);
+		regex_is_type_made(alpha, ft_isgraph, SET);
 	else if (!ft_strncmp(reg, ":lower:", 7) && (i = 7))
-		regex_is_type_made(alpha, ft_islowercase, REG_SET);
+		regex_is_type_made(alpha, ft_islowercase, SET);
 	else
 		return (regex_is_type2(alpha, reg, i));
 	return (i);

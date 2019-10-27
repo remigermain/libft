@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-static t_bool	regex_replace_check(t_reg_capt *list, int len,\
+static t_bool	regex_replace_check(t_reg_list *list, int len,\
 													enum e_regex_replace mod)
 {
 	if ((len == 0 && (mod & REG_FIRST)) ||
@@ -23,10 +23,10 @@ static t_bool	regex_replace_check(t_reg_capt *list, int len,\
 	return (FALSE);
 }
 
-int				regex_replace_len(t_regex *st, const char *s1, char *src,
+int				regex_replace_len(t_regex *st, const char *s1, const char *rep,
 													enum e_regex_replace mod)
 {
-	t_reg_capt	*list;
+	t_reg_list	*list;
 	int			len;
 	int			rem;
 
@@ -39,36 +39,49 @@ int				regex_replace_len(t_regex *st, const char *s1, char *src,
 			rem += ft_strlen(list->str);
 		list = list->next;
 	}
-	return ((ft_strlen(s1) - rem) + (ft_strlen(src) * len));
+	return ((ft_strlen(s1) - rem) + (ft_strlen(rep) * len));
 }
 
-char			*ft_regex_replace(const char *s1, const char *reg,
-									char *rep, enum e_regex_replace mod)
+static void regex_replace_str(t_regex *st, char *ptr, const char *rep,
+							  						enum e_regex_replace mod)
 {
-	t_regex		st;
-	t_reg_capt	*list;
-	char		*ptr;
+	t_reg_list *list;
 	int			len;
 	int			i;
 
-	if (ft_regex_exec(&st, s1, reg) < 0)
-		return (NULL);
+	list = st->capt;
+	len = 0;
 	i = 0;
-	list = st.capt;
-	len = regex_replace_len(&st, s1, rep, mod);
-	if (!(ptr = (char*)ft_memalloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	len = -1;
-	while (list && (++len))
+	while (list)
 	{
-		ft_strncat(ptr, s1 + i, list->start - i);
+		ft_strncat(ptr, st->s1 + i, list->start - i);
 		if (regex_replace_check(list, len, mod))
 			ft_strcat(ptr, rep);
 		else
-			ft_strncat(ptr, s1 + list->start, list->end - list->start);
+			ft_strncat(ptr, st->s1 + list->start, list->end - list->start);
 		i = list->end;
 		list = list->next;
+		len++;
 	}
-	ft_strcat(ptr, s1 + i);
+	ft_strcat(ptr, st->s1 + i);
+}
+
+char			*ft_regex_replace(const char *s1, const char *reg,
+									const char *rep, enum e_regex_replace mod)
+{
+	t_regex		st;
+	char		*ptr;
+	int			len;
+
+	ptr = NULL;
+	if (ft_regex_exec(&st, s1, reg) > 0)
+	{
+		len = regex_replace_len(&st, s1, rep, mod);
+		if (!(ptr = (char*)ft_memalloc(sizeof(char) * (len + 1))))
+			return (NULL);
+		regex_replace_str(&st, ptr, rep, mod);
+	}
+	ft_regex_print(&st);
+	ft_regex_free(&st);
 	return (ptr);
 }

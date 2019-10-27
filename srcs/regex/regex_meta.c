@@ -10,8 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
+
+/*
+**-------------------------------------------------------
+**		verifie que le character n'est pas antislasher
+**		le st->reg est la valeur l'adress original de la regex
+**		nous decrementon reg pour retrouver si il n'est pas antislaher
+**		ex :  bonj\our\\ca va  represente bonjour\ca va
+**			on veut savoir si le c de ca va n'est pas antislaher
+**			dans ce ca on decremente reg de i + 1
+**			avant le c il y a un slash on continue
+**			il y a encore un slash on continue puis il n'y en a plus
+**			on n'est arriver au r de bonj\our, i vaut 2
+**			dans ce cas , vue qu'il n'est pas impaire
+**			le c n'est pas antislaher.
+**-------------------------------------------------------
+*/
 
 t_bool	is_metachar(t_regex *st, const char *reg)
 {
@@ -25,58 +40,17 @@ t_bool	is_metachar(t_regex *st, const char *reg)
 	return (TRUE);
 }
 
+/*
+**-------------------------------------------------------
+**		regarde que le permier charactere de *reg
+**		n'est pas antislasher avec is_netachar et
+**		que le character est la la chaine *delimiter
+**-------------------------------------------------------
+*/
+
 t_bool	is_delimiter(t_regex *st, const char *reg, char *delimiter)
 {
 	if (*reg && ft_strchr(delimiter, *reg) && is_metachar(st, reg))
 		return (TRUE);
 	return (FALSE);
-}
-
-int		convert_metachar_len(t_regex *st, const char *reg)
-{
-	int len;
-
-	len = 1;
-	if (is_delimiter(st, reg, "\\"))
-	{
-		reg++;
-		len++;
-	}
-	if (*reg && !is_metachar(st, reg))
-	{
-		if (*reg == '0')
-		{
-			if (ft_tolower(*(reg + 1)) == 'x')
-				len += 1 + ft_intlen_base(ft_atoi_base(reg + 2, 16), 16);
-			else if (ft_tolower(*(reg + 1)) == 'b')
-				len += 1 + ft_intlen_base(ft_atoi_base(reg + 2, 2), 2);
-		}
-	}
-	return (len);
-}
-
-int		convert_metachar(t_regex *st, const char *reg)
-{
-	int c;
-
-	if (is_delimiter(st, reg, "\\"))
-		reg++;
-	c = *reg;
-	if (*reg && !is_metachar(st, reg))
-	{
-		if (*reg == 'n')
-			c = '\n';
-		else if (*reg == 't')
-			c = '\t';
-		else if (*reg == 'v')
-			c = '\v';
-		else if (*reg == '0')
-		{
-			if (ft_tolower(*(reg + 1)) == 'x')
-				c = ft_atoi_base(reg + 2, 16);
-			else if (ft_tolower(*(reg + 1)) == 'b')
-				c = ft_atoi_base(reg + 2, 2);
-		}
-	}
-	return (c);
 }
