@@ -1,4 +1,4 @@
-# Regular expression WIP
+# Regular expression
 
 
 ## Prototype
