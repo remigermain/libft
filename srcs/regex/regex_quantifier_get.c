@@ -44,7 +44,7 @@ static int	quantifier_mini(t_reg_quan *quan, const char *reg)
 		quan->isset |= QUAN_MIN;
 		quan->n = 1;
 	}
-	else
+	else if (*reg == '?')
 	{
 		quan->isset |= QUAN_MAX;
 		quan->m = 1;

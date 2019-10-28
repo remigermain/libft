@@ -98,8 +98,8 @@ SRC_STDIO = $(CSRC_PRINTF)
 CSRC_REGEX = $(addprefix $(D_REGEX), $(SRC_REGEX))
 D_REGEX = regex/
 SRC_REGEX =	regex_utils.c regex_exec.c regex_meta.c regex_meta_type.c \
-		regex_class.c regex_quantifier.c regex_quantifier_get.c regex_enclosed.c \
-		regex_span.c regex_replace.c \
+			regex_class.c regex_quantifier.c regex_quantifier_get.c regex_enclosed.c \
+			regex_span.c regex_replace.c regex_capt.c \
 
 CSRC_PRINTF = $(addprefix $(D_FT_PRINTF),$(SRC_PRINTF))
 D_FT_PRINTF = ft_printf/

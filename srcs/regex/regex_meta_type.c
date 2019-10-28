@@ -65,6 +65,8 @@ int			regex_is_metatype(t_regex *st, char alpha[128], const char *reg)
 		regex_is_type_made(alpha, ft_isalnum, UPPER(*reg) ? UNSET : SET);
 	else if (is_meta && *reg == 'n')
 		alpha[(int)('\n')] = SET;
+	else if (is_meta && *reg == 't')
+		alpha[(int)('\t')] = SET;
 	else if (is_meta && *reg == 'r')
 		alpha[(int)('\r')] = SET;
 	else if (is_meta && *reg == 'e')

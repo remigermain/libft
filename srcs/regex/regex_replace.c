@@ -77,11 +77,9 @@ char			*ft_regex_replace(const char *s1, const char *reg,
 	if (ft_regex_exec(&st, s1, reg) > 0)
 	{
 		len = regex_replace_len(&st, s1, rep, mod);
-		if (!(ptr = (char*)ft_memalloc(sizeof(char) * (len + 1))))
-			return (NULL);
-		regex_replace_str(&st, ptr, rep, mod);
+		if ((ptr = (char*)ft_memalloc(sizeof(char) * (len + 1))))
+			regex_replace_str(&st, ptr, rep, mod);
 	}
-	ft_regex_print(&st);
 	ft_regex_free(&st);
 	return (ptr);
 }

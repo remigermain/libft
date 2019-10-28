@@ -67,9 +67,6 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 		}
 		encl->i += regex_span_or(st, reg + encl->i);
 	}
-	encl->ret = verif_quantifier(&(encl->quan), encl->quan.match);
-	if (encl->ret && regex_parse(st, s1, reg + encl->len))
-		return (regex_enclose_capt(st, encl, s1));
 	return (FALSE);
 }
 
