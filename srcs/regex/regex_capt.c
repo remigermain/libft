@@ -23,8 +23,8 @@ void        ft_regex_free(t_regex *st)
         tmp = list;
         list = list->next;
         ft_memdel((void **)&(tmp->str));
-        if (tmp->name)
-            ft_memdel((void **)&(tmp->name));
+        if (tmp->token)
+            ft_memdel((void **)&(tmp->token));
         ft_memdel((void **)&tmp);
     }
 }
@@ -41,7 +41,7 @@ static void regex_put_arg_list(t_regex *st, t_reg_list *list)
             ft_memdel((void **)list);
             return;
         }
-        else if ((*head)->start <= list->start)
+        if ((*head)->start >= list->start)
             break;
         head = &(*head)->next;
     }
@@ -50,7 +50,7 @@ static void regex_put_arg_list(t_regex *st, t_reg_list *list)
     list->pos = st->nb_capt++;
 }
 
-void        regex_put_arg(t_regex *st, const char *s1, int len, char *name)
+void        regex_put_arg(t_regex *st, const char *s1, int len, char *token)
 {
     t_reg_list *list;
 
@@ -62,7 +62,7 @@ void        regex_put_arg(t_regex *st, const char *s1, int len, char *name)
             ft_memdel((void **)&list);
         return;
     }
-    list->name = name;
+    list->token = token;
     list->start = st->len_s1 - ft_strlen(s1);
     list->end = list->start + len;
     list->level = st->level;

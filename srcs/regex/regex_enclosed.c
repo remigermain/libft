@@ -30,9 +30,9 @@ static t_bool	regex_enclose_capt(t_regex *st, t_reg_encl *encl,
 	{
 		len = ft_strlen(s1) - ft_strlen(encl->mem);
 		if (len)
-			regex_put_arg(st, s1, len, encl->name);
-		else if (encl->name)
-			ft_strdel(&(encl->name));
+			regex_put_arg(st, s1, len, encl->token);
+		else if (encl->token)
+			ft_strdel(&(encl->token));
 	}
 	return (TRUE);
 }
@@ -67,6 +67,9 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 		}
 		encl->i += regex_span_or(st, reg + encl->i);
 	}
+	encl->ret = verif_quantifier(&(encl->quan), encl->quan.match);
+	if (encl->ret && regex_parse(st, s1, reg + encl->len))
+		return (regex_enclose_capt(st, encl, s1));
 	return (FALSE);
 }
 
@@ -95,7 +98,7 @@ static int	regex_enclosed_flags(t_regex *st, t_reg_encl *encl, const char *reg)
 	{
 		while (*(reg + i + j) && *(reg + i + j) != '>')
 			j++;
-		if (j > 0 && !(encl->name = ft_strsub(reg + i, 0, j)))
+		if (j > 0 && !(encl->token = ft_strsub(reg + i, 0, j)))
 			st->error = ERROR_REGEX;
 		if (*(reg + i + j) == '>')
 			i++;
@@ -112,7 +115,7 @@ static int	regex_enclosed_flags(t_regex *st, t_reg_encl *encl, const char *reg)
 **			de capturation de la regex
 **			on parse l'enclose
 **			si il na pas puis capture quelque chose
-**			et qu'il y avait un nomage <name>
+**			et qu'il y avait un nomage <token>
 **			on le free
 **-------------------------------------------------------
 */
@@ -132,8 +135,8 @@ t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 	if (encl.capture)
 		st->level++;
 	ret = regex_enclose_parse(st, &encl, s1, reg);
-	if (ret == FALSE && encl.name)
-		ft_strdel(&(encl.name));
+	if (ret == FALSE && encl.token)
+		ft_strdel(&(encl.token));
 	if (encl.capture)
 		st->level--;
 	return (ret);

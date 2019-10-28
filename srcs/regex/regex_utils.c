@@ -19,10 +19,10 @@ static void	regex_print_calc(t_regex *st, t_regex_pr *pr)
     lst = st->capt;
 	while (lst != NULL)
     {
-        if (lst->name)
-            pr->name = MAX(pr->name, ft_strlen(lst->name));
+        if (lst->token)
+            pr->token = MAX(pr->token, ft_strlen(lst->token));
         else
-            pr->name = MAX(pr->name, 6);        
+            pr->token = MAX(pr->token, 6);        
         pr->str = MAX(pr->str, ft_strlen(lst->str));
         pr->pos = MAX(pr->pos, (size_t)ft_intlen(lst->pos));
         pr->start = MAX(pr->start, (size_t)ft_intlen(lst->start));
@@ -47,7 +47,7 @@ void		ft_regex_print(t_regex *st)
     regex_print_calc(st, &pr);
     lst = st->capt;
     ft_printf("[ PRINT  REXGEX CAPTURATIONS  ]\n\n");
-    i = ft_printf("[ %*s ]", pr.name, "name");
+    i = ft_printf("[ %*s ]", pr.token, "token");
     i += ft_printf("[ %*s ]", pr.str, "string");
     i += ft_printf("[ %*s ]", pr.pos + 2, "pos");
     i += ft_printf("[ %*s ]", pr.start, "start");
@@ -56,7 +56,7 @@ void		ft_regex_print(t_regex *st)
     while (lst != NULL)
     {
         ft_printf("%*@", lst->level, "char", ' ');
-        ft_printf("[ %*s ]", pr.name, lst->name);
+        ft_printf("[ %*s ]", pr.token, lst->token);
         ft_printf("[ %*s ]", pr.str, lst->str);
         ft_printf("[  %*d  ]", pr.pos, lst->pos);
         ft_printf("[  %*d  ]", pr.start, lst->start);

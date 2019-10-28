@@ -13,71 +13,61 @@
 
 #include "libft.h"
 
-static void usage_flag_text(char fl)
+static t_reg_list *usage_option(t_reg_list *lst)
 {
-    char    *text;
-    int     i;
-    int     j;
-
-    i = 0;
-    text = init_usage(NULL);
-    ft_printf("\t-%c", fl);
-    while(text && text[i])
-    {
-        if(text[i] == fl)
-        {
-            j = ft_spancharspace(text + i + 2, "|");
-            ft_printf("\t%.*s\n", j, text + i + 2);
-            break ;
-        }
-        i += ft_spancharspace(text + i + 2, "|") + 3;
-    }
-    ft_printf("\n");
-}
-
-static int  usage_option(char *flag)
-{
-    t_finfo it;
-
-    ft_bzero(&it, sizeof(t_finfo));
-    parse_typeoption(&it, flag);
-    if (it.isset & OP_MAX)
-        ft_printf(" min: %d ", it.min);
-    if (it.isset & OP_MIN)
-        ft_printf(" max: %d ", it.max);
-    if (it.isset & OP_PATTERN)
-        ft_printf(" pattern: %s ", it.str);
-    ft_printf(">\n");
-    return (span_option(flag));
-}
-
-static int  usage_type(char *flag)
-{
-    int i;
-    int j;
-
-    i = 0;
-	if (flag[i] == '{' && (++i))
+	ft_dprintf(2, "\t\t");
+	if (!ft_strcmp(lst->str, "int"))
+		ft_dprintf(2, "< number ");
+	else if (!ft_strcmp(lst->str, "char*"))
+		ft_dprintf(2, "< string ");
+	else if (!ft_strcmp(lst->str, "char"))
+	    ft_dprintf(2, "< character ");
+	lst = lst->next;
+	while (lst && !ft_strncmp(lst->token, "opt_", 4))
 	{
-		while (flag[i] && flag[i] != '}' && flag[i] != ';')
+		if (!ft_strcmp(lst->token, "opt_min"))
+			ft_dprintf(2, " min: %d ", ft_atoi(lst->str));
+		else if (!ft_strcmp(lst->token, "opt_max"))
+			ft_dprintf(2, " max: %d ", ft_atoi(lst->str));
+		else if (!ft_strcmp(lst->token, "opt_ex"))
+			ft_dprintf(2, " euqual: %d ", ft_atoi(lst->str));
+		else if (!ft_strcmp(lst->token, "opt_pattern"))
+			ft_dprintf(2, " pattern: %s ", lst->str);
+		lst = lst->next;
+	}
+	ft_dprintf(2, ">");
+	return (lst);
+}
+
+static void  usage_type(t_reg_list *lst)
+{
+	ft_dprintf(2, "\t%s\t", lst->str);
+	while (lst && !(lst->token && (!ft_strcmp(lst->token, "alone") ||
+								   !ft_strcmp(lst->token, "flags"))))
+	{
+		if (!ft_strcmp(lst->token, "type"))
+			lst = usage_option(lst);
+		else
 		{
-			if (flag[i] == ',')
-				i++;
-            ft_printf("\t\t");
-			i += ft_spantype(flag + i, ft_isspace);
-	        j = ft_spancharspace(flag + i, ",}{");
-            if (!ft_strncmp(flag + i, "int", 3))
-                ft_printf("< number ");
-		    else if (!ft_strncmp(flag + i, "char*", 5))
-                ft_printf("< string ");
-		    else if (!ft_strncmp(flag + i, "char", 4))
-                ft_printf("< character ");
-            i += usage_option(flag + i + j) + j;
-			i += ft_spantype(flag + i, ft_isspace);
+			//if (lst->token && !ft_strcmp(lst->token, "set"))
+			//	
+			//else if (lst->token && !ft_strcmp(lst->token, "unset"))
+			//	(void);
+			lst = lst->next;
 		}
 	}
-    ft_printf("\n");
-	return (i + (flag[i] == '}' ? 1 : 0));
+}
+
+static void usage_flag(t_reg_list *lst, char *flag, char *text)
+{
+	while (lst)
+	{
+		if (lst->token && (!ft_strcmp(lst->token, "alone") ||
+			!ft_strcmp(lst->token, "flags")) && !ft_strcmp(lst->token, flag))
+			return (usage_type(lst));
+		lst = lst->next;
+	}
+	ft_dprintf(2, "\n\n%s\n", text);
 }
 
 char   *init_usage(char *str)
@@ -89,25 +79,33 @@ char   *init_usage(char *str)
     return (text);
 }
 
+#define REGEX_ARGV_USAGE "^\\s*(?<flags>[\\w_]+)\\s*,\\s*(?<short_flags>[\\w_]+)\\s*,\\s*\\\"(?<text>[^|]+)\\\"\\s*$"
 void        print_usage(t_flag *st)
 {
-    int     i;
+	t_regex		reg;
+	t_reg_list	*lst;
+	char	*str;
+	t_bool ret;
 
-    i = 0;
-    ft_printf("%s usage\n\n\t[ FLAGS ]\n", st->argv[0]);
-    while (st->flag[i] && st->flag[i] != '|')
-		usage_flag_text(st->flag[i++]);
-    ft_printf("\n\t[ FLAGS With ARGV ]\n\n");
-	while (st->flag[++i])
+	str = init_usage(NULL);
+	if (ret == ft_regex_exec(&reg, str, REGEX_ARGV_USAGE) > 0)
 	{
-		if (i > 0 && st->flag[i - 1] == '|')
-        {
-            usage_flag_text(st->flag[i++]);
-            i += usage_type(st->flag + i);
-        }
-        else
-		    i += span_alloption(st->flag + i);
+		lst = reg.capt;
+		ft_dprintf(2, "%s usage\n\n\t[ FLAGS ]\n", st->argv[0]);
+		ft_regex_print(&reg);
+		while (lst && lst->next)
+		{
+			usage_flag(st->reg.capt, lst->str, lst->next->str);
+			lst = lst->next->next;
+		}
 	}
-    ft_printf("\n");
+	if (ret == 0)
+	{
+		ft_printf("lalal %d   %s\n", reg.error_pos, reg.s1);
+		error_line_pos("error parsing", 76, reg.error_pos);
+		error_line_e(reg.s1, reg.error_pos);
+	}
+	ft_regex_free(&reg);
+	ft_dprintf(2, "\n");
     exit(0);
 }

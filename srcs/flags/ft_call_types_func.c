@@ -13,59 +13,101 @@
 
 #include "libft.h"
 
-int	type_all(t_flag *st, t_finfo *it, t_bool (*type_av)\
-		(t_flag *st, t_finfo*, char*, enum e_type))
+static int			type_all(t_flag *st, t_finfo *it, t_bool (*type_av)(t_flag *st, t_finfo*, enum e_option))
 {
-	int	i;
-
-	i = 0;
-	if (type_av(st, it, it->av, CHECK))
+	if (type_av(st, it, CHECK))
 	{
-		i = parse_typeoption(it, it->flag);
+		ft_printf("lalal  %b\n", it->isset);
 		if (it->isset & OP_MIN)
-			type_av(st, it, it->av, MIN);
+			type_av(st, it, MIN);
 		if (it->isset & OP_MAX)
-			type_av(st, it, it->av, MAX);
+			type_av(st, it, MAX);
+		if (it->isset & OP_EQ)
+			type_av(st, it, EQ);
 		if (it->isset & OP_PATTERN)
-			type_av(st, it, it->av, MATCH);
+			type_av(st, it, PATTERN);
 		if (!it->error)
-			type_av(st, it, it->av, ADD);
+			type_av(st, it, ADD);
 	}
 	st->add++;
-	return (i);
+	return (0);
 }
 
-int	find_type(t_flag *st, char *flag, char fl, int i)
+static void 		check_av_option(t_flag *st, t_finfo *it)
 {
-	static char		*type[4] = {"int", "char*", "char", "uint"};
-	static t_bool	(*func[4])(t_flag *st, t_finfo*, char*, enum e_type) = \
-	{check_int, check_string, check_char, check_uint};
-	int				ret;
-	int				j;
+	static char *type[4] = {"int", "char*", "char", "uint"};
+	static t_bool (*func[4])(t_flag * st, t_finfo *, enum e_type) = {check_int, check_string, check_char, check_uint};
+	int i;
 
-	ret = 0;
-	j = 0;
-	st->it.fl = fl;
-	st->it.flag = flag + ft_spancharspace(flag, ",}{");
-	st->it.av = st->argv[i];
-	while (j < 4 && ft_strncmp(flag, type[j], ft_strlen(type[j])))
-		j++;
-	if (j < 4)
-		ret = type_all(st, &(st->it), func[j]);
-	else
-		ft_printf("unknow type %.*s\n", j, flag);
-	return (ret);
-}
-
-int	is_type(t_flag *st, char *flag, int nb, char fl)
-{
-	int	i;
-
-	i = ft_spancharspace(flag, ",}{");
-	ft_bzero(&(st->it), sizeof(t_finfo));
-	if ((st->i + nb) < st->argc)
-		i += find_type(st, flag, fl, (st->i + nb));
+	if ((st->i + st->add) < st->argc)
+	{
+		i = 0;
+		it->av = st->argv[st->i + st->add];
+		while (i < 4 && ft_strcmp(it->type, type[i]))
+			i++;
+		if (i < 4)
+			type_all(st, it, func[i]);
+		else
+			ft_printf("unknow type %s\n", it->type);
+	}
 	else
 		error_argv(st, "Missing arguments", st->i + st->add, 0);
-	return (span_option(flag + i) + i);
+}
+
+static void			parse_option_number(char *str, int *nb, int *isset, int mod)
+{
+	*nb = ft_atoi(str);
+	*isset |= mod;
+}
+
+static t_reg_list	*parse_option_type(t_flag *st, t_finfo *it, t_reg_list *lst)
+{
+	ft_printf("[<%s>  \"%s\"]\n", lst->token, lst->str);
+	it->type = lst->str;
+	lst = lst->next;
+	it->isset = 0;
+	while (lst && !ft_strncmp(lst->token, "opt_", 4))
+	{
+		if (!ft_strcmp(lst->token, "opt_min"))
+			parse_option_number(lst->str, &(it->min), &(it->isset), OP_MIN);
+		else if (!ft_strcmp(lst->token, "opt_max"))
+			parse_option_number(lst->str, &(it->max), &(it->isset), OP_MAX);
+		else if (!ft_strcmp(lst->token, "opt_ex"))
+			parse_option_number(lst->str, &(it->eq), &(it->isset), OP_EQ);
+		else if (!ft_strcmp(lst->token, "opt_pattern"))
+		{
+			it->isset |= OP_PATTERN;
+			it->pattern = lst->str;
+		}
+		ft_printf("[<%s>  \"%s\"]\n", lst->token, lst->str);
+		lst = lst->next;
+	}
+	ft_printf("%b\n", it->isset);
+	check_av_option(st, it);
+	return (lst);
+}
+
+t_bool			parse_flags(t_flag *st, t_reg_list *lst)
+{
+	t_finfo it;
+
+	add_flags(lst->str);
+	ft_bzero(&it, sizeof(t_finfo));
+	it.flag = lst->str;
+	lst = lst->next;
+	while (lst && !(lst->token && (!ft_strcmp(lst->token, "alone") ||
+									!ft_strcmp(lst->token, "flags"))))
+	{
+		if (!ft_strcmp(lst->token, "type"))
+			lst = parse_option_type(st, &it, lst);
+		else
+		{
+			if (lst->token && !ft_strcmp(lst->token, "set"))
+				add_flags(lst->str);
+			else if (lst->token && !ft_strcmp(lst->token, "unset"))
+				remove_flags(lst->str);
+			lst = lst->next;
+		}
+	}
+	return (TRUE);
 }

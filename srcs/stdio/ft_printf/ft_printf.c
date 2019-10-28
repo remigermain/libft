@@ -43,6 +43,7 @@ int			ft_sprintf(t_uchar **dest, const char *format, ...)
 	va_start(st.va_lst, format);
 	convert_buff(&st, NULL, 0);
 	i = ftprintf_base((char*)format, &st, 0, 0);
+	convert_buff(&st, NULL, 0);
 	*dest = st.str;
 	return (i);
 }

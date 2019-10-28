@@ -64,7 +64,7 @@ typedef struct	s_regex_enclose
 	t_bool		capture;
 	t_bool		is_encl;
 	const char	*mem;
-	char		*name;
+	char		*token;
 	int			len;
 	int			i;
 }				t_reg_encl;
@@ -72,7 +72,7 @@ typedef struct	s_regex_enclose
 typedef struct	s_regex_print
 {
 	size_t	str;
-	size_t 	name;
+	size_t 	token;
 	size_t	level;
 	size_t	pos;
 	size_t	start;
@@ -82,7 +82,7 @@ typedef struct	s_regex_print
 typedef struct	s_regex_list
 {
 	char				*str;
-	char				*name;
+	char				*token;
 	int					pos;
 	int					level;
 	int					start;
@@ -178,7 +178,7 @@ t_bool			is_delimiter(t_regex *st, const char *reg, char *delimiter);
 void			ft_regex_print(t_regex *st);
 void			regex_alpha_debug(char *func, char alpha[128]);
 void			regex_put_arg(t_regex *st, const char *base, int len,
-																	char *name);
+																	char *token);
 void			ft_regex_free(t_regex *st);
 
 #endif

@@ -13,93 +13,42 @@
 
 #include "libft.h"
 
-static int	find_flags2(t_flag *st, char *flag)
+static t_bool	find_flags(t_flag *st, char *c)
 {
-	int i;
-	int	j;
+	t_reg_list *lst;
 
-	i = 0;
-	j = 0;
-	add_flags(flag[i]);
-	i = parse_option(st, flag[i], flag + 1) + 1;
-	while (flag[i] && flag[i] != '|' && j != 2)
-	{
-		if (flag[i] == ';' && (++j))
-			i++;
-		while (flag[i] && flag[i] != ';' && flag[i] != '|')
-		{
-			if (j == 1)
-				add_flags(flag[i++]);
-			else
-				remove_flags(flag[i++]);
-		}
-	}
-	return (1);
-}
-
-static int	find_flags(t_flag *st, char c)
-{
-	int	i;
-
-	i = 0;
-	if (c == 'h')
+	ft_printf("find_flag  %s\n", c);
+	if (!ft_strcmp(c, "help") || *c == 'h')
 		print_usage(st);
-	while (st->flag[i] && st->flag[i] != '|' && st->flag[i] != c)
-		i++;
-	if (st->flag[i] == c)
-		return (add_flags(st->flag[i]));
-	while (st->flag[++i])
+	lst = st->reg.capt;
+	while (lst)
 	{
-		if (st->flag[i] == c && i > 0 && st->flag[i - 1] == '|')
-			return (find_flags2(st, st->flag + i));
-		else
-			i += span_alloption(st->flag + i);
+		if (lst->token && (!ft_strcmp(lst->token, "alone") ||
+		!ft_strcmp(lst->token, "flags")) && !ft_strcmp(lst->str, c))
+			return (parse_flags(st, lst));
+		lst = lst->next;
 	}
-	return (0);
+	error_argv(st, "unknow flags", st->i, st->j);
+	return (FALSE);
 }
 
-static int	parse_mflag(t_flag *st)
-{
-	int		len;
-	int		i;
-	int		j;
-
-	if (!ft_strcmp(ft_strlowcase(st->argv[st->i] + 2), "help"))
-		print_usage(st);
-	j = 0;
-	i = 0;
-	len = ft_strlen(st->mflag);
-	while (i + j < len)
-	{
-		i = ft_spanchar(st->mflag + j, ";");
-		if (!ft_strncmp(st->argv[st->i] + 2, st->mflag + j, i))
-		{
-			if (!st->mflag[i + j + 1])
-				ft_printf("%1@", "error", "wrong parsing", "mflag");
-			add_flags(st->mflag[i + j + 1]);
-			find_flags(st, st->mflag[i + j + 1]);
-			return (1);
-		}
-		j += i + ft_spanchar(st->mflag + i + j, "|") + 1;
-	}
-	error_argv(st, "unknow flags", st->i, 0);
-	return (1);
-}
-
-static int	call_flags(t_flag *st)
+static t_bool	call_flags(t_flag *st)
 {
 	st->j = 0;
 	while (st->argv[st->i][++st->j] && cout_error_argv(ERROR_GET) <= MAX_ERROR)
 	{
-		if (st->argv[st->i][1] != '-')
+		if (st->argv[st->i][1] == '-')
 		{
-			if (!find_flags(st, st->argv[st->i][st->j]))
-				error_argv(st, "unknow flags", st->i, st->j);
+			st->j = 0;
+			return (find_flags(st, st->argv[st->i] + 2));
 		}
-		else if (st->argv[st->i][1] == '-')
-			return (parse_mflag(st));
+		else
+		{
+			ft_printf("icici\n");
+			find_flags(st, &(st->argv[st->i][st->j]));
+		}
 	}
-	return (0);
+	return (TRUE);
 }
 
 /*
@@ -121,16 +70,35 @@ static int	call_flags(t_flag *st)
 **		animation;a|  --animation is same as -a
 */
 
+#define REGEX_ARGV_PARSE "^(\\s*(?<alone>[\\w\\-]*)\\s*,)*\\s*\\|(\\s*(?<flags>[\\w\\-]+)\\s*(\\(\\s*((?<type>[a-zA-Z*_]+)\\s*((\\{\\s*((?<opt_min>[\\d]*)\\s*,\\s*(?<opt_max>[\\d]*)\\s*(\\s*,\\s*\"(?<opt_pattern>[^\"]+)\"\\s*)?|\\s*(?<opt_ex>[\\d]*)\\s*)\\s*\\})?\\s*,\\s*)?)*\\s*\\))?\\s*;\\s*((?<set>[\\w\\-]*)\\s*,\\s*)*\\s*;\\s*((?<unset>[\\w\\-]*)\\s*,\\s*)*\\s*;\\s*\\|)*$"
 int			init_flags(char **argv, char *flag, char *mflag, enum e_flags mod)
 {
 	t_flag	st;
 
+	
 	st.i = 1;
 	st.mod = mod;
 	st.flag = flag;
 	st.argv = argv;
 	st.mflag = mflag;
 	st.argc = ft_maxlen_tab(argv, TAB_LENGHT);
+	ft_printf("[FLAG   %s ]\n\n", flag);
+	t_bool ret = ft_regex_exec(&(st.reg), flag, REGEX_ARGV_PARSE);
+	if (ret > 0)
+		ft_printf("\033[38;5;326mTRUE  %d\n" T_WHITE, ret);
+	else if (ret == 0)
+		ft_printf("\033[1;31mFALSE  %d\n" T_WHITE, ret);
+	else
+		ft_printf("\033[1;31mERROR MALLOC %d\n" T_WHITE, ret);
+
+	if (ret == 0)
+	{
+		ft_printf("lalal %d   %s\n", st.reg.error_pos, st.reg.s1);
+		error_line_pos("error parsing", 76, st.reg.error_pos);
+		error_line_e(st.reg.s1, st.reg.error_pos);
+	}
+
+	ft_regex_print(&(st.reg));
 	while (st.argv[st.i] && cout_error_argv(ERROR_GET) <= MAX_ERROR)
 	{
 		if ((st.argv[st.i][0] != '-' && st.mod == F_STOP) ||
@@ -145,6 +113,7 @@ int			init_flags(char **argv, char *flag, char *mflag, enum e_flags mod)
 	}
 	while (st.argv[st.i])
 		add_flags_av(FLAG_ARGV, (void*)st.argv[st.i++], STRING);
+	ft_regex_free(&(st.reg));
 	if (cout_error_argv(ERROR_GET | ERROR_PRINT))
 		return (-1);
 	return (st.i);
