@@ -58,7 +58,7 @@ SRC_divers = 		ft_countwchar.c  ft_createtab.c  ft_inttab_del.c  ft_match.c  ft_
 CSRC_FLAGS = $(addprefix $(D_FLAGS),$(SRC_flags))
 D_FLAGS = flags/
 SRC_flags = 	ft_call_types_func.c ft_erro_argv.c ft_error_flags.c ft_flags_base.c ft_flags_base_func.c \
-				ft_func_type.c ft_func_type_obj.c ft_get_type_option.c ft_parse_argv.c ft_parse_type.c ft_usage_flags.c \
+				ft_func_type.c ft_func_type_obj.c ft_parse_argv.c ft_usage_flags.c \
 				ft_error_line.c
 
 

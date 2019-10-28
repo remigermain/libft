@@ -22,6 +22,8 @@ static t_reg_list *usage_option(t_reg_list *lst)
 		ft_dprintf(2, "< string ");
 	else if (!ft_strcmp(lst->str, "char"))
 	    ft_dprintf(2, "< character ");
+	else if (!ft_strcmp(lst->str, "size_t"))
+		ft_dprintf(2, "< unsigned number ");
 	lst = lst->next;
 	while (lst && !ft_strncmp(lst->token, "opt_", 4))
 	{
@@ -35,13 +37,14 @@ static t_reg_list *usage_option(t_reg_list *lst)
 			ft_dprintf(2, " pattern: %s ", lst->str);
 		lst = lst->next;
 	}
-	ft_dprintf(2, ">");
+	ft_dprintf(2, ">\n");
 	return (lst);
 }
 
-static void  usage_type(t_reg_list *lst)
+static void  usage_type(t_reg_list *lst, char *text)
 {
-	ft_dprintf(2, "\t%s\t", lst->str);
+	ft_dprintf(2, "\t%s\t\t%s\n", lst->str, text);
+	lst = lst->next;
 	while (lst && !(lst->token && (!ft_strcmp(lst->token, "alone") ||
 								   !ft_strcmp(lst->token, "flags"))))
 	{
@@ -62,12 +65,15 @@ static void usage_flag(t_reg_list *lst, char *flag, char *text)
 {
 	while (lst)
 	{
+		//ft_printf("[%s  %s]\n", lst->token, lst->str);
 		if (lst->token && (!ft_strcmp(lst->token, "alone") ||
-			!ft_strcmp(lst->token, "flags")) && !ft_strcmp(lst->token, flag))
-			return (usage_type(lst));
+			!ft_strcmp(lst->token, "flags")) && !ft_strcmp(lst->str, flag))
+		{
+			usage_type(lst, text);
+			break ;
+		}
 		lst = lst->next;
 	}
-	ft_dprintf(2, "\n\n%s\n", text);
 }
 
 char   *init_usage(char *str)
@@ -79,26 +85,29 @@ char   *init_usage(char *str)
     return (text);
 }
 
-#define REGEX_ARGV_USAGE "^\\s*(?<flags>[\\w_]+)\\s*,\\s*(?<short_flags>[\\w_]+)\\s*,\\s*\\\"(?<text>[^|]+)\\\"\\s*$"
+#define REGEX_ARGV_USAGE "^(\\s*(?<flags>[\\w_]+)\\s*,\\s*(?<short_flags>[\\w_]+)\\s*,\\s*\\\"(?<text>[^\"]+)\\\"\\s*\\|)+$"
 void        print_usage(t_flag *st)
 {
 	t_regex		reg;
-	t_reg_list	*lst;
+	t_reg_list *lst;
+	t_reg_list *lst2;
 	char	*str;
 	t_bool ret;
-
+	ret = 0;
 	str = init_usage(NULL);
-	if (ret == ft_regex_exec(&reg, str, REGEX_ARGV_USAGE) > 0)
+	ret = ft_regex_exec(&reg, str, REGEX_ARGV_USAGE);
+	if (ret > 0)
 	{
 		lst = reg.capt;
 		ft_dprintf(2, "%s usage\n\n\t[ FLAGS ]\n", st->argv[0]);
-		ft_regex_print(&reg);
-		while (lst && lst->next)
+		while (lst && lst->next && lst->next->next)
 		{
-			usage_flag(st->reg.capt, lst->str, lst->next->str);
-			lst = lst->next->next;
+			lst2 = st->reg.capt;
+			usage_flag(lst2, lst->str, lst->next->next->str);
+			lst = lst->next->next->next;
 		}
 	}
+	ft_regex_print(&reg);
 	if (ret == 0)
 	{
 		ft_printf("lalal %d   %s\n", reg.error_pos, reg.s1);
