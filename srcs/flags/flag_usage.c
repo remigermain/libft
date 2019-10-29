@@ -41,42 +41,45 @@ static t_reg_list *usage_option(t_reg_list *lst)
 	return (lst);
 }
 
-static void  usage_type(t_reg_list *lst, char *text)
+t_reg_list *usage_name(t_reg_list *lst)
 {
-	ft_dprintf(2, "\t%s\t\t%s\n", lst->str, text);
-	lst = lst->next;
-	while (lst && !(lst->token && (!ft_strcmp(lst->token, "alone") ||
-								   !ft_strcmp(lst->token, "flags"))))
+	if (lst && lst->token && !ft_strcmp(lst->token, "separator"))
+		lst = lst->next;
+	ft_dprintf(2, "\t");
+	if (lst && lst->token && !ft_strcmp(lst->token, "mflags"))
+	{
+		ft_dprintf(2, "--%s ", lst->str);
+		lst = lst->next;
+	}
+	if (lst && lst->token && !ft_strcmp(lst->token, "sflag"))
+	{
+		ft_dprintf(2, " -%s ", lst->str);
+		lst = lst->next;
+	}
+	return (lst);
+}
+
+static t_reg_list *usage_flag(t_reg_list *lst, t_reg_list *text)
+{
+	lst = usage_name(lst);
+	ft_dprintf(2, "\t\t%s.\n", text ? text->str : "No Description");
+	while (lst && !(lst->token && !ft_strcmp(lst->token, "separator")))
 	{
 		if (!ft_strcmp(lst->token, "type"))
 			lst = usage_option(lst);
 		else
 		{
-			//if (lst->token && !ft_strcmp(lst->token, "set"))
-			//	
-			//else if (lst->token && !ft_strcmp(lst->token, "unset"))
-			//	(void);
+			if (lst->token && !ft_strcmp(lst->token, "set"))
+				(void)lst;
+			else if (lst->token && !ft_strcmp(lst->token, "unset"))
+				(void)lst;
 			lst = lst->next;
 		}
 	}
+	return (lst);
 }
 
-static void usage_flag(t_reg_list *lst, char *flag, char *text)
-{
-	while (lst)
-	{
-		//ft_printf("[%s  %s]\n", lst->token, lst->str);
-		if (lst->token && (!ft_strcmp(lst->token, "alone") ||
-			!ft_strcmp(lst->token, "flags")) && !ft_strcmp(lst->str, flag))
-		{
-			usage_type(lst, text);
-			break ;
-		}
-		lst = lst->next;
-	}
-}
-
-char   *init_usage(char *str)
+char   *usage_init(char *str)
 {
     static char *text = NULL;
 
@@ -85,36 +88,31 @@ char   *init_usage(char *str)
     return (text);
 }
 
-#define REGEX_ARGV_USAGE "^(\\s*(?<flags>[\\w_]+)\\s*,\\s*(?<short_flags>[\\w_]+)\\s*,\\s*\\\"(?<text>[^\"]+)\\\"\\s*\\|)+$"
 void        print_usage(t_flag *st)
 {
 	t_regex		reg;
-	t_reg_list *lst;
-	t_reg_list *lst2;
-	char	*str;
-	t_bool ret;
-	ret = 0;
-	str = init_usage(NULL);
-	ret = ft_regex_exec(&reg, str, REGEX_ARGV_USAGE);
-	if (ret > 0)
+	t_reg_list	*lst;
+	t_reg_list	*text;
+	char		*str;
+
+	str = usage_init(NULL);
+	if (ft_regex_exec(&reg, str, REGEX_ARGV_USAGE) > 0)
 	{
-		lst = reg.capt;
-		ft_dprintf(2, "%s usage\n\n\t[ FLAGS ]\n", st->argv[0]);
-		while (lst && lst->next && lst->next->next)
+		lst = st->reg.capt;
+		text = reg.capt;
+		ft_dprintf(2, "Usage %s %s\nOptions:\n", st->argv[0], text->str);
+		ft_dprintf(2, "\t--help  -h \tTo display command line options.\n");
+		text = text->next;
+		while (lst && lst->next)
 		{
-			lst2 = st->reg.capt;
-			usage_flag(lst2, lst->str, lst->next->next->str);
-			lst = lst->next->next->next;
+			if (text && text->token && !ft_strcmp(text->token, "separator"))
+				text = text->next;
+			lst = usage_flag(lst, text);
+			if (text)
+				text = text->next;
 		}
-	}
-	ft_regex_print(&reg);
-	if (ret == 0)
-	{
-		ft_printf("lalal %d   %s\n", reg.error_pos, reg.s1);
-		error_line_pos("error parsing", 76, reg.error_pos);
-		error_line_e(reg.s1, reg.error_pos);
+		ft_dprintf(2, "\n\t__Compiled with GCC %d.%d__\n", __GNUC__,__STDC__);
 	}
 	ft_regex_free(&reg);
-	ft_dprintf(2, "\n");
     exit(0);
 }

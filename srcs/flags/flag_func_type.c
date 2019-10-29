@@ -27,7 +27,7 @@ t_bool	check_uint(t_flag *st, t_finfo *it, enum e_type mod)
 	else if (mod == EQ && it->eq != nb)	
 		it->error = func_lenght(st, "Number need to be equal than %d", it->eq);
 	else if (mod == ADD)
-		add_flags_av(it->flag, (void *)&nb, INT);
+		add_flags_av(it->mfl, it->sfl, (void *)&nb, INT);
 	return (TRUE);
 }
 
@@ -38,7 +38,7 @@ t_bool	check_char(t_flag *st, t_finfo *it, enum e_type mod)
 	else if (mod == MATCH)
 		func_pattern(st, it);
 	else if (mod == ADD)
-		add_flags_av(it->flag, (void *)it->av, CHAR);
+		add_flags_av(it->mfl, it->sfl, (void *)it->av, CHAR);
 	return (TRUE);
 }
 
@@ -58,7 +58,7 @@ t_bool	check_string(t_flag *st, t_finfo *it, enum e_type mod)
 	else if (mod == PATTERN)
 		func_pattern(st, it);
 	else if (mod == ADD)
-		add_flags_av(it->flag, (void *)it->av, STRING);
+		add_flags_av(it->mfl, it->sfl, (void *)it->av, STRING);
 	return (TRUE);
 }
 
@@ -78,6 +78,6 @@ t_bool	check_int(t_flag *st, t_finfo *it, enum e_type mod)
 	else if (mod == EQ && it->eq != nb)	
 		it->error = func_lenght(st, "Number need to be equal than %d", it->eq);
 	else if (mod == ADD)
-		add_flags_av(it->flag, (void*)&nb, INT);
+		add_flags_av(it->mfl, it->sfl, (void *)&nb, INT);
 	return (TRUE);
 }

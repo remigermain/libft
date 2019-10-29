@@ -62,7 +62,7 @@ enum	e_cast_pf
 
 enum	e_pf_float
 {
-	FLOAT_START,
+	FLOAT_START = 1,
 	FLOAT_END,
 	F_POS,
 	F_NEG,
@@ -70,7 +70,7 @@ enum	e_pf_float
 
 enum	e_pf
 {
-	PF_FREE,
+	PF_FREE = 1,
 	NO_FREE,
 };
 
