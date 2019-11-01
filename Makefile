@@ -119,8 +119,12 @@ SRC_STRINGS =		ft_atof.c       ft_atol.c  ft_str_is_type.c ft_strclr.c     ft_st
 					 ft_strncmp.c  ft_strnew.c      ft_strrev.c   ft_strtok.c    ft_tabdel.c ft_base_string.c ft_atof_base.c 
 
 
-NUMBER_FUNCTION := "$(shell  ls -R1 $(DSRC) | grep . | grep ".c" | wc -l)"
+NUMBER_FUNCTION := "$(shell  ls -R1 $(DSRC) | grep . | grep "\.c" | wc -l)"
 NUMBER := "0"
+PROGRESS := "1"
+DIFF := "1"
+MAX_PROGRESS = "50"
+COLOR_PROGRESS = "0"
 COUNT := "TRUE"
 NULL := 
 ESC := $(shell printf '\033')
@@ -173,17 +177,25 @@ $(NAME): $(COBJ)
 	@printf $(SPACE)"Compilation of objects $(GREEN)finish$(WHITE)"$(SPACE)$(SPACE)"\n"
 	@printf $(SPACE)"Compilation $(TYPE) $(BLUE) $(NAME) $(WHITE)"$(SPACE)$(SPACE)"\n"
 	@ar ru $(NAME) $? > /dev/null 2>&1
-	@printf $(SPACE)"Opimisation library with $(BLUE)ranlib$(WHITE)\n"
+	@printf $(SPACE)"Opimisation library with $(BLUE)ranlib$(WHITE)"$(SPACE)$(SPACE)"\n\n"
 	@ranlib $(NAME)
 
 $(DOBJ)%.o : $(DSRC)%.c $(CHEADER)
 	@$(eval COUNT = "FALSE")
-	@$(eval NUMBER=$(shell echo $$(($(NUMBER)+1))))
+	@printf "$(eval NUMBER=$(shell echo $(NUMBER) + 1 | bc ))"
+	@printf "$(eval PROGRESS=$(shell echo $(NUMBER) \* $(MAX_PROGRESS) / $(NUMBER_FUNCTION) | bc ))"
+	@printf "$(eval DIFF=$(shell echo $(MAX_PROGRESS) - $(PROGRESS) | bc ))"
+	@printf "$(eval COLOR_PROGRESS=$(shell echo $(PROGRESS) % 7 + 31 | bc))"
 	@mkdir -p $(DOBJ)
 	@mkdir -p $(addprefix $(DOBJ), $(ALL_D))
 	@gcc $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@printf "$(ESC)[$(COLOR_PROGRESS)m       ["
+	@printf "%0.s=" {0..$(PROGRESS)}
+	@printf ">"
+	@printf "%0.s " {0..$(DIFF)}
+	@printf "]$(WHITE)\n"
 	@printf $(SPACE)"Compilation $(GREEN)$(NUMBER)$(WHITE) of $(BLUE)$(NUMBER_FUNCTION)$(WHITE)"$(SPACE)"\n"
-	@printf $(SPACE)"Compilation of function $(GREEN)$<$(WHITE)"$(SPACE)$(SPACE)"\n$(ESC)[2A"
+	@printf $(SPACE)"Compilation of function $(GREEN)$<$(WHITE)"$(SPACE)$(SPACE)"\n$(ESC)[3A"
 
 clean: print_name
 	@rm -rf $(DOBJ)
@@ -216,4 +228,4 @@ info: print_name
 norme : print_norme
 	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&$(WHITE)," | sed "s/Error/  Error/g" | sed "s,Error,${ESC}[31m&$(WHITE),"
 
-.PHONY: default all clean fclean re norme print_libft print_norme info prototype
+.PHONY: default all clean fclean re norme print_libft print_norme info prototype diff
