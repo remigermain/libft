@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-int	ft_str_is_lowercase(char *str)
+t_bool	ft_str_is_lowercase(char *str)
 {
 	int i;
 

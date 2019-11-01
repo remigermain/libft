@@ -16,7 +16,7 @@
 # define ABS(a)				(a < 0 ? -a : a)
 # define MAX(a, b)			(a < b ? b : a)
 # define MIN(a, b)			(a < b ? a : b)
-# define HEX_16 16
+# define HEX 16
 # define DEC 10
 # define OCTAL 8
 # define BIN 2

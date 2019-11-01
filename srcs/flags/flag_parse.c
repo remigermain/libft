@@ -66,7 +66,7 @@ static t_reg_list	*parse_option_type(t_flag *st, t_finfo *it, t_reg_list *lst)
 			AV_ADD_NUM(ft_atoi(lst->str), &(it->min), &(it->isset), OP_MIN);
 		else if (!ft_strcmp(lst->token, "opt_max"))
 			AV_ADD_NUM(ft_atoi(lst->str), &(it->max), &(it->isset), OP_MAX);
-		else if (!ft_strcmp(lst->token, "opt_ex"))
+		else if (!ft_strcmp(lst->token, "opt_eq"))
 			AV_ADD_NUM(ft_atoi(lst->str), &(it->eq), &(it->isset), OP_EQ);
 		else if (!ft_strcmp(lst->token, "opt_pattern"))
 			AV_ADD_PATTERN(lst->str, it->pattern, &(it->isset), OP_PATTERN);

@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-void       flag_free()
+void       flag_free(void)
 {
 	t_flags_inf	*st;
     int			i;

@@ -12,9 +12,9 @@
 
 
 NAME = libft.a
-TYPE = " de la library"
+TYPE := "library"
 
-CFLAGS =  -Wall -Wextra -g3 #-Werror
+CFLAGS =  -Wall -Wextra -g3 -Werror
 
 INCLUDE = -Iincludes
 
@@ -46,18 +46,18 @@ CHEADER = $(addprefix $(DHEADER),$(HEADER))
 
 CSRC_BYTES = $(addprefix $(D_BYTES), $(SRC_BYTES))
 D_BYTES = bytes_tools/
-SRC_BYTES = ft_print_memory.c reverse_bytes.c ft_option.c ft_create_bytes_tab.c \
+SRC_BYTES = ft_print_memory.c ft_reverse_bytes.c ft_option.c ft_create_bytes_tab.c \
 
 CSRC_DIVERS = $(addprefix $(D_DIVERS),$(SRC_divers))
 D_DIVERS = divers/
-SRC_divers = 		ft_countwchar.c  ft_createtab.c  ft_inttab_del.c  ft_match.c  ft_sort_integer_table.c  \
+SRC_divers = 		ft_countwchar.c  ft_createtab.c  ft_inttab_del.c    ft_sort_integer_table.c  \
 					ft_swap.c  ft_tablen.c  len_wchar.c  len_wchar_single.c  nlen_wchar.c  timestamp.c \
 					ft_getchar.c get_next_line.c  
 
 
 CSRC_FLAGS = $(addprefix $(D_FLAGS),$(SRC_flags))
 D_FLAGS = flags/
-SRC_flags = 	flag_base_func.c  flag_base_obj.c  flag_error.c  flag_func.c  \
+SRC_flags = 	flag_base_func.c  flag_base_obj.c  flag_error.c  flag_parse.c  \
 				flag_func_obj.c  flag_func_type.c  flag_init.c  flag_usage.c  \
 				ft_erro_argv.c  ft_error_line.c flag_utils.c
 
@@ -108,91 +108,112 @@ SRC_PRINTF =		ft_printf.c ft_printf_base.c get_options.c put_string.c utils.c\
 
 CSRC_STRING = $(addprefix $(D_STRING),$(SRC_STRINGS))
 D_STRING = string/
-SRC_STRINGS =		ft_atof.c       ft_atol.c             ft_spancharspace.c  ft_strclr.c     ft_strdel.c   \
+SRC_STRINGS =		ft_atof.c       ft_atol.c  ft_str_is_type.c ft_strclr.c     ft_strdel.c   \
 					ft_str_is_alpha.c      ft_str_is_uppercase.c  ft_strlcat.c     ft_strmap.c   ft_strncpy.c     ft_strnlen.c  \
 					ft_strsplit.c  ft_strtrim.c ft_atoi_base.c  ft_itoabase_buffer.c  ft_itoa.c        ft_strcapitalize.c  ft_strcmp.c     ft_strdup.c    \
 					ft_str_is_lowercase.c  ft_striter.c           ft_strlcpy.c     ft_strmapi.c  ft_strncpychr.c  ft_strnstr.c \
-					 ft_strstr.c    ft_strupcase.c ft_atoi.c       ft_itoa_base.c        ft_span.c        ft_strcat.c         \
+					 ft_strstr.c    ft_strupcase.c ft_atoi.c       ft_itoa_base.c        ft_spantype.c        ft_strcat.c         \
 					 ft_strcpy.c     ft_strequ.c    ft_str_is_numeric.c    ft_striteri.c          ft_strlen.c      ft_strncat.c  \
-					 ft_strnequ.c     ft_strpbrk.c  ft_strsub.c    ft_strxfrm.c  ft_atol_base.c  ft_itoa_buffer.c      ft_spanchar.c    \
+					 ft_strnequ.c     ft_strpbrk.c  ft_strsub.c    ft_strxfrm.c  ft_atol_base.c  ft_itoa_buffer.c      ft_span.c    \
 					 ft_strchr.c         ft_strcpychr.c  ft_strerror.c  ft_str_is_printable.c  ft_strjoin.c    ft_strlowcase.c  \
 					 ft_strncmp.c  ft_strnew.c      ft_strrev.c   ft_strtok.c    ft_tabdel.c ft_base_string.c ft_atof_base.c 
 
-COUNT = "1"
-SPACE = "                  "
+
+NUMBER_FUNCTION := "$(shell  ls -R1 $(DSRC) | grep . | grep ".c" | wc -l)"
+NUMBER := "0"
+COUNT := "TRUE"
+NULL := 
+ESC := $(shell printf '\033')
+SPACE := "                       "
 .DEFAULT_GOAL := all
-ESC = $(shell printf '\033')
+
+#### COLOR
+RED := $(ESC)[1;31m
+BLUE := $(ESC)[1;34m
+LIGHT_BLUE := $(ESC)[34m
+GREEN := $(ESC)[1;32m
+WHITE := $(ESC)[0m
+WHITE := $(ESC)[0m
+####
+
+#Inside actions we can use:  
+#    $@ to represent the full target name of the current target  
+#    $? returns the dependencies that are newer than the current target  
+#    $* returns the text that corresponds to % in the target     
+#    $< returns the name of the first dependency 
+#    $^ returns the names of all the dependencies with space as the delimiter
 
 print_name : 
-	@printf "\n  		██▓     ██▓ ▄▄▄▄     █████▒▄▄▄█████▓ \n"
-	@printf "		▓██▒    ▓██▒▓█████▄ ▓██   ▒ ▓  ██▒ ▓▒ \n"
-	@printf "		▒██░    ▒██▒▒██▒ ▄██▒████ ░ ▒ ▓██░ ▒░\n"
-	@printf "		▒██░    ░██░▒██░█▀  ░▓█▒  ░ ░ ▓██▓ ░ \n"
-	@printf "		░██████▒░██░░▓█  ▀█▓░▒█░      ▒██▒ ░ \n"
-	@printf "		░ ▒░▓  ░░▓  ░▒▓███▀▒ ▒ ░      ▒ ░░   \n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒   ░  ░          ░    \n"
-	@printf "		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
-	@printf "		    ░  ░ ░   ░                       \n"
-	@printf "		                  ░                  \n\n\n"
-	@printf "		https://framagit.org/rgermain/libft\n"
+	@printf "$(BLUE)\n  		██▓     ██▓ ▄▄▄▄     █████▒▄▄▄█████▓ \n"
+	@printf "$(BLUE)		▓██▒    ▓██▒▓█████▄ ▓██   ▒ ▓  ██▒ ▓▒ \n"
+	@printf "$(BLUE)		▒██░    ▒██▒▒██▒ ▄██▒████ ░ ▒ ▓██░ ▒░\n"
+	@printf "$(WHITE)		▒██░    ░██░▒██░█▀  ░▓█▒  ░ ░ ▓██▓ ░ \n"
+	@printf "$(WHITE)		░██████▒░██░░▓█  ▀█▓░▒█░      ▒██▒ ░ \n"
+	@printf "$(WHITE)		░ ▒░▓  ░░▓  ░▒▓███▀▒ ▒ ░      ▒ ░░   \n"
+	@printf "$(WHITE)		░ ░ ▒  ░ ▒ ░▒░▒   ░  ░          ░    \n"
+	@printf "$(RED)		  ░ ░    ▒ ░ ░    ░  ░ ░      ░      \n"
+	@printf "$(RED)		    ░  ░ ░   ░                       \n"
+	@printf "$(RED)		                  ░                  \n\n\n"
+	@printf "$(WHITE)		https://framagit.org/rgermain/libft\n"
 	@printf "				by\n"
 	@printf "			      rgermain\n\n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n\n"
+	@printf "$(BLUE)		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n\n$(WHITE)"
 
 print_norme : print_name
 	@printf "			    Norminette    \n\n"
-	@printf "		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n\n"
-
+	@printf "$(BLUE)		░ ░ ▒  ░ ▒ ░▒░▒  ░ ░ ▒  ░ ▒ ░▒░▒    \n\n$(WHITE)"
 
 
 all: print_name $(NAME)
-	@if [ $(COUNT) = "1" ]; then \
-		echo $(SPACE)"${ESC}[1;34m    Nothing are changed !${ESC}[0m"; \
+	@if [ $(COUNT) = "TRUE" ]; then \
+		printf $(SPACE)"$(BLUE) Nothing are changed !$(WHITE)\n"; \
 	fi
 
 $(NAME): $(COBJ)
-	@echo $(SPACE)"${ESC}[JCompilation des Objects ${ESC}[1;32mterminer${ESC}[0m"
-	@echo $(SPACE)"Compilation "$(TYPE)" ${ESC}[34m" $(NAME) "${ESC}[0m"
+	@printf $(SPACE)"Compilation of objects $(GREEN)finish$(WHITE)"$(SPACE)$(SPACE)"\n"
+	@printf $(SPACE)"Compilation $(TYPE) $(BLUE) $(NAME) $(WHITE)"$(SPACE)$(SPACE)"\n"
 	@ar ru $(NAME) $? > /dev/null 2>&1
-	@echo $(SPACE)"Optimisation des index avec ranlib"
+	@printf $(SPACE)"Opimisation library with $(BLUE)ranlib$(WHITE)\n"
 	@ranlib $(NAME)
 
 $(DOBJ)%.o : $(DSRC)%.c $(CHEADER)
-	@$(eval COUNT = "0")
+	@$(eval COUNT = "FALSE")
+	@$(eval NUMBER=$(shell echo $$(($(NUMBER)+1))))
 	@mkdir -p $(DOBJ)
 	@mkdir -p $(addprefix $(DOBJ), $(ALL_D))
 	@gcc $(CFLAGS) $(INCLUDE) -c $< -o $@
-	@echo $(SPACE)"compilation de la fonction ${ESC}[1;32m"$< "${ESC}[0m${ESC}[K${ESC}[1A"
+	@printf $(SPACE)"Compilation $(GREEN)$(NUMBER)$(WHITE) of $(BLUE)$(NUMBER_FUNCTION)$(WHITE)"$(SPACE)"\n"
+	@printf $(SPACE)"Compilation of function $(GREEN)$<$(WHITE)"$(SPACE)$(SPACE)"\n$(ESC)[2A"
 
 clean: print_name
 	@rm -rf $(DOBJ)
-	@echo $(SPACE)"Suppresion des ${ESC}[1;31mobjects${ESC}[0m"
+	@printf $(SPACE)"Remove $(RED) objects $(WHITE)\n\n"
 
-fclean: clean
+fclean: print_name
+	@rm -rf $(DOBJ)
 	@rm -f $(NAME)
-	@echo $(SPACE)"Suppresion "$(TYPE)" ${ESC}[1;31m"$(NAME) "${ESC}[0m"
+	@printf $(SPACE)"Remove $(RED) objects $(WHITE)\n"
+	@printf $(SPACE)"Remove $(TYPE) $(RED)$(NAME)$(WHITE)\n\n"
 
 re: fclean all
 
 prototype:
-	@cat $(PATH)/* | grep -E "^(size_t|int|void|char|unsigned|t_bool|t_time|long|double|float)" | grep ")$" | grep -v "static" | sed "s/$/;/g"
-
+	@printf "$(shell cat $(PATH) | grep '^[a-zA-Z_]*\s*[a-zA-Z]\+[[:space:]]\+[*]*[a-zA-Z][a-zA-Z0-9_]\+(.*)[[:space:]]*' | grep -v '^static')"
 
 info: print_name
-	@printf $(SPACE)"total functions : ${ESC}[1;34m"
-	@echo "$(shell cat $(CSRC) $(CHEADER) | sed 's/^[a-z*_]\+[[:blank:]]\+[*a-z_]\+(\(.\)*);/REMIREMIREMI/g' | grep REMIREMIREMI | wc -l)"
-	@printf "${ESC}[0m\n";
-	@printf $(SPACE)"total lines : ${ESC}[1;34m"
-	@echo "$(shell cat $(CSRC) $(CHEADER) | sed '/^\*\*.*/d' | sed '/^\/\*.*/d' | sed '/^\*\/.*/d' | sed '/^[[:blank:]]*\/\/.*/d' | grep . | wc -l)"
-	@printf "${ESC}[0m\n";
-	@printf $(SPACE)"total commit : ${ESC}[1;34m"
+	@printf $(SPACE)"Total functions : $(BLUE)"
+	@printf "$(NUMBER_FUNCTION)$(WHITE)\n";
+	@printf $(SPACE)"Total lines : $(BLUE)"
+	@printf "$(shell cat $(CSRC) $(CHEADER) | sed '/^\*\*.*/d' | sed '/^\/\*.*/d' | sed '/^\*\/.*/d' | sed '/^[[:blank:]]*\/\/.*/d' | grep . | wc -l)"
+	@printf "$(WHITE)\n";
+	@printf $(SPACE)"Total commit : $(BLUE)"
 	@git rev-list --all --count
-	@printf "${ESC}[0m\n";
-	@printf $(SPACE)"last modifications : ${ESC}[1;34m"
+	@printf "$(WHITE)\n";
+	@printf $(SPACE)"Last modifications : $(BLUE)"
 	@git log| head -n5 | grep Date | cut -c 9-
-	@printf "${ESC}[0m\n";
+	@printf "$(WHITE)\n";
 
 norme : print_norme
-	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&${ESC}[0m," | sed "s/Error/  Error/g" | sed "s,Error,${ESC}[31m&${ESC}[0m,"
+	@norminette $(CSRC) $(CHEADER) | sed "s,Norme,${ESC}[38;5;326m&$(WHITE)," | sed "s/Error/  Error/g" | sed "s,Error,${ESC}[31m&$(WHITE),"
 
-.PHONY: default all clean fclean re norme print_libft print_norme info
+.PHONY: default all clean fclean re norme print_libft print_norme info prototype

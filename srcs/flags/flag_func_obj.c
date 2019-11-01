@@ -27,13 +27,11 @@ void	func_pattern(t_flag *st, t_finfo *it)
 	ft_regex_free(&reg);
 }
 
-int		func_lenght(t_flag *st, char *str, int nb)
+void	func_lenght(t_flag *st, t_finfo *it, char *str, int nb)
 {
 	unsigned char	*msg;
-	int				error;
 
 	ft_sprintf(&msg, str, nb);
-	error = error_argv(st, (char*)msg, st->i + st->add, 0);
+	it->error = error_argv(st, (char*)msg, st->i + st->add, 0);
 	ft_strdel((char**)&msg);
-	return (error);
 }

@@ -23,7 +23,5 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
 		dst[count] = (char)src[count];
 		count++;
 	}
-	while (count < (int)len)
-		dst[count++] = '\0';
 	return (dst);
 }

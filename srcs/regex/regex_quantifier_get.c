@@ -82,7 +82,7 @@ static int	quantifier_set(t_reg_quan *quan, const char *reg, int i)
 	mod = FALSE;
 	i += quantifier_number(&quan->n, &quan->isset, QUAN_MIN, reg + i);
 	if (*(reg + i) == '}')
-		quan->isset = QUAN_EX;
+		quan->isset = QUAN_EQ;
 	else
 	{
 		mod = (*(reg + i++) == ';' ? TRUE : FALSE);

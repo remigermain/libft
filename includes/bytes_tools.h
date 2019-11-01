@@ -23,7 +23,7 @@ enum	e_print_memory
 };
 
 void			ft_print_memory(void *type, size_t s, enum e_print_memory f);
-void			reverse_bytes(void *bytes, size_t size);
+void			ft_reverse_bytes(void *bytes, size_t size);
 unsigned char	**ft_create_bytes_tab(size_t size);
 
 /*

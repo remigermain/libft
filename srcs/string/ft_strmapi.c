@@ -19,7 +19,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char	*new;
 
 	count = -1;
-	if (!s || !(new = (char *)malloc(sizeof(char) * ft_strlen(s) + 1)))
+	if (!s || !(new = (char *)ft_memalloc(sizeof(char) * ft_strlen(s) + 1)))
 		return (NULL);
 	while (s[++count] != '\0')
 		new[count] = f(count, (char)s[count]);

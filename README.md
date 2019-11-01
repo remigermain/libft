@@ -11,7 +11,7 @@ Disclaimer: Reinventing the wheel is bad, 42 makes us do this just so we can hav
 |ft_tabdel|ft_putwchar_fd|ft_realloc|ft_sqrt|ft_lstnew|ft_toupper|init_flags|timestamp|ft_print_memory|ft_printf|ft_regex_exec|
 |ft_strxfrm|ft_putwchar|ft_memset|ft_recursive_power|ft_lstmap|ft_tolower|print_usage|nlen_wchar|ft_option|ft_dprintf|ft_regex_free|
 |ft_strupcase|ft_putstrw_fd|ft_memnew|ft_recursive_factorial|ft_lstiter|ft_isxdigit|init_usage|len_wchar_single|ft_create_bytes_tab|ft_sprintf|ft_regex_print|
-|ft_strtrim|ft_putstrw|ft_memmove|ft_pow|ft_lstdelone|ft_isword|get_flags_av|len_wchar|reverse_bytes||ft_regex_replace|
+|ft_strtrim|ft_putstrw|ft_memmove|ft_pow|ft_lstdelone|ft_isword|get_flags_av|len_wchar|ft_reverse_bytes||ft_regex_replace|
 |ft_strtok|ft_putstr_fd|ft_memdel|ft_iterative_power|ft_lstdel|ft_isuppercase|remove_flags|get_next_line||||
 |ft_strsub|ft_putstr|ft_memcpy|ft_iterative_factorial|ft_lstadd|ft_isspace|exist_flags|ft_tablen||||
 |ft_strstr|ft_putpstr_fd|ft_memcmp|ft_is_prime||ft_isprint|add_flags|ft_swap||||

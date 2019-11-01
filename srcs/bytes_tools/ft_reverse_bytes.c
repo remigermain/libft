@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-void	reverse_bytes(void *bytes, size_t size)
+void	ft_reverse_bytes(void *bytes, size_t size)
 {
 	unsigned char	tmp;
 	int				mem;

@@ -28,7 +28,7 @@ enum	e_regex_quan
 {
 	QUAN_MIN = 0b1,
 	QUAN_MAX = 0b10,
-	QUAN_EX = 0b100,
+	QUAN_EQ = 0b100,
 	QUAN_OR = 0b1000,
 	QUAN_LAZY = 0b10000,
 };

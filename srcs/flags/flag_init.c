@@ -126,3 +126,8 @@ int			flag_init(char **argv, char *flag, char *usage, enum e_flags mod)
 	ft_regex_free(&(st.reg));
 	return (AV_ERROR(ERROR_GET | ERROR_PRINT) ? -1 : st.i);
 }
+/*
+**
+**
+**
+*/

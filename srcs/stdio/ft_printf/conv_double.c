@@ -26,7 +26,7 @@ static void	print_exponent(t_pf *st)
 	}
 }
 
-void		asign_double(t_pf *st)
+static void	asign_double(t_pf *st)
 {
 	int max;
 

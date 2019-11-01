@@ -28,6 +28,8 @@
 #ifdef __linux__
 # include <inttypes.h>
 #endif
+# define TRUE 1
+# define FALSE 0
 
 typedef char			t_bool;
 typedef unsigned char	t_muint;

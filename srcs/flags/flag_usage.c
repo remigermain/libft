@@ -13,6 +13,7 @@
 
 #include "libft.h"
 
+
 static t_reg_list *usage_option(t_reg_list *lst)
 {
 	ft_dprintf(2, "\t\t");
@@ -33,7 +34,7 @@ static t_reg_list *usage_option(t_reg_list *lst)
 			ft_dprintf(2, " min: %d ", ft_atoi(lst->str));
 		else if (!ft_strcmp(lst->token, "opt_max"))
 			ft_dprintf(2, " max: %d ", ft_atoi(lst->str));
-		else if (!ft_strcmp(lst->token, "opt_ex"))
+		else if (!ft_strcmp(lst->token, "opt_eq"))
 			ft_dprintf(2, " euqual: %d ", ft_atoi(lst->str));
 		else if (!ft_strcmp(lst->token, "opt_pattern"))
 			ft_dprintf(2, " pattern: %s ", lst->str);

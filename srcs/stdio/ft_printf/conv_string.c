@@ -59,7 +59,7 @@ static void		comv_wstr(t_pf *st, wchar_t *wstr, int max)
 		put_buff(st, &((unsigned char*)wstr)[i++], 1, NO_FREE);
 }
 
-void			pf_string(t_pf *st, unsigned char *str)
+static void		pf_string(t_pf *st, unsigned char *str)
 {
 	size_t	max;
 

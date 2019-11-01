@@ -23,7 +23,7 @@ static void	conv_boucle_char(t_pf *st)
 		return ;
 	if (st->op.field < 0)
 		st->op.field = -st->op.field;
-	if (!(tmp = (char*)malloc(st->op.field + 1)))
+	if (!(tmp = (char*)ft_memalloc(st->op.field + 1)))
 		ftprintf_error(st, "comv_boucle_char", 1);
 	ft_memset(tmp, c, st->op.field);
 	tmp[st->op.field] = 0;

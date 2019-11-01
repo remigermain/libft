@@ -15,7 +15,7 @@
 /*
 **-------------------------------------------------------
 **		verifi le nombre de match (i) et les donner du quantifier
-**		QUAN_EX n doit etre egal a i
+**		QUAN_EQ n doit etre egal a i
 **		QUAN_MIN n doit superieur ou egale a i
 **		QUAN_MAX m doit etre inferieur ou egale a i
 **		QUAN_OR i doit etre egale a n ou m
@@ -25,7 +25,7 @@
 
 t_bool		verif_quantifier(t_reg_quan *quan, int i)
 {
-	if ((quan->isset & QUAN_EX) && quan->n != i)
+	if ((quan->isset & QUAN_EQ) && quan->n != i)
 		return (FALSE);
 	else if ((quan->isset & QUAN_MIN) && quan->n > i)
 		return (FALSE);
@@ -47,7 +47,7 @@ t_bool		verif_quantifier(t_reg_quan *quan, int i)
 
 t_bool verif_quantifier_max(t_reg_quan *quan, int i)
 {
-	if ((quan->isset & QUAN_EX) && quan->n >= i)
+	if ((quan->isset & QUAN_EQ) && quan->n >= i)
 		return (FALSE);
 	else if ((quan->isset & QUAN_MAX) && quan->m >= i)
 		return (FALSE);

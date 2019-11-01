@@ -17,7 +17,6 @@ int	ft_getchar(void)
 {
 	int	c;
 
-	c = 0;
 	read(1, &c, 1);
 	return (c);
 }

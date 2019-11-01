@@ -22,7 +22,8 @@ static t_list	*ft_find_fd(t_list **list, int fd)
 		list_temp = list_temp->next;
 	if (list_temp == NULL)
 	{
-		list_temp = ft_lstnew(NULL, 0);
+		if (!(list_temp = ft_lstnew(NULL, 0)))
+			return (NULL);
 		list_temp->content_size = (size_t)fd;
 		ft_lstadd(list, list_temp);
 	}
@@ -45,7 +46,11 @@ static int		ft_read_fd(int fd, t_list *list)
 			list->content = ft_strdup(buff);
 		else
 		{
-			temp = ft_strjoin(list->content, buff);
+			if (!(temp = ft_strjoin(list->content, buff)))
+			{
+				free(buff);				
+				return (-1);
+			}
 			ft_memdel(&list->content);
 			list->content = temp;
 		}
@@ -74,10 +79,13 @@ int				get_next_line(const int fd, char **line)
 	ret = 1;
 	if (fd < 0 || line == NULL || (read(fd, NULL, 0) < 0))
 		return (-1);
-	list = ft_find_fd(&p_list, fd);
+	if (!(list = ft_find_fd(&p_list, fd)))
+		return (-1);
 	while (((!list->content || (ft_strchr(list->content, '\n') == NULL))
 			&& ret > 0))
 		ret = ft_read_fd(fd, list);
+	if (ret == -1)
+		return (-1);
 	*line = ft_strcpychr(list->content, '\n');
 	if (*line == NULL || (ret < BUFF_SIZE && ft_strlen(list->content) == 0))
 		return (free_lst(list));

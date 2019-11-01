@@ -13,28 +13,18 @@
 
 #include "libft.h"
 
-void	ft_itoabase_buffer(char *buff, int nb2, int base)
+void	ft_itoabase_buffer(char *buff, int nb, int base)
 {
-	long	nb;
 	int		len;
-	int		min;
+	long	n;
 
-	nb = (long)nb2;
-	min = 0;
-	len = ft_intlen_base(nb, base);
-	buff[len] = 0;
-	if (nb2 < 0)
-	{
-		nb2 = -nb2;
-		if (base == 10)
-		{
-			min = 1;
-			buff[0] = '-';
-		}
-	}
+	n = (long)ABS(nb);
+	len = ft_intlen_base(n, base);
+	if (nb < 0 && base == 10)
+		*buff++ = '-';
 	while (len)
 	{
-		buff[min + --len] = nb % base + '0';
-		nb /= base;
+		buff[--len] = n % base + (n % base < 10 ? 48 : 55);
+		n /= base;
 	}
 }

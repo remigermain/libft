@@ -96,7 +96,7 @@ void	put_prefix(t_pf *st, int len, int nb, t_bool point)
 		return ;
 	if ((llen + st->buff_count) >= BUFF_PRINTF)
 	{
-		if (!(tmp = (t_uchar*)malloc(llen + 1)))
+		if (!(tmp = (t_uchar*)ft_memalloc(llen + 1)))
 			ftprintf_error(st, "put_prefix", 1);
 		ft_memset(tmp, (point ? '0' : ' '), llen);
 		put_buff(st, tmp, llen, 1);

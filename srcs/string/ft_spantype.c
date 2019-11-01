@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_spanchar.c                                      :+:      :+:    :+:   */
+/*   ft_spantype.c                                       :+:      :+:    :+:*/
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:19:09 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/10 17:15:37 by rgermain         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:15:52 by rgermain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "libft.h"
 
-int	ft_spanchar(const char *flag, const char *str)
+int	ft_spantype(const char *str, t_bool (*func)(int))
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (flag[i] && !ft_strchr(str, flag[i]) && !ft_isspace(flag[i]))
+	while (str[i] && func(str[i]))
 		i++;
 	return (i);
 }

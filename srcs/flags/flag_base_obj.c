@@ -21,7 +21,6 @@ t_flags_inf	*flags_av_struct(void)
 	if (pass == FALSE)
 	{
 		ft_bzero(&st, sizeof(t_flags_inf));
-		ft_bzero(&(st.av), sizeof(t_flagav) * MAX_ARG);
 		pass = TRUE;
 	}
 
