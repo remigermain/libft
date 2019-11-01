@@ -50,10 +50,31 @@ static void	regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 **-------------------------------------------------------
 */
 
+static int	regex_is_type_hexa(char alpha[128], const char *reg)
+{
+	const char *mem;
+	int			base;
+
+	mem = reg;
+	if (ft_strchr("Xx", *reg))
+		base = HEX;
+	else if (ft_strchr("Oo", *reg))
+		base = OCTAL;
+	else if (ft_strchr("Bb", *reg))
+		base = BIN;
+	else
+		base = DEC;
+	alpha[ft_atoi_base(++reg, base) % 128] = SET;
+	reg += ft_spantype(reg, ft_isxdigit);
+	return (reg - mem + (*reg == ';' ? 1 : 0));
+}
+
 int			regex_is_metatype(t_regex *st, char alpha[128], const char *reg)
 {
 	t_bool	is_meta;
+	int		len;
 
+	len = 1;
 	is_meta = is_metachar(st, reg) ? FALSE : TRUE;
 	if (is_meta && (*reg == 'w' || *reg == 'W'))
 		regex_is_type_made(alpha, ft_isword, UPPER(*reg) ? UNSET : SET);
@@ -71,9 +92,11 @@ int			regex_is_metatype(t_regex *st, char alpha[128], const char *reg)
 		alpha[(int)('\r')] = SET;
 	else if (is_meta && *reg == 'e')
 		alpha[(int)('\e')] = SET;
+	else if (is_meta && ft_strchr(REG_ASCII_TYPE, *reg))
+		len = regex_is_type_hexa(alpha, reg);
 	else
 		alpha[(int)(*reg)] = SET;
-	return (1);
+	return (len);
 }
 
 static int	regex_is_type2(char alpha[128], const char *reg, int i)

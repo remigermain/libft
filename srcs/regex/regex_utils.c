@@ -75,3 +75,12 @@ void	regex_alpha_debug(char *func, char alpha[128])
 		ft_dprintf(2, "%d", alpha[i]);
 	ft_dprintf(2, "\n");
 }
+
+void	ft_regex_error(t_regex *st)
+{
+	if (st->match == 0 && st->error == 0)
+	{
+		error_line_pos("error parsing", 76, st->error_pos);
+		error_line_e(st->s1, st->error_pos);
+	}
+}

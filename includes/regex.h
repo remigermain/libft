@@ -15,6 +15,7 @@
 # define REGEX_H
 # include "libft.h"
 # define QUANTIFIER "{*+?"
+# define REG_ASCII_TYPE "XxOoBb"
 # define ERROR_REGEX -1
 # define REGEX_TYPE "wWdDsSpPnret"
 # define LAZY_QUAN(encl) (encl->quan.isset & QUAN_LAZY ? TRUE : FALSE)
@@ -180,5 +181,6 @@ void			regex_alpha_debug(char *func, char alpha[128]);
 void			regex_put_arg(t_regex *st, const char *base, int len,
 																	char *token);
 void			ft_regex_free(t_regex *st);
+void			ft_regex_error(t_regex *st);
 
 #endif

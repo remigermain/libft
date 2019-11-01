@@ -33,20 +33,26 @@
 **-------------------------------------------------------
 */
 
-static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
+static t_bool	regex_parse_2(t_regex *st, const char *s1, const char *reg)
 {
 	char	alpha[128];
+	int		len;
 
-	if (REGEX_DEBUG)
-		ft_dprintf(2, "[regex_same_char]\n[s1][%s]\n[reg][%s]\n", s1, reg);
+	if (is_delimiter(st, reg, "$") && *(reg + 1) == '\0')
+	{
+		if (*s1 == '\0' && (++st->match))
+			return (TRUE);
+		return (FALSE);
+	}
 	if (*s1)
 	{
 		ft_bzero(alpha, sizeof(char) * 128);
-		regex_is_metatype(st, alpha, reg);
+		ft_printf("REG == >>%s<<  >>%s<<\n", reg, reg);
+		len = regex_is_metatype(st, alpha, reg);
 		if (REGEX_DEBUG)
 			regex_alpha_debug("regex_same_char", alpha);
 		if ((is_delimiter(st, reg, ".") || alpha[(int)(*s1)] == 1))
-			return (regex_parse(st, ++s1, ++reg));
+			return (regex_parse(st, ++s1, reg + len));
 	}
 	return (FALSE);
 }
@@ -60,8 +66,8 @@ static t_bool	regex_same_char(t_regex *st, const char *s1, const char *reg)
 
 t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 {
-	if (REGEX_DEBUG)
-		ft_dprintf(2, "[regex_parse]\n[s1][%s]\n[reg][%s]\n", s1, reg);
+	int	span;
+
 	if (s1 > st->last_error)
 		st->last_error = s1;
 	st->last_s1 = s1;
@@ -77,15 +83,16 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 		return (regex_class(st, s1, ++reg));
 	if (is_delimiter(st, reg, "("))
 		return (regex_enclosed(st, s1, ++reg));
-	if (is_delimiter(st, reg + 1, QUANTIFIER))
-		return (regex_quantifier(st, s1, reg));
-	if (is_delimiter(st, reg, "$") && *(reg + 1) == '\0')
+	if (!is_delimiter(st, reg, REG_ASCII_TYPE))
 	{
-		if (*s1 == '\0' && (++st->match))
-			return (TRUE);
-		return (FALSE);
+		span = ft_spantype(reg + 1, ft_isxdigit) + 1;
+		if (*(reg + span) == ';' && 
+				is_delimiter(st, reg + span + 1, QUANTIFIER))
+			return (regex_quantifier(st, s1, reg));
 	}
-	return (regex_same_char(st, s1, reg));
+	else if (is_delimiter(st, reg + 1, QUANTIFIER))
+		return (regex_quantifier(st, s1, reg));
+	return (regex_parse_2(st, s1, reg));
 }
 
 /*
