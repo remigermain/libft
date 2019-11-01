@@ -35,9 +35,9 @@ static int type_all(t_flag *st, t_finfo *it,
 
 static void	check_av_option(t_flag *st, t_finfo *it)
 {
-	static char *type[MAX_TYPE_AV] = {"int", "char*", "char", "uint", "size_t"};
+	static char *type[MAX_TYPE_AV] = {"int", "string", "char", "uint", "file"};
 	static t_bool (*func[MAX_TYPE_AV])(t_flag * st, t_finfo *, enum e_type) =
-	{check_int, check_string, check_char, check_uint, check_uint};
+	{check_int, check_string, check_char, check_uint, check_file};
 	int i;
 
 	if ((st->i + st->add) < st->argc)

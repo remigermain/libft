@@ -81,3 +81,30 @@ t_bool	check_int(t_flag *st, t_finfo *it, enum e_type mod)
 		add_flags_av(it->mfl, it->sfl, (void *)&nb, INT);
 	return (TRUE);
 }
+
+# include <fcntl.h>
+t_bool check_file(t_flag *st, t_finfo *it, enum e_type mod)
+{
+	int fd;
+	int len;
+
+	len = ft_strlen(it->av);
+	if (mod == CHECK)
+	{
+		fd = open(it->av, O_RDONLY);
+		close(fd);
+		if (fd == -1)
+			return (wrong_type(st, "c'ant open file"));
+	}
+	else if (mod == MAX && it->max < len)
+		it->error = func_lenght(st, "File lenght c'ant be upper than %d", it->max);
+	else if (mod == MIN && it->min > len)
+		it->error = func_lenght(st, "File lenght c'ant be less than %d", it->min);
+	else if (mod == EQ && it->eq != len)
+		it->error = func_lenght(st, "File lenght need to be equal than %d", it->eq);
+	else if (mod == PATTERN)
+		func_pattern(st, it);
+	else if (mod == ADD)
+		add_flags_av(it->mfl, it->sfl, (void *)it->av, STRING);
+	return (TRUE);
+}

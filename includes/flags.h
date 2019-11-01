@@ -18,10 +18,11 @@
 # define MAX_FLAGS 127
 # define MAX_ARG 30
 # define MAX_ERROR 30
-#define FLAG_AV NULL
+# define NO_FLAG NULL
 # define MAX_TYPE_AV 5
 # define AV_ADD_NUM(nb, it_num, isset, mod) (*it_num = nb, *isset |= mod)
 # define AV_ADD_PATTERN(str, pat, isset, mod) (pat = str, *isset |= mod)
+# define AV_ERROR(mod) (cout_error_argv(mod))
 
 #define REGEX_ARGV_PARSE "^(\\s*(?<mflags>[\\w\\-]*)\\s*,\\s*\
 (?<sflag>[\\w\\-]?)\\s*(\\(\\s*((?<type>[a-zA-Z*_]+)\\s*\
@@ -139,9 +140,10 @@ typedef struct	s_flag
 {
 	t_regex			reg;
 	t_finfo			it;
+	char			**argv;
 	char			*mflag;
 	char			*flag;
-	char			**argv;
+	const char		*usage;
 	int				argc;
 	int				i;
 	int				j;
@@ -176,7 +178,7 @@ void			flag_free();
 **          ft_parse_argv.c
 **-----------------------------------------------------------
 */
-int				flag_init(char **argv, char *flag,  enum e_flags mod);
+int				flag_init(char **argv, char *flag,  char *usage, enum e_flags mod);
 
 /*
 **-----------------------------------------------------------
@@ -200,7 +202,7 @@ void			error_line_e(const char *str, int pos);
 **          ft_error_flags.c
 **-----------------------------------------------------------
 */
-int				cout_error_argv(enum e_error_flag mod);
+int				AV_ERROR(enum e_error_flag mod);
 int				not_match(t_flag *st, char *str, char *match);
 int				wrong_type(t_flag *st, char *type);
 int				error_argv(t_flag *st, char *str, int i, int j);
@@ -214,6 +216,8 @@ t_bool			check_int(t_flag *st, t_finfo *it, enum e_type mod);
 t_bool			check_uint(t_flag *st, t_finfo *it, enum e_type mod);
 t_bool			check_string(t_flag *st, t_finfo *i, enum e_type mod);
 t_bool			check_char(t_flag *st, t_finfo *it, enum e_type mod);
+t_bool			check_file(t_flag *st, t_finfo *it, enum e_type mod);
+
 
 int				func_lenght(t_flag *st, char *str, int nb);
 void			func_pattern(t_flag *st, t_finfo *it);

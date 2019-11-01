@@ -13,7 +13,7 @@
 
 #include "libft.h"
 
-int	cout_error_argv(enum e_error_flag mod)
+int	AV_ERROR(enum e_error_flag mod)
 {
 	static int	error = 0;
 
@@ -34,12 +34,12 @@ int	wrong_type(t_flag *st, char *type)
 	ft_dprintf(2, T_RED"error: "T_LGREY"Wrong argument type, need "\
 				"%s.\n"T_WHITE, type);
 	ft_error_argv(st->argv, st->i + st->add, 0);
-	return (cout_error_argv(ERROR_SET));
+	return (AV_ERROR(ERROR_SET));
 }
 
 int	error_argv(t_flag *st, char *str, int i, int j)
 {
 	error_line(str);
 	ft_error_argv(st->argv, i, j);
-	return (cout_error_argv(ERROR_SET));
+	return (AV_ERROR(ERROR_SET));
 }

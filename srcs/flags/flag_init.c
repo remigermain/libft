@@ -57,13 +57,22 @@ static t_bool find_sflags(t_flag *st, int sfl)
 
 static t_bool	call_flags(t_flag *st)
 {
-	st->j = 0;
-	while (st->argv[st->i][++st->j] && cout_error_argv(ERROR_GET) <= MAX_ERROR)
+	st->add = 1;
+	if (st->argv[st->i][0] == '-')
 	{
-		if (st->argv[st->i][1] == '-')
-			return (find_mflags(st, st->argv[st->i] + 2));
-		else
-			find_sflags(st, st->argv[st->i][st->j]);
+		st->j = 0;
+		while (st->argv[st->i][++st->j] && AV_ERROR(ERROR_GET) <= MAX_ERROR)
+		{
+			if (st->argv[st->i][1] == '-')
+				return (find_mflags(st, st->argv[st->i] + 2));
+			else
+				find_sflags(st, st->argv[st->i][st->j]);
+		}
+	}
+	else if (!add_flags_av(NO_FLAG, NO_FLAG, (void *)st->argv[st->i], STRING))
+	{
+		ft_regex_free(&(st->reg));
+		return (FALSE);
 	}
 	return (TRUE);
 }
@@ -87,31 +96,33 @@ static t_bool	call_flags(t_flag *st)
 **		animation;a|  --animation is same as -a
 */
 
-int			flag_init(char **argv, char *flag, enum e_flags mod)
+static	t_bool	flag_mod(t_flag *st)
+{
+	if ((st->argv[st->i][0] != '-' && st->mod == F_STOP) ||
+			!ft_strcmp("--", st->argv[st->i]))
+		return (FALSE);
+	return (TRUE);
+}
+
+int			flag_init(char **argv, char *flag, char *usage, enum e_flags mod)
 {
 	t_flag	st;
 
 	st.i = 1;
+	st.mod = mod;
 	st.argv = argv;
+	st.usage = usage;
 	st.argc = ft_maxlen_tab(argv, TAB_LENGHT);
 	ft_regex_exec(&(st.reg), flag, REGEX_ARGV_PARSE);
-	while (st.argv[st.i] && cout_error_argv(ERROR_GET) <= MAX_ERROR)
+	while (st.argv[st.i] && AV_ERROR(ERROR_GET) <= MAX_ERROR && flag_mod(&st))
 	{
-		if ((st.argv[st.i][0] != '-' && mod == F_STOP) ||
-				!ft_strcmp("--", st.argv[st.i]))
-			break ;
-		st.add = 1;
-		if (st.argv[st.i][0] == '-')
-			call_flags(&st);
-		else if (!add_flags_av(FLAG_AV, FLAG_AV, (void*)st.argv[st.i], STRING))
-		{
-			ft_regex_free(&(st.reg));
+		if (!call_flags(&st))
 			return (error_argv(&st, "To many arguments", st.i + st.add, 0));
-		}
 		st.i += st.add;
 	}
-	while (st.argv[st.i])
-		add_flags_av(FLAG_AV, FLAG_AV, (void*)st.argv[st.i++], STRING);
+	while (st.argv[st.i] &&
+			add_flags_av(NO_FLAG, NO_FLAG, (void*)st.argv[st.i], STRING))
+		st.i++;
 	ft_regex_free(&(st.reg));
-	return (cout_error_argv(ERROR_GET | ERROR_PRINT) ? -1 : st.i);
+	return (AV_ERROR(ERROR_GET | ERROR_PRINT) ? -1 : st.i);
 }

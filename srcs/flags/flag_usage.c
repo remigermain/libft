@@ -18,12 +18,14 @@ static t_reg_list *usage_option(t_reg_list *lst)
 	ft_dprintf(2, "\t\t");
 	if (!ft_strcmp(lst->str, "int"))
 		ft_dprintf(2, "< number ");
-	else if (!ft_strcmp(lst->str, "char*"))
+	else if (!ft_strcmp(lst->str, "string"))
 		ft_dprintf(2, "< string ");
 	else if (!ft_strcmp(lst->str, "char"))
 	    ft_dprintf(2, "< character ");
-	else if (!ft_strcmp(lst->str, "size_t"))
+	else if (!ft_strcmp(lst->str, "uint"))
 		ft_dprintf(2, "< unsigned number ");
+	else if (!ft_strcmp(lst->str, "file"))
+		ft_dprintf(2, "< file ");
 	lst = lst->next;
 	while (lst && !ft_strncmp(lst->token, "opt_", 4))
 	{
@@ -59,33 +61,46 @@ t_reg_list *usage_name(t_reg_list *lst)
 	return (lst);
 }
 
+static t_reg_list	*usage_set_unset(t_reg_list *lst, char *str, char *mode)
+{
+	t_bool	isset;
+
+	isset = FALSE;
+	ft_dprintf(2, "\t\t<Flags %s :", str);
+	while (lst && lst->token && !ft_strcmp(lst->token, mode))
+	{
+		if (isset)
+			ft_dprintf(2, ",");
+		ft_dprintf(2, " %s", lst->str);
+		lst = lst->next;
+		isset = TRUE;
+	}
+	ft_dprintf(2, " >\n");
+	return (lst);
+}
+
 static t_reg_list *usage_flag(t_reg_list *lst, t_reg_list *text)
 {
+	t_bool	isset;
+
+	isset = FALSE;
 	lst = usage_name(lst);
 	ft_dprintf(2, "\t\t%s.\n", text ? text->str : "No Description");
 	while (lst && !(lst->token && !ft_strcmp(lst->token, "separator")))
 	{
 		if (!ft_strcmp(lst->token, "type"))
 			lst = usage_option(lst);
+		else if (lst->token && !ft_strcmp(lst->token, "set"))
+			lst = usage_set_unset(lst, "Enable", "set");
+		else if (lst->token && !ft_strcmp(lst->token, "unset"))
+			lst = usage_set_unset(lst, "Disable", "unset");
 		else
-		{
-			if (lst->token && !ft_strcmp(lst->token, "set"))
-				(void)lst;
-			else if (lst->token && !ft_strcmp(lst->token, "unset"))
-				(void)lst;
 			lst = lst->next;
-		}
+		isset = TRUE;
 	}
+	if (lst && lst->next && isset)
+		ft_dprintf(2, "\n");
 	return (lst);
-}
-
-char   *usage_init(char *str)
-{
-    static char *text = NULL;
-
-    if (!text)
-        text = str;
-    return (text);
 }
 
 void        print_usage(t_flag *st)
@@ -93,10 +108,8 @@ void        print_usage(t_flag *st)
 	t_regex		reg;
 	t_reg_list	*lst;
 	t_reg_list	*text;
-	char		*str;
 
-	str = usage_init(NULL);
-	if (ft_regex_exec(&reg, str, REGEX_ARGV_USAGE) > 0)
+	if (ft_regex_exec(&reg, st->usage, REGEX_ARGV_USAGE) > 0)
 	{
 		lst = st->reg.capt;
 		text = reg.capt;

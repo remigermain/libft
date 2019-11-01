@@ -19,10 +19,10 @@ void	func_pattern(t_flag *st, t_finfo *it)
 
 	if (ft_regex_exec(&reg, it->av, it->pattern) == 0)
 	{
-		ft_dprintf(2, T_RED"error: "T_LGREY"The string need to be \"%s\""\
-			".\n"T_WHITE, it->pattern);
+		ft_dprintf(2, T_RED"error: "T_LGREY"The %s need to be \"%s\""\
+			".\n"T_WHITE, it->type, it->pattern);
 		ft_error_argv(st->argv, st->i + st->add, 0);
-		it->error = cout_error_argv(ERROR_SET);
+		it->error = AV_ERROR(ERROR_SET);
 	}
 	ft_regex_free(&reg);
 }
