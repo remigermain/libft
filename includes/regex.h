@@ -21,9 +21,6 @@
 # define LAZY_QUAN(encl) (encl->quan.isset & QUAN_LAZY ? TRUE : FALSE)
 # define UPPER(c) (ft_isuppercase(c))
 # define LOWER(c) (ft_isuppercase(c))
-# ifndef REGEX_DEBUG
-# 	define REGEX_DEBUG FALSE
-# endif
 
 enum	e_regex_quan
 {

@@ -49,8 +49,6 @@ static t_bool	regex_parse_2(t_regex *st, const char *s1, const char *reg)
 		ft_bzero(alpha, sizeof(char) * 128);
 		ft_printf("REG == >>%s<<  >>%s<<\n", reg, reg);
 		len = regex_is_metatype(st, alpha, reg);
-		if (REGEX_DEBUG)
-			regex_alpha_debug("regex_same_char", alpha);
 		if ((is_delimiter(st, reg, ".") || alpha[(int)(*s1)] == 1))
 			return (regex_parse(st, ++s1, reg + len));
 	}
@@ -160,8 +158,6 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 {
 	int i;
 
-	if (REGEX_DEBUG)
-		ft_dprintf(2, "[DEBUG]\n[s1][%s]\n[reg][%s]\n", s1, reg);
 	ft_bzero(st, sizeof(*st));
 	st->s1 = s1;
 	st->len_s1 = ft_strlen(s1);

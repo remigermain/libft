@@ -125,8 +125,6 @@ t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
 	t_reg_encl 	encl;
 	t_bool		ret;
 
-	if (REGEX_DEBUG)
-		ft_dprintf(2, "[regex_enclosed]\n[s1][%s]\n[reg][%s]\n", s1, reg);
 	ft_bzero(&encl, sizeof(t_reg_encl));
 	reg += regex_enclosed_flags(st, &encl, reg);
 	encl.len += regex_span_enclose(st, reg);
