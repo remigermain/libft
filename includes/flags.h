@@ -6,14 +6,14 @@
 /*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/20 16:16:41 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/02 19:16:32 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 19:38:29 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #ifndef FLAGS_H
-# include "regex.h"
 # define FLAGS_H
+# include "regex.h"
 # define FSPACE 1
 # define MAX_FLAGS 127
 # define MAX_ARG 30
@@ -29,15 +29,20 @@
 **
 **-----------------------------------------------------------
 */
-# define REGEX_ARGV_PARSE "^(\\s*(?<mflags>[\\w\\-]*)\\s*,\\s*\
-(?<sflag>[\\w\\-]?)\\s*(\\(\\s*((?<type>[a-zA-Z*_]+)\\s*\
-((\\{\\s*((?<opt_min>[\\d]*)\\s*,\\s*(?<opt_max>[\\d]*)\\s*\
-(\\s*,\\s*\"(?<opt_pattern>[^\"]+)\"\\s*)?|\\s*(?<opt_eq>[\\d]*)\\s*)\\s*\\})?\
-\\s*,\\s*)?)*\\s*\\))?\\s*(;\\s*((?<set>[\\w\\-]*)\\s*,\\s*)*\\s*;\\s*\
-((?<unset>[\\w\\-]*)\\s*,\\s*)*\\s*;)?\\s*(?<separator>\\|))*$"
+# define REG_1 "^(\\s*(?<mflags>[\\w\\-]*)\\s*,\\s*"
+# define REG_2 "(?<sflag>[\\w\\-]?)\\s*(\\(\\s*((?<type>[a-zA-Z*_]+)\\s*"
+# define REG_3 "((\\{\\s*((?<opt_min>[\\d]*)\\s*,\\s*(?<opt_max>[\\d]*)\\s*"
+# define REG_4 "(\\s*,\\s*\"(?<opt_pattern>[^\"]+)\"\\s*)?|\\s*"
+# define REG_5 "(?<opt_eq>[\\d]*)\\s*)\\s*\\})?"
+# define REG_6 "\\s*,\\s*)?)*\\s*\\))?\\s*(;\\s*((?<set>[\\w\\-]*)\\s*,\\s*)"
+# define REG_7 "*\\s*;\\s*"
+# define REG_8 "((?<unset>[\\w\\-]*)\\s*,\\s*)*\\s*;)?\\s*(?<separator>\\|))*$"
 
-# define REGEX_ARGV_USAGE "^\\s*\"(?<usage_type>[^\"]+)\"\\s*(?<separator>\\|)\
-(\\s*\"(?<text>[^\"]+)\\\"\\s*(?<separator>\\|))*$"
+# define REGEX_ARGV_PARSE REG_1 REG_2 REG_3 REG_4 REG_5 REG_6 REG_7 REG_8
+
+# define USAGE_1 "^\\s*\"(?<usage_type>[^\"]+)\"\\s*(?<separator>\\|)"
+# define USAGE_2 "(\\s*\"(?<text>[^\"]+)\\\"\\s*(?<separator>\\|))*$"
+# define REGEX_ARGV_USAGE USAGE_1 USAGE_2
 
 /*
 **-----------------------------------------------------------

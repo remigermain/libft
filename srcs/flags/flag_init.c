@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/20 16:19:09 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/02 18:56:27 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 19:27:37 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,7 +80,7 @@ static t_bool	call_flags(t_flag *st)
 static t_bool	flag_mod(t_flag *st)
 {
 	if ((st->argv[st->i][0] != '-' && st->mod & F_NOF) ||
-			!ft_strcmp("--", st->argv[st->i]) && st->mod & F_STOP)
+			(!ft_strcmp("--", st->argv[st->i]) && st->mod & F_STOP))
 		return (FALSE);
 	return (TRUE);
 }

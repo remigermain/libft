@@ -1,15 +1,15 @@
 # **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/10/01 15:39:03 by rgermain          #+#    #+#              #
-#    Updated: 2019/11/02 17:47:41 by rgermain         ###   ########.fr        #
-#                                                                              #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2018/10/01 15:39:03 by rgermain     #+#   ##    ##    #+#        #
+#    Updated: 2019/11/02 19:39:12 by rgermain    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
 # **************************************************************************** #
-
 
 NAME = libft.a
 TYPE := "library"
@@ -183,7 +183,7 @@ $(NAME): $(COBJ)
 	@ar ru $(NAME) $? > /dev/null 2>&1
 	@printf $(SPACE)"Opimisation library with $(BLUE)ranlib$(WHITE)"$(SPACE)$(SPACE)
 	@printf "\n\n"
-	#@ranlib $(NAME)
+	@ranlib $(NAME)
 
 $(DOBJ)%.o : $(DSRC)%.c $(CHEADER)
 	@$(eval COUNT = "FALSE")

@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:47:12 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/02 19:01:37 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 19:28:17 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -130,8 +130,6 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg);
 **          regex_enclosed.c
 **-------------------------------------------------------
 */
-t_bool			regex_enclose_parse(t_regex *st, t_reg_encl *encl,
-								const char *s1, const char *reg);
 t_bool			regex_enclosed(t_regex *st, const char *s1, const char *reg);
 
 /*
