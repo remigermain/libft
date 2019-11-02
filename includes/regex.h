@@ -17,6 +17,7 @@
 # define QUANTIFIER "{*+?"
 # define REG_ASCII_TYPE "XxOoBb"
 # define ERROR_REGEX -1
+# define REGEX_ALPHA 128
 # define REGEX_TYPE "wWdDsSpPnret"
 # define LAZY_QUAN(encl) (encl->quan.isset & QUAN_LAZY ? TRUE : FALSE)
 # define UPPER(c) (ft_isuppercase(c))
@@ -50,7 +51,7 @@ typedef struct	s_regex_class
 {
 	t_reg_quan	quantifier;
 	t_bool		is_not;
-	char		alpha[128];
+	char		alpha[REGEX_ALPHA];
 }				t_reg_class;
 
 typedef struct	s_regex_enclose
@@ -157,8 +158,8 @@ int				regex_span_class(t_regex *st, const char *reg);
 **          regex_class_methode.c
 **-------------------------------------------------------
 */
-int				regex_is_metatype(t_regex *st, char alph[128], const char *reg);
-int				regex_is_type(char alpha[128], const char *reg);
+int				regex_is_metatype(t_regex *st, char alph[REGEX_ALPHA], const char *reg);
+int				regex_is_type(char alpha[REGEX_ALPHA], const char *reg);
 
 /*
 **-------------------------------------------------------
@@ -174,7 +175,7 @@ t_bool			is_delimiter(t_regex *st, const char *reg, char *delimiter);
 **-------------------------------------------------------
 */
 void			ft_regex_print(t_regex *st);
-void			regex_alpha_debug(char *func, char alpha[128]);
+void			regex_alpha_debug(char *func, char alpha[REGEX_ALPHA]);
 void			regex_put_arg(t_regex *st, const char *base, int len,
 																	char *token);
 void			ft_regex_free(t_regex *st);

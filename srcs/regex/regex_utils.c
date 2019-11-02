@@ -65,13 +65,13 @@ void		ft_regex_print(t_regex *st)
     }
 }
 
-void	regex_alpha_debug(char *func, char alpha[128])
+void	regex_alpha_debug(char *func, char alpha[REGEX_ALPHA])
 {
 	int i;
 
 	i = -1;
 	ft_dprintf(2, "[%s]", func);
-	while (++i < 128)
+	while (++i < REGEX_ALPHA)
 		ft_dprintf(2, "%d", alpha[i]);
 	ft_dprintf(2, "\n");
 }

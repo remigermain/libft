@@ -15,7 +15,7 @@
 
 /*
 **-------------------------------------------------------
-**		le alpha[128] represente un chaine de 1 et de 0
+**		le alpha[REGEX_ALPHA] represente un chaine de 1 et de 0
 **		le 1 represente le character set
 **		ex :	bonjour
 **		u = 117 en valeur ascii
@@ -35,7 +35,7 @@
 
 static t_bool	regex_parse_2(t_regex *st, const char *s1, const char *reg)
 {
-	char	alpha[128];
+	char	alpha[REGEX_ALPHA];
 	int		len;
 
 	if (is_delimiter(st, reg, "$") && *(reg + 1) == '\0')

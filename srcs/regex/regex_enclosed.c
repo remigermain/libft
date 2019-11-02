@@ -29,7 +29,7 @@ static t_bool	regex_enclose_capt(t_regex *st, t_reg_encl *encl,
 	if (encl->capture)
 	{
 		len = ft_strlen(s1) - ft_strlen(encl->mem);
-		if (len)
+		if (len > 0)
 			regex_put_arg(st, s1, len, encl->token);
 		else if (encl->token)
 			ft_strdel(&(encl->token));

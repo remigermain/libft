@@ -84,11 +84,8 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg)
 
 	i = -1;
 	ft_bzero(&class, sizeof(t_reg_class));
-	if (is_delimiter(st, reg, "^"))
-	{
-		reg++;
+	if (is_delimiter(st, reg, "^") && (++reg))
 		class.is_not = TRUE;
-	}
 	reg += regex_class_parse(st, &class, reg);
 	if (is_delimiter(st, reg, QUANTIFIER))
 		reg += regex_get_quantifier(&(class.quantifier), reg);

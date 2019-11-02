@@ -105,7 +105,7 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quan,
 **			   bonj*?our	 j*?
 **			   bon{5,99}?jour	 n{5,99}?
 **
-**		le alpha[128] represente un chaine de 1 et de 0
+**		le alpha[REGEX_ALPHA] represente un chaine de 1 et de 0
 **		le 1 represente le character set
 **		ex :	bonjou+r
 **		u = 117 en valeur ascii
@@ -122,7 +122,7 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quan,
 t_bool		regex_quantifier(t_regex *st, const char *s1, const char *reg)
 {
 	t_reg_quan	quan;
-	char		alpha[128];
+	char		alpha[REGEX_ALPHA];
 	int			len;
 	t_bool		is_any;
 

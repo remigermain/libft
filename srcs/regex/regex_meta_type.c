@@ -30,7 +30,7 @@
 **-------------------------------------------------------
 */
 
-static void	regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
+static void	regex_is_type_made(char alpha[REGEX_ALPHA], t_bool (*func)(int), int mod)
 {
 	int		i;
 
@@ -50,7 +50,7 @@ static void	regex_is_type_made(char alpha[128], t_bool (*func)(int), int mod)
 **-------------------------------------------------------
 */
 
-static int	regex_is_type_hexa(char alpha[128], const char *reg)
+static int	regex_is_type_hexa(char alpha[REGEX_ALPHA], const char *reg)
 {
 	const char *mem;
 	int			base;
@@ -69,7 +69,7 @@ static int	regex_is_type_hexa(char alpha[128], const char *reg)
 	return (reg - mem + (*reg == ';' ? 1 : 0));
 }
 
-int			regex_is_metatype(t_regex *st, char alpha[128], const char *reg)
+int			regex_is_metatype(t_regex *st, char alpha[REGEX_ALPHA], const char *reg)
 {
 	t_bool	is_meta;
 	int		len;
@@ -99,7 +99,7 @@ int			regex_is_metatype(t_regex *st, char alpha[128], const char *reg)
 	return (len);
 }
 
-static int	regex_is_type2(char alpha[128], const char *reg, int i)
+static int	regex_is_type2(char alpha[REGEX_ALPHA], const char *reg, int i)
 {
 	if (!ft_strncmp(reg, ":print:", 7) && (i = 7))
 		regex_is_type_made(alpha, ft_isprint, SET);
@@ -123,7 +123,7 @@ static int	regex_is_type2(char alpha[128], const char *reg, int i)
 **-------------------------------------------------------
 */
 
-int			regex_is_type(char alpha[128], const char *reg)
+int			regex_is_type(char alpha[REGEX_ALPHA], const char *reg)
 {
 	int i;
 

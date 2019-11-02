@@ -130,6 +130,8 @@ NULL :=
 ESC := $(shell printf '\033')
 SPACE := "                       "
 .DEFAULT_GOAL := all
+$(eval SHELL:=/bin/bash)
+
 
 #### COLOR
 RED := $(ESC)[1;31m
@@ -210,7 +212,7 @@ fclean: print_name
 re: fclean all
 
 prototype:
-	@printf "$(shell cat $(PATH) | grep '^[a-zA-Z_]*\s*[a-zA-Z]\+[[:space:]]\+[*]*[a-zA-Z][a-zA-Z0-9_]\+(.*)[[:space:]]*' | grep -v '^static')"
+	@printf "$(shell cat $(CSRC) | grep '^[a-zA-Z_]*\s*[a-zA-Z]\+[[:space:]]\+[*]*[a-zA-Z][a-zA-Z0-9_]\+(.*)[[:space:]]*' | grep -v '^static')"
 
 info: print_name
 	@printf $(SPACE)"Total functions : $(BLUE)"
