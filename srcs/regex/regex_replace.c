@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/10 18:11:55 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/10 18:11:57 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 19:03:12 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,10 +42,10 @@ int				regex_replace_len(t_regex *st, const char *s1, const char *rep,
 	return ((ft_strlen(s1) - rem) + (ft_strlen(rep) * len));
 }
 
-static void regex_replace_str(t_regex *st, char *ptr, const char *rep,
-							  						enum e_regex_replace mod)
+static void		regex_replace_str(t_regex *st, char *ptr, const char *rep,
+												enum e_regex_replace mod)
 {
-	t_reg_list *list;
+	t_reg_list	*list;
 	int			len;
 	int			i;
 

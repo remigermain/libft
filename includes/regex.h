@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   regex.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 15:47:12 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/11 19:07:03 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex.h                                          .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/06/27 15:47:12 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/02 19:01:37 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #ifndef REGEX_H
 # define REGEX_H
@@ -22,6 +22,9 @@
 # define LAZY_QUAN(encl) (encl->quan.isset & QUAN_LAZY ? TRUE : FALSE)
 # define UPPER(c) (ft_isuppercase(c))
 # define LOWER(c) (ft_isuppercase(c))
+
+# define VERIF_QUAN(encl) (verif_quan(&(encl->quan), encl->quan.match))
+# define VERIF_QUAN_MAX(encl) (verif_quan_max(&(encl->quan), encl->quan.match))
 
 enum	e_regex_quan
 {
@@ -57,8 +60,8 @@ typedef struct	s_regex_class
 typedef struct	s_regex_enclose
 {
 	t_reg_quan	quan;
-	t_bool 		ret_max;
-	t_bool 		ret;
+	t_bool		ret_max;
+	t_bool		ret;
 	t_bool		is_not;
 	t_bool		capture;
 	t_bool		is_encl;
@@ -71,7 +74,7 @@ typedef struct	s_regex_enclose
 typedef struct	s_regex_print
 {
 	size_t	str;
-	size_t 	token;
+	size_t	token;
 	size_t	level;
 	size_t	pos;
 	size_t	start;
@@ -93,16 +96,16 @@ typedef struct	s_regex_list
 typedef struct	s_regex
 {
 	t_reg_list	*capt;
-	const char 	*last_error;
+	const char	*last_error;
 	const char	*last_s1;
-	const char 	*reg;
+	const char	*reg;
 	const char	*s1;
 	size_t		match;
 	size_t		len_s1;
 	size_t		level;
 	size_t		nb_capt;
 	size_t		error_pos;
-	t_bool 		error;
+	t_bool		error;
 }				t_regex;
 
 /*
@@ -127,8 +130,8 @@ t_bool			regex_class(t_regex *st, const char *s1, const char *reg);
 **          regex_enclosed.c
 **-------------------------------------------------------
 */
-t_bool 			regex_enclose_parse(t_regex *st, t_reg_encl *encl,
-							   const char *s1, const char *reg);
+t_bool			regex_enclose_parse(t_regex *st, t_reg_encl *encl,
+								const char *s1, const char *reg);
 t_bool			regex_enclosed(t_regex *st, const char *s1, const char *reg);
 
 /*
@@ -136,11 +139,11 @@ t_bool			regex_enclosed(t_regex *st, const char *s1, const char *reg);
 **          regex_quantifier.c
 **-------------------------------------------------------
 */
-t_bool			verif_quantifier(t_reg_quan *st, int i);
-t_bool 			verif_quantifier_max(t_reg_quan *quan, int i);
-int 			regex_get_quantifier(t_reg_quan *st, const char *reg);
-t_bool			regex_quantifier_do(t_regex *st, t_reg_quan *quantifier,
-							   const char *s1, const char *reg);
+t_bool			verif_quan(t_reg_quan *st, int i);
+t_bool			verif_quan_max(t_reg_quan *quan, int i);
+int				regex_get_quantifier(t_reg_quan *st, const char *reg);
+t_bool			regex_quantifier_do(t_regex *st, t_reg_quan *quantifier,\
+									const char *s1, const char *reg);
 t_bool			regex_quantifier(t_regex *st, const char *s1, const char *reg);
 
 /*
@@ -158,7 +161,8 @@ int				regex_span_class(t_regex *st, const char *reg);
 **          regex_class_methode.c
 **-------------------------------------------------------
 */
-int				regex_is_metatype(t_regex *st, char alph[REGEX_ALPHA], const char *reg);
+int				regex_is_metatype(t_regex *st, char alph[REGEX_ALPHA],
+														const char *reg);
 int				regex_is_type(char alpha[REGEX_ALPHA], const char *reg);
 
 /*
@@ -177,7 +181,7 @@ t_bool			is_delimiter(t_regex *st, const char *reg, char *delimiter);
 void			ft_regex_print(t_regex *st);
 void			regex_alpha_debug(char *func, char alpha[REGEX_ALPHA]);
 void			regex_put_arg(t_regex *st, const char *base, int len,
-																	char *token);
+																char *token);
 void			ft_regex_free(t_regex *st);
 void			ft_regex_error(t_regex *st);
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_parse_argv.c                                  .::    .:/ .      .::   */
+/*   flag_init.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/20 16:19:09 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/20 16:26:06 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 18:56:27 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,7 @@ static t_bool	find_mflags(t_flag *st, char *mfl)
 	return (FALSE);
 }
 
-static t_bool find_sflags(t_flag *st, int sfl)
+static t_bool	find_sflags(t_flag *st, int sfl)
 {
 	t_reg_list *lst;
 	t_reg_list *head;
@@ -77,41 +77,22 @@ static t_bool	call_flags(t_flag *st)
 	return (TRUE);
 }
 
-/*
-**		usage :
-**
-**		mod :  F_STOP  stop get flag when he have other than '-'
-**
-**		alone_flag  |  flag  { type {min, max, pattern} , ....} ; set_flag ; unset_flag | ... ect
-**		type :  char*	{min, max, pattern}
-**				int		{min, max}
-**				char	{min, max, pattern}
-**				file	{min, max, pattern}
-**
-**		pattern :  name  | name | ..ect
-**		pipe is for "or"
-**		if in name as * , is match for all character like : *.cor match with  explosivekitty.cor or bazou.cor
-**
-**		mflag ; set_flag | ... ect
-**		animation;a|  --animation is same as -a
-*/
-
-static	t_bool	flag_mod(t_flag *st)
+static t_bool	flag_mod(t_flag *st)
 {
-	if ((st->argv[st->i][0] != '-' && st->mod == F_STOP) ||
-			!ft_strcmp("--", st->argv[st->i]))
+	if ((st->argv[st->i][0] != '-' && st->mod & F_NOF) ||
+			!ft_strcmp("--", st->argv[st->i]) && st->mod & F_STOP)
 		return (FALSE);
 	return (TRUE);
 }
 
-int			flag_init(char **argv, char *flag, char *usage, enum e_flags mod)
+int				flag_init(char **argv, char *flag, char *usa, enum e_flags mod)
 {
 	t_flag	st;
 
 	st.i = 1;
 	st.mod = mod;
 	st.argv = argv;
-	st.usage = usage;
+	st.usage = usa;
 	st.argc = ft_maxlen_tab(argv, TAB_LENGHT);
 	ft_regex_exec(&(st.reg), flag, REGEX_ARGV_PARSE);
 	while (st.argv[st.i] && AV_ERROR(ERROR_GET) <= MAX_ERROR && flag_mod(&st))
@@ -126,8 +107,3 @@ int			flag_init(char **argv, char *flag, char *usage, enum e_flags mod)
 	ft_regex_free(&(st.reg));
 	return (AV_ERROR(ERROR_GET | ERROR_PRINT) ? -1 : st.i);
 }
-/*
-**
-**
-**
-*/

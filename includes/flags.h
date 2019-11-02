@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   flags.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/20 16:16:41 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/03 19:21:41 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   flags.h                                          .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/07/20 16:16:41 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/02 19:16:32 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #ifndef FLAGS_H
 # include "regex.h"
@@ -29,14 +29,14 @@
 **
 **-----------------------------------------------------------
 */
-#define REGEX_ARGV_PARSE "^(\\s*(?<mflags>[\\w\\-]*)\\s*,\\s*\
+# define REGEX_ARGV_PARSE "^(\\s*(?<mflags>[\\w\\-]*)\\s*,\\s*\
 (?<sflag>[\\w\\-]?)\\s*(\\(\\s*((?<type>[a-zA-Z*_]+)\\s*\
 ((\\{\\s*((?<opt_min>[\\d]*)\\s*,\\s*(?<opt_max>[\\d]*)\\s*\
 (\\s*,\\s*\"(?<opt_pattern>[^\"]+)\"\\s*)?|\\s*(?<opt_eq>[\\d]*)\\s*)\\s*\\})?\
 \\s*,\\s*)?)*\\s*\\))?\\s*(;\\s*((?<set>[\\w\\-]*)\\s*,\\s*)*\\s*;\\s*\
 ((?<unset>[\\w\\-]*)\\s*,\\s*)*\\s*;)?\\s*(?<separator>\\|))*$"
 
-#define REGEX_ARGV_USAGE "^\\s*\"(?<usage_type>[^\"]+)\"\\s*(?<separator>\\|)\
+# define REGEX_ARGV_USAGE "^\\s*\"(?<usage_type>[^\"]+)\"\\s*(?<separator>\\|)\
 (\\s*\"(?<text>[^\"]+)\\\"\\s*(?<separator>\\|))*$"
 
 /*
@@ -44,6 +44,7 @@
 **      Macro for convert return argument
 **-----------------------------------------------------------
 */
+
 # define F_INT(ptr) ((int)*((int*)ptr))
 # define F_CHAR(ptr) ((int)*((int*)ptr))
 # define F_CHARS(ptr) ((char*)ptr)
@@ -55,10 +56,11 @@ enum	e_flags
 	F_RM = 0b011,
 	F_PRINT = 0b100,
 	F_STOP,
+	F_NOF,
 	F_USAGE,
 };
 
-enum e_option
+enum	e_option
 {
 	OP_MIN = 0b1,
 	OP_MAX = 0b10,
@@ -107,12 +109,10 @@ typedef struct	s_flagav
 	int		nb_arg;
 }				t_flagav;
 
-
-typedef struct s_flags_info
+typedef struct	s_flags_info
 {
 	t_flagav	av[MAX_ARG];
 	int			nb_flags;
-
 }				t_flags_inf;
 /*
 **-----------------------------------------------------------
@@ -162,8 +162,9 @@ typedef struct	s_flag
 **-----------------------------------------------------------
 */
 t_flags_inf		*flags_av_struct(void);
-int 			flag_getindice(t_flags_inf *st, char *mfl, char *sfl);
-t_bool			flag_add(char *mfl, char *sfl, void *value, enum e_type type);
+t_bool			flag_add(char *mfl, char *sfl, void *value,
+												enum e_type type);
+int				flag_getindice(t_flags_inf *st, char *mfl, char *sfl);
 void			print_flags(void);
 
 /*
@@ -172,8 +173,9 @@ void			print_flags(void);
 **-----------------------------------------------------------
 */
 t_bool			exist_flags(char *fl);
-t_bool 			add_flags(char *mfl, char *sfl);
-t_bool			add_flags_av(char *mfl, char *sfl, void *value, enum e_type type);
+t_bool			add_flags(char *mfl, char *sfl);
+t_bool			add_flags_av(char *mfl, char *sfl, void *value,
+													enum e_type type);
 void			remove_flags(char *fl);
 void			*get_flags_av(char *fl, int nb);
 
@@ -189,7 +191,8 @@ void			flag_free(void);
 **          	flag_init.c
 **-----------------------------------------------------------
 */
-int				flag_init(char **argv, char *flag,  char *usage, enum e_flags mod);
+int				flag_init(char **argv, char *flag, char *usage,
+											enum e_flags mod);
 
 /*
 **-----------------------------------------------------------
@@ -238,7 +241,7 @@ void			func_pattern(t_flag *st, t_finfo *it);
 
 /*
 **-----------------------------------------------------------
-**			flag_usage.c	
+**			flag_usage.c
 **-----------------------------------------------------------
 */
 void			print_usage(t_flag *st);

@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/10 18:11:02 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 19:02:48 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,8 @@
 **-------------------------------------------------------
 */
 
-static void	regex_is_type_made(char alpha[REGEX_ALPHA], t_bool (*func)(int), int mod)
+static void	regex_is_type_made(char alpha[REGEX_ALPHA],
+								t_bool (*func)(int), int mod)
 {
 	int		i;
 
@@ -52,7 +53,7 @@ static void	regex_is_type_made(char alpha[REGEX_ALPHA], t_bool (*func)(int), int
 
 static int	regex_is_type_hexa(char alpha[REGEX_ALPHA], const char *reg)
 {
-	const char *mem;
+	const char	*mem;
 	int			base;
 
 	mem = reg;
@@ -64,17 +65,16 @@ static int	regex_is_type_hexa(char alpha[REGEX_ALPHA], const char *reg)
 		base = BIN;
 	else
 		base = DEC;
-	alpha[ft_atoi_base(++reg, base) % 128] = SET;
+	alpha[ft_atoi_base(++reg, base) % REGEX_ALPHA] = SET;
 	reg += ft_spantype(reg, ft_isxdigit);
 	return (reg - mem + (*reg == ';' ? 1 : 0));
 }
 
-int			regex_is_metatype(t_regex *st, char alpha[REGEX_ALPHA], const char *reg)
+int			regex_is_metatype(t_regex *st, char alpha[REGEX_ALPHA],
+														const char *reg)
 {
 	t_bool	is_meta;
-	int		len;
 
-	len = 1;
 	is_meta = is_metachar(st, reg) ? FALSE : TRUE;
 	if (is_meta && (*reg == 'w' || *reg == 'W'))
 		regex_is_type_made(alpha, ft_isword, UPPER(*reg) ? UNSET : SET);
@@ -93,10 +93,10 @@ int			regex_is_metatype(t_regex *st, char alpha[REGEX_ALPHA], const char *reg)
 	else if (is_meta && *reg == 'e')
 		alpha[(int)('\e')] = SET;
 	else if (is_meta && ft_strchr(REG_ASCII_TYPE, *reg))
-		len = regex_is_type_hexa(alpha, reg);
+		return (regex_is_type_hexa(alpha, reg));
 	else
 		alpha[(int)(*reg)] = SET;
-	return (len);
+	return (1);
 }
 
 static int	regex_is_type2(char alpha[REGEX_ALPHA], const char *reg, int i)

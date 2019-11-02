@@ -1,13 +1,14 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   regex_quantifier.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/11 19:40:48 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex_quantifier.c                               .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/02 19:02:21 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
@@ -23,7 +24,7 @@
 **-------------------------------------------------------
 */
 
-t_bool		verif_quantifier(t_reg_quan *quan, int i)
+t_bool		verif_quan(t_reg_quan *quan, int i)
 {
 	if ((quan->isset & QUAN_EQ) && quan->n != i)
 		return (FALSE);
@@ -45,7 +46,7 @@ t_bool		verif_quantifier(t_reg_quan *quan, int i)
 **-------------------------------------------------------
 */
 
-t_bool verif_quantifier_max(t_reg_quan *quan, int i)
+t_bool		verif_quan_max(t_reg_quan *quan, int i)
 {
 	if ((quan->isset & QUAN_EQ) && quan->n >= i)
 		return (FALSE);
@@ -62,10 +63,10 @@ t_bool verif_quantifier_max(t_reg_quan *quan, int i)
 **-------------------------------------------------------
 **		LAZY
 **		si le quantifier est LAZY on commence a 0 puis
-**		on l'incremente jusqu'au nombre de fois qu'il a match 
+**		on l'incremente jusqu'au nombre de fois qu'il a match
 **										(quan->match)
 **		GREDIE
-**		si le quantifier est GREDIE on commence au 
+**		si le quantifier est GREDIE on commence au
 **		nombre de fois qu'il a match (quan->match)
 **		on le decremente jusqu'a zero
 **
@@ -84,13 +85,13 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quan,
 	i = 0;
 	while ((quan->isset & QUAN_LAZY) && i <= quan->match)
 	{
-		if (verif_quantifier(quan, i) && regex_parse(st, s1 + i, reg))
+		if (verif_quan(quan, i) && regex_parse(st, s1 + i, reg))
 			return (TRUE);
 		i++;
 	}
 	while (!(quan->isset & QUAN_LAZY) && quan->match >= 0)
 	{
-		if (verif_quantifier(quan, quan->match) &&
+		if (verif_quan(quan, quan->match) &&
 			regex_parse(st, s1 + quan->match, reg))
 			return (TRUE);
 		quan->match--;
@@ -114,8 +115,8 @@ t_bool		regex_quantifier_do(t_regex *st, t_reg_quan *quan,
 **		il fonctionnera aussi avec les metachar \d \w \D \W ...
 **		ex :	bonjour\d+
 **		\d = tout les digits donc de 0 a 9
-**		apha[48] a alpha[57] vaudra 1 
-**		car 0 = 48 et 9 = 57 , on va set tout les char de 0 a 9 
+**		apha[48] a alpha[57] vaudra 1
+**		car 0 = 48 et 9 = 57 , on va set tout les char de 0 a 9
 **-------------------------------------------------------
 */
 

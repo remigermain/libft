@@ -6,7 +6,7 @@
 #    By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/01 15:39:03 by rgermain          #+#    #+#              #
-#    Updated: 2019/10/03 19:26:40 by rgermain         ###   ########.fr        #
+#    Updated: 2019/11/02 17:47:41 by rgermain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,9 @@ ALL_D = $(D_DIVERS) $(D_IS_METHODE) $(D_MATH) $(D_MEMORY) $(D_FLAGS) $(D_LST)\
 
 DHEADER = includes/
 
-SRC =  $(CSRC_DIVERS) $(CSRC_ISMETHODE) $(CSRC_MATH) $(CSRC_LST) \
-	  $(CSRC_MEMORY) $(CSRC_PUT) $(CSRC_STRING) $(CSRC_STDIO) $(CSRC_FLAGS)\
-	  $(CSRC_BYTES) $(CSRC_REGEX)
+SRC = 	$(CSRC_MEMORY) $(CSRC_PUT) $(CSRC_STRING) $(CSRC_STDIO) $(CSRC_FLAGS) \
+		$(CSRC_DIVERS) $(CSRC_ISMETHODE) $(CSRC_MATH) $(CSRC_LST) \
+		$(CSRC_BYTES) $(CSRC_REGEX)
 
 CSRC = $(addprefix $(DSRC),$(SRC))
 COBJ = $(addprefix $(DOBJ),$(OBJ))
@@ -112,34 +112,34 @@ SRC_STRINGS =		ft_atof.c       ft_atol.c  ft_str_is_type.c ft_strclr.c     ft_st
 					ft_str_is_alpha.c      ft_str_is_uppercase.c  ft_strlcat.c     ft_strmap.c   ft_strncpy.c     ft_strnlen.c  \
 					ft_strsplit.c  ft_strtrim.c ft_atoi_base.c  ft_itoabase_buffer.c  ft_itoa.c        ft_strcapitalize.c  ft_strcmp.c     ft_strdup.c    \
 					ft_str_is_lowercase.c  ft_striter.c           ft_strlcpy.c     ft_strmapi.c  ft_strncpychr.c  ft_strnstr.c \
-					 ft_strstr.c    ft_strupcase.c ft_atoi.c       ft_itoa_base.c        ft_spantype.c        ft_strcat.c         \
-					 ft_strcpy.c     ft_strequ.c    ft_str_is_numeric.c    ft_striteri.c          ft_strlen.c      ft_strncat.c  \
-					 ft_strnequ.c     ft_strpbrk.c  ft_strsub.c    ft_strxfrm.c  ft_atol_base.c  ft_itoa_buffer.c      ft_span.c    \
-					 ft_strchr.c         ft_strcpychr.c  ft_strerror.c  ft_str_is_printable.c  ft_strjoin.c    ft_strlowcase.c  \
-					 ft_strncmp.c  ft_strnew.c      ft_strrev.c   ft_strtok.c    ft_tabdel.c ft_base_string.c ft_atof_base.c 
+					ft_strstr.c    ft_strupcase.c ft_atoi.c       ft_itoa_base.c        ft_spantype.c        ft_strcat.c         \
+					ft_strcpy.c     ft_strequ.c    ft_str_is_numeric.c    ft_striteri.c          ft_strlen.c      ft_strncat.c  \
+					ft_strnequ.c     ft_strpbrk.c  ft_strsub.c    ft_strxfrm.c  ft_atol_base.c  ft_itoa_buffer.c      ft_span.c    \
+					ft_strchr.c         ft_strcpychr.c  ft_strerror.c  ft_str_is_printable.c  ft_strjoin.c    ft_strlowcase.c  \
+					ft_strncmp.c  ft_strnew.c      ft_strrev.c   ft_strtok.c    ft_tabdel.c ft_base_string.c ft_atof_base.c 
 
 
-NUMBER_FUNCTION := "$(shell  ls -R1 $(DSRC) | grep . | grep "\.c" | wc -l)"
-NUMBER := "0"
-PROGRESS := "1"
-DIFF := "1"
+NUMBER_FUNCTION = $(shell  ls -R1 $(DSRC) | grep . | grep "\.c" | wc -l | bc)
+NUMBER = "0"
+PROGRESS = "1"
+DIFF = "1"
 MAX_PROGRESS = "50"
 COLOR_PROGRESS = "0"
-COUNT := "TRUE"
-NULL := 
-ESC := $(shell printf '\033')
-SPACE := "                       "
-.DEFAULT_GOAL := all
+COUNT = "TRUE"
+NULL = 
+ESC = $(shell printf '\033')
+SPACE = "                       "
+.DEFAULT_GOAL = all
 $(eval SHELL:=/bin/bash)
 
 
 #### COLOR
-RED := $(ESC)[1;31m
-BLUE := $(ESC)[1;34m
-LIGHT_BLUE := $(ESC)[34m
-GREEN := $(ESC)[1;32m
-WHITE := $(ESC)[0m
-WHITE := $(ESC)[0m
+RED = $(ESC)[1;31m
+BLUE = $(ESC)[1;34m
+LIGHT_BLUE = $(ESC)[32m
+GREEN = $(ESC)[1;32m
+WHITE = $(ESC)[0m
+WHITE = $(ESC)[0m
 ####
 
 #Inside actions we can use:  
@@ -176,11 +176,14 @@ all: print_name $(NAME)
 	fi
 
 $(NAME): $(COBJ)
-	@printf $(SPACE)"Compilation of objects $(GREEN)finish$(WHITE)"$(SPACE)$(SPACE)"\n"
-	@printf $(SPACE)"Compilation $(TYPE) $(BLUE) $(NAME) $(WHITE)"$(SPACE)$(SPACE)"\n"
+	@printf $(SPACE)"Compilation of objects $(GREEN)finish$(WHITE)"$(SPACE)$(SPACE)
+	@printf "\n\n\n"
+	@printf $(SPACE)"Compilation $(TYPE) $(BLUE) $(NAME) $(WHITE)"$(SPACE)$(SPACE)
+	@printf "\n"
 	@ar ru $(NAME) $? > /dev/null 2>&1
-	@printf $(SPACE)"Opimisation library with $(BLUE)ranlib$(WHITE)"$(SPACE)$(SPACE)"\n\n"
-	@ranlib $(NAME)
+	@printf $(SPACE)"Opimisation library with $(BLUE)ranlib$(WHITE)"$(SPACE)$(SPACE)
+	@printf "\n\n"
+	#@ranlib $(NAME)
 
 $(DOBJ)%.o : $(DSRC)%.c $(CHEADER)
 	@$(eval COUNT = "FALSE")
@@ -195,9 +198,11 @@ $(DOBJ)%.o : $(DSRC)%.c $(CHEADER)
 	@printf "%0.s=" {0..$(PROGRESS)}
 	@printf ">"
 	@printf "%0.s " {0..$(DIFF)}
-	@printf "]$(WHITE)\n"
-	@printf $(SPACE)"Compilation $(GREEN)$(NUMBER)$(WHITE) of $(BLUE)$(NUMBER_FUNCTION)$(WHITE)"$(SPACE)"\n"
-	@printf $(SPACE)"Compilation of function $(GREEN)$<$(WHITE)"$(SPACE)$(SPACE)"\n$(ESC)[3A"
+	@printf "]"$(WHITE)"\n"
+	@printf $(SPACE)"Compilation $(GREEN)$(NUMBER)$(WHITE) of $(NUMBER_FUNCTION)"$(SPACE)
+	@printf "\n"
+	@printf $(SPACE)"Compilation of function $(GREEN)$<$(WHITE)"$(SPACE)$(SPACE)
+	@printf "\n$(ESC)[3A"
 
 clean: print_name
 	@rm -rf $(DOBJ)
@@ -222,8 +227,7 @@ info: print_name
 	@printf "$(WHITE)\n";
 	@printf $(SPACE)"Total commit : $(BLUE)"
 	@git rev-list --all --count
-	@printf "$(WHITE)\n";
-	@printf $(SPACE)"Last modifications : $(BLUE)"
+	@printf $(SPACE)"$(WHITE)Last modifications : $(BLUE)"
 	@git log| head -n5 | grep Date | cut -c 9-
 	@printf "$(WHITE)\n";
 

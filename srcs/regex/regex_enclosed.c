@@ -1,13 +1,14 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   regex_enclosed.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 15:48:43 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/11 19:40:31 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex_enclosed.c                                 .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/02 19:02:20 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
@@ -43,7 +44,7 @@ static t_bool	regex_enclose_capt(t_regex *st, t_reg_encl *encl,
 **-------------------------------------------------------
 */
 
-t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
+static t_bool	regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 											const char *s1, const char *reg)
 {
 	while (*(reg + encl->i) && !is_delimiter(st, reg + encl->i, ")"))
@@ -52,8 +53,8 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 		{
 			encl->mem = st->last_s1;
 			encl->quan.match++;
-			encl->ret = verif_quantifier(&(encl->quan), encl->quan.match);
-			encl->ret_max = verif_quantifier_max(&(encl->quan), encl->quan.match);
+			encl->ret = VERIF_QUAN(encl);
+			encl->ret_max = VERIF_QUAN_MAX(encl);
 			if (LAZY_QUAN(encl) && encl->ret &&
 				regex_parse(st, st->last_s1, reg + encl->len))
 				return (regex_enclose_capt(st, encl, s1));
@@ -67,7 +68,7 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 		}
 		encl->i += regex_span_or(st, reg + encl->i);
 	}
-	encl->ret = verif_quantifier(&(encl->quan), encl->quan.match);
+	encl->ret = VERIF_QUAN(encl);
 	if (encl->ret && regex_parse(st, s1, reg + encl->len))
 		return (regex_enclose_capt(st, encl, s1));
 	return (FALSE);
@@ -83,7 +84,8 @@ t_bool		regex_enclose_parse(t_regex *st, t_reg_encl *encl,\
 **-------------------------------------------------------
 */
 
-static int	regex_enclosed_flags(t_regex *st, t_reg_encl *encl, const char *reg)
+static int		regex_enclosed_flags(t_regex *st, t_reg_encl *encl,
+														const char *reg)
 {
 	int i;
 	int j;
@@ -120,9 +122,9 @@ static int	regex_enclosed_flags(t_regex *st, t_reg_encl *encl, const char *reg)
 **-------------------------------------------------------
 */
 
-t_bool		regex_enclosed(t_regex *st, const char *s1, const char *reg)
+t_bool			regex_enclosed(t_regex *st, const char *s1, const char *reg)
 {
-	t_reg_encl 	encl;
+	t_reg_encl	encl;
 	t_bool		ret;
 
 	ft_bzero(&encl, sizeof(t_reg_encl));

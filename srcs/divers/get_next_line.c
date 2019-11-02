@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   get_next_line.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/12 12:51:10 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/01/15 15:21:28 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 18:06:57 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,7 +48,7 @@ static int		ft_read_fd(int fd, t_list *list)
 		{
 			if (!(temp = ft_strjoin(list->content, buff)))
 			{
-				free(buff);				
+				ft_strdel(&buff);
 				return (-1);
 			}
 			ft_memdel(&list->content);

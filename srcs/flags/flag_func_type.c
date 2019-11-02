@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_parse_argv.c                                  .::    .:/ .      .::   */
+/*   flag_func_type.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/20 16:19:09 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/20 16:26:06 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 18:28:10 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@ t_bool	check_uint(t_flag *st, t_finfo *it, enum e_type mod)
 		func_lenght(st, it, "Number c'ant be upper than %d", it->max);
 	else if (mod == MIN && it->min > nb)
 		func_lenght(st, it, "Number c'ant be less than %d", it->min);
-	else if (mod == EQ && it->eq != nb)	
+	else if (mod == EQ && it->eq != nb)
 		func_lenght(st, it, "Number need to be equal than %d", it->eq);
 	else if (mod == ADD)
 		add_flags_av(it->mfl, it->sfl, (void *)&nb, INT);
@@ -75,17 +75,15 @@ t_bool	check_int(t_flag *st, t_finfo *it, enum e_type mod)
 		func_lenght(st, it, "Number c'ant be upper than %d", it->max);
 	else if (mod == MIN && it->min > nb)
 		func_lenght(st, it, "Number c'ant be less than %d", it->min);
-	else if (mod == EQ && it->eq != nb)	
+	else if (mod == EQ && it->eq != nb)
 		func_lenght(st, it, "Number need to be equal than %d", it->eq);
 	else if (mod == ADD)
 		add_flags_av(it->mfl, it->sfl, (void *)&nb, INT);
 	return (TRUE);
 }
 
-# include <fcntl.h>
-t_bool check_file(t_flag *st, t_finfo *it, enum e_type mod)
+t_bool	check_file(t_flag *st, t_finfo *it, enum e_type mod)
 {
-	
 	int fd;
 	int len;
 

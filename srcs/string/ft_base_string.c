@@ -1,16 +1,17 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_base_string.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/02 11:14:09 by rgermain          #+#    #+#             */
-/*   Updated: 2019/09/29 17:01:09 by rgermain    ###    #+. /#+    ###.fr     */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   ft_base_string.c                                 .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/08/02 11:14:09 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/02 18:36:25 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h" 
+#include "libft.h"
 
 t_bool	ft_base_string(char letter, int base)
 {
@@ -25,7 +26,7 @@ t_bool	ft_base_string(char letter, int base)
 	while (++i < base)
 	{
 		if (base_string[i] == letter)
-			isset = 1;		
+			isset = 1;
 	}
 	if (isset)
 		return (TRUE);

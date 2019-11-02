@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_parse_argv.c                                  .::    .:/ .      .::   */
+/*   flag_usage.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/20 16:19:09 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/20 16:26:06 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 18:29:51 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
-static t_reg_list *usage_option(t_reg_list *lst)
+static t_reg_list	*usage_option(t_reg_list *lst)
 {
-	ft_dprintf(2, "\t\t");
 	if (!ft_strcmp(lst->str, "int"))
-		ft_dprintf(2, "< number ");
+		ft_dprintf(2, "\t\t< number ");
 	else if (!ft_strcmp(lst->str, "string"))
-		ft_dprintf(2, "< string ");
+		ft_dprintf(2, "\t\t< string ");
 	else if (!ft_strcmp(lst->str, "char"))
-	    ft_dprintf(2, "< character ");
+		ft_dprintf(2, "\t\t< character ");
 	else if (!ft_strcmp(lst->str, "uint"))
-		ft_dprintf(2, "< unsigned number ");
+		ft_dprintf(2, "\t\t< unsigned number ");
 	else if (!ft_strcmp(lst->str, "file"))
-		ft_dprintf(2, "< file ");
+		ft_dprintf(2, "\t\t< file ");
 	lst = lst->next;
 	while (lst && !ft_strncmp(lst->token, "opt_", 4))
 	{
@@ -44,7 +42,7 @@ static t_reg_list *usage_option(t_reg_list *lst)
 	return (lst);
 }
 
-t_reg_list *usage_name(t_reg_list *lst)
+static t_reg_list	*usage_name(t_reg_list *lst)
 {
 	if (lst && lst->token && !ft_strcmp(lst->token, "separator"))
 		lst = lst->next;
@@ -80,7 +78,7 @@ static t_reg_list	*usage_set_unset(t_reg_list *lst, char *str, char *mode)
 	return (lst);
 }
 
-static t_reg_list *usage_flag(t_reg_list *lst, t_reg_list *text)
+static t_reg_list	*usage_flag(t_reg_list *lst, t_reg_list *text)
 {
 	t_bool	isset;
 
@@ -104,11 +102,11 @@ static t_reg_list *usage_flag(t_reg_list *lst, t_reg_list *text)
 	return (lst);
 }
 
-void        print_usage(t_flag *st)
+void				print_usage(t_flag *st)
 {
-	t_regex		reg;
 	t_reg_list	*lst;
 	t_reg_list	*text;
+	t_regex		reg;
 
 	if (ft_regex_exec(&reg, st->usage, REGEX_ARGV_USAGE) > 0)
 	{
@@ -125,8 +123,8 @@ void        print_usage(t_flag *st)
 			if (text)
 				text = text->next;
 		}
-		ft_dprintf(2, "\n\t__Compiled with GCC %d.%d__\n", __GNUC__,__STDC__);
+		ft_dprintf(2, "\n\t__Compiled with GCC %d.%d__\n", __GNUC__, __STDC__);
 	}
 	ft_regex_free(&reg);
-    exit(0);
+	exit(0);
 }

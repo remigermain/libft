@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   limit.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/21 02:28:17 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/28 03:10:54 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 18:08:43 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,9 +25,9 @@
 # define CHAR_MAX 127
 # define CHAR_MIN -128
 # define UCHAR_MAX 255
-#ifdef __linux__
-# include <inttypes.h>
-#endif
+# ifdef __linux__
+#  include <inttypes.h>
+# endif
 # define TRUE 1
 # define FALSE 0
 

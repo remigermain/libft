@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_flags.c                                       .::    .:/ .      .::   */
+/*   flag_base_obj.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/20 16:21:27 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/20 16:22:02 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 19:10:59 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,6 @@ t_flags_inf	*flags_av_struct(void)
 		ft_bzero(&st, sizeof(t_flags_inf));
 		pass = TRUE;
 	}
-
 	return (&st);
 }
 
@@ -64,7 +63,7 @@ t_bool		flag_add(char *mfl, char *sfl, void *value, enum e_type type)
 
 	st = flags_av_struct();
 	pos = flag_add_name(st, mfl, sfl, 0);
-	if (value && st->av[pos].nb_arg < 30)
+	if (value && st->av[pos].nb_arg < MAX_ARG)
 	{
 		if (type == STRING)
 		{
@@ -82,9 +81,7 @@ t_bool		flag_add(char *mfl, char *sfl, void *value, enum e_type type)
 			st->av[pos].number[st->av[pos].nb_arg++] = *(int*)(value);
 		}
 	}
-	else if (value)
-		return (FALSE);
-	return (TRUE);
+	return (value && (st->av[pos].nb_arg - 1) < MAX_ARG ? FALSE : TRUE);
 }
 
 void		print_flags(void)

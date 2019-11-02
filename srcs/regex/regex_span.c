@@ -6,7 +6,7 @@
 /*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/06/27 15:48:43 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/10 18:12:15 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 18:08:19 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -84,7 +84,7 @@ int		regex_span_or(t_regex *st, const char *reg)
 
 	i = 0;
 	while (*(reg + i) && !is_delimiter(st, reg + i, "|") &&
-		   !is_delimiter(st, reg + i, ")"))
+		!is_delimiter(st, reg + i, ")"))
 	{
 		if (is_delimiter(st, reg + i, "("))
 			i += regex_span_enclose(st, reg + i + 1) + 1;

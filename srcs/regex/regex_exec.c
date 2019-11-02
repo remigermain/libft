@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   regex_exec.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rgermain <rgermain@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 18:11:21 by rgermain          #+#    #+#             */
-/*   Updated: 2019/10/11 19:32:26 by rgermain         ###   ########.fr       */
-/*                                                                            */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   regex_exec.c                                     .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/10/10 18:11:21 by rgermain     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/02 19:08:27 by rgermain    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
 /* ************************************************************************** */
-
 
 #include "libft.h"
 
@@ -24,7 +24,7 @@
 **		il fonctionnera aussi avec les metachar \d \w \D \W ...
 **		ex :	bonjour\d
 **		\d = tout les digits donc de 0 a 9
-**		apha[48] a alpha[57] vaudra 1 
+**		apha[48] a alpha[57] vaudra 1
 **		car 0 = 48 et 9 = 57 , on va set tout les char de 0 a 9
 **
 **		le character doit etre egale a s1 ou que le character
@@ -55,6 +55,16 @@ static t_bool	regex_parse_2(t_regex *st, const char *s1, const char *reg)
 	return (FALSE);
 }
 
+static t_bool	regex_ascii_char(t_regex *st, const char *s1, const char *reg)
+{
+	int span;
+
+	span = ft_spantype(reg + 1, ft_isxdigit) + 1;
+	if (*(reg + span) == ';' && is_delimiter(st, reg + span + 1, QUANTIFIER))
+		return (regex_quantifier(st, s1, reg));
+	return (regex_parse_2(st, s1, reg));
+}
+
 /*
 **-------------------------------------------------------
 **		function principal qui apelle toutes les functions
@@ -64,8 +74,6 @@ static t_bool	regex_parse_2(t_regex *st, const char *s1, const char *reg)
 
 t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 {
-	int	span;
-
 	if (s1 > st->last_error)
 		st->last_error = s1;
 	st->last_s1 = s1;
@@ -82,13 +90,8 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 	if (is_delimiter(st, reg, "("))
 		return (regex_enclosed(st, s1, ++reg));
 	if (!is_delimiter(st, reg, REG_ASCII_TYPE))
-	{
-		span = ft_spantype(reg + 1, ft_isxdigit) + 1;
-		if (*(reg + span) == ';' && 
-				is_delimiter(st, reg + span + 1, QUANTIFIER))
-			return (regex_quantifier(st, s1, reg));
-	}
-	else if (is_delimiter(st, reg + 1, QUANTIFIER))
+		return (regex_ascii_char(st, s1, reg));
+	if (is_delimiter(st, reg + 1, QUANTIFIER))
 		return (regex_quantifier(st, s1, reg));
 	return (regex_parse_2(st, s1, reg));
 }
@@ -113,7 +116,7 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 **		{5,9}?	match upper than 5, and lower than 9
 **
 **	-------------
-**		CLASS	
+**		CLASS
 **	-------------
 **
 **	[^a-zA-Z\d[:isdigit].\\]fg]
@@ -125,10 +128,10 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 **		*fg				match with f or g
 **
 **	-------------
-**		META	
+**		META
 **	-------------
 **
-**	\d \D \s \S \w \W \n \e \t
+**	\d \D \s \S \w \W \n \e \t \xE7; \o152;
 **	{}()[]?*+^$.					metachar need to be esapced
 **
 **	-------------
@@ -154,6 +157,7 @@ t_bool			regex_parse(t_regex *st, const char *s1, const char *reg)
 **
 **-------------------------------------------------------
 */
+
 int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 {
 	int i;
@@ -175,6 +179,6 @@ int				ft_regex_exec(t_regex *st, const char *s1, const char *reg)
 		reg += regex_span_or(st, reg);
 	}
 	if (st->last_error)
-		st->error_pos =  st->len_s1 - ft_strlen(st->last_error);
+		st->error_pos = st->len_s1 - ft_strlen(st->last_error);
 	return (st->error | st->match);
 }

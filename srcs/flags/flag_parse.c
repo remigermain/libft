@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_parse_argv.c                                  .::    .:/ .      .::   */
+/*   flag_parse.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: rgermain <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: rgermain <rgermain@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/07/20 16:19:09 by rgermain     #+#   ##    ##    #+#       */
-/*   Updated: 2019/07/20 16:26:06 by rgermain    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/02 19:15:10 by rgermain    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int type_all(t_flag *st, t_finfo *it,
+static int			type_all(t_flag *st, t_finfo *it,
 					t_bool (*type_av)(t_flag *st, t_finfo *, enum e_type))
 {
 	if (type_av(st, it, CHECK))
@@ -33,12 +33,13 @@ static int type_all(t_flag *st, t_finfo *it,
 	return (0);
 }
 
-static void	check_av_option(t_flag *st, t_finfo *it)
+static void			check_av_option(t_flag *st, t_finfo *it)
 {
-	static char *type[MAX_TYPE_AV] = {"int", "string", "char", "uint", "file"};
-	static t_bool (*func[MAX_TYPE_AV])(t_flag * st, t_finfo *, enum e_type) =
+	static char		*type[MAX_TYPE_AV] =
+	{"int", "string", "char", "uint", "file"};
+	static t_bool	(*func[MAX_TYPE_AV])(t_flag *, t_finfo *, enum e_type) =
 	{check_int, check_string, check_char, check_uint, check_file};
-	int i;
+	int				i;
 
 	if ((st->i + st->add) < st->argc)
 	{
@@ -76,7 +77,7 @@ static t_reg_list	*parse_option_type(t_flag *st, t_finfo *it, t_reg_list *lst)
 	return (lst);
 }
 
-t_reg_list	*put_name_flag(t_finfo *it, t_reg_list *head)
+static t_reg_list	*put_name_flag(t_finfo *it, t_reg_list *head)
 {
 	if (head && head->token && !ft_strcmp(head->token, "separator"))
 		head = head->next;
@@ -93,9 +94,9 @@ t_reg_list	*put_name_flag(t_finfo *it, t_reg_list *head)
 	return (head);
 }
 
-t_bool			parse_flags(t_flag *st, t_reg_list *lst,  t_reg_list *head)
+t_bool				parse_flags(t_flag *st, t_reg_list *lst, t_reg_list *head)
 {
-	t_finfo it;
+	t_finfo	it;
 
 	ft_bzero(&it, sizeof(t_finfo));
 	lst = put_name_flag(&it, head ? head : lst);
