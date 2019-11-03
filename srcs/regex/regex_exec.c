@@ -47,7 +47,6 @@ static t_bool	regex_parse_2(t_regex *st, const char *s1, const char *reg)
 	if (*s1)
 	{
 		ft_bzero(alpha, sizeof(char) * 128);
-		ft_printf("REG == >>%s<<  >>%s<<\n", reg, reg);
 		len = regex_is_metatype(st, alpha, reg);
 		if ((is_delimiter(st, reg, ".") || alpha[(int)(*s1)] == 1))
 			return (regex_parse(st, ++s1, reg + len));
