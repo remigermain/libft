@@ -176,8 +176,8 @@ all: print_name $(NAME)
 	fi
 
 $(NAME): $(COBJ)
-	@printf $(SPACE)"Compilation of objects $(GREEN)finish$(WHITE)"$(SPACE)$(SPACE)
 	@printf "\n\n\n"
+	@printf $(SPACE)"Compilation of objects $(GREEN)finish$(WHITE)"$(SPACE)$(SPACE)"\n"
 	@printf $(SPACE)"Compilation $(TYPE) $(BLUE) $(NAME) $(WHITE)"$(SPACE)$(SPACE)
 	@printf "\n"
 	@ar ru $(NAME) $? > /dev/null 2>&1
